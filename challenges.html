@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Challenges — NovaHack</title>
+  <meta name="description" content="NovaHack CTF Challenge Board — IEEE CS Nirma University" />
+  <link rel="icon" href="assets/ieee_cs_emblem.ico" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #ffffff;
+      --fg: #111111;
+      --muted: #666666;
+      --border: #dddddd;
+      --card-bg: #fafafa;
+      --hover-bg: #f4f4f4;
+      --green: #1a7f37;
+      --orange: #FFA300;
+      --red: #cf222e;
+      --yellow: #9a6700;
+      --mono: 'Space Mono', 'Courier New', monospace;
+      --sidebar: 260px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--mono);
+      background: var(--bg);
+      color: var(--fg);
+      font-size: 13px;
+      line-height: 1.65;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── NAV ───────────────────────────── */
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.5rem;
+      height: 52px;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+      z-index: 200;
+      flex-shrink: 0;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      font-weight: 700;
+      text-decoration: none;
+      color: var(--fg);
+      letter-spacing: .05em;
+    }
+
+    .nav-brand img {
+      height: 26px;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      font-size: 12px;
+    }
+
+    .nav-right a {
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    .nav-right a:hover {
+      color: var(--fg);
+    }
+
+    .score-display {
+      font-weight: 700;
+      font-size: 12px;
+    }
+
+    /* ── LAYOUT ────────────────────────── */
+    .layout {
+      display: grid;
+      grid-template-columns: var(--sidebar) 1fr;
+      flex: 1;
+      min-height: 0;
+    }
+
+    /* ── SIDEBAR ───────────────────────── */
+    .sidebar {
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      position: sticky;
+      top: 52px;
+      height: calc(100vh - 52px);
+    }
+
+    .sidebar-section {
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 0;
+    }
+
+    .sidebar-label {
+      font-size: 10px;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 0.5rem 1.2rem;
+    }
+
+    .ch-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0.6rem 1.2rem;
+      cursor: pointer;
+      font-size: 12px;
+      color: var(--muted);
+      transition: background .1s, color .1s;
+      border-left: 3px solid transparent;
+    }
+
+    .ch-item:hover {
+      background: var(--hover-bg);
+      color: var(--fg);
+    }
+
+    .ch-item.active {
+      background: var(--hover-bg);
+      color: var(--fg);
+      border-left-color: var(--fg);
+    }
+
+    .ch-item.solved {
+      color: var(--green);
+    }
+
+    .ch-item.solved .ch-dot {
+      background: var(--green);
+    }
+
+    .ch-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--border);
+      flex-shrink: 0;
+    }
+
+    .ch-pts {
+      margin-left: auto;
+      font-size: 10px;
+      color: var(--muted);
+    }
+
+    .ch-item.solved .ch-pts {
+      color: var(--green);
+    }
+
+    /* ── MAIN CONTENT ──────────────────── */
+    .main {
+      overflow-y: auto;
+      height: calc(100vh - 52px);
+    }
+
+    .main-inner {
+      max-width: 780px;
+      padding: 3rem 2.5rem;
+    }
+
+    /* ── CHALLENGE HEADER ──────────────── */
+    .ch-header {
+      margin-bottom: 2.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .ch-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-bottom: 0.8rem;
+    }
+
+    .ch-icon {
+      font-size: 1.2rem;
+    }
+
+    .ch-title {
+      font-size: 1.9rem;
+      font-weight: 700;
+      letter-spacing: -.02em;
+      line-height: 1.2;
+      margin-bottom: 1.2rem;
+    }
+
+    .ch-badges {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 2px 10px;
+      border: 1px solid var(--border);
+      font-size: 10px;
+      letter-spacing: .06em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    .badge.easy {
+      border-color: var(--green);
+      color: var(--green);
+    }
+
+    .badge.medium {
+      border-color: var(--yellow);
+      color: var(--yellow);
+    }
+
+    .badge.hard {
+      border-color: var(--red);
+      color: var(--red);
+    }
+
+    .badge.solved {
+      border-color: var(--green);
+      color: var(--green);
+      background: #f0fff4;
+    }
+
+    /* ── SECTION BLOCKS ────────────────── */
+    .block {
+      margin-bottom: 2.5rem;
+    }
+
+    .block-title {
+      font-size: 10px;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1rem;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .block p {
+      font-size: 13px;
+      line-height: 1.85;
+      color: var(--fg);
+    }
+
+    .block p+p {
+      margin-top: 0.8rem;
+    }
+
+    /* ── HINTS ─────────────────────────── */
+    .hint-card {
+      border: 1px solid var(--border);
+      margin-bottom: 8px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: border-color .2s;
+    }
+
+    .hint-card:hover {
+      border-color: #aaa;
+    }
+
+    .hint-card.revealed {
+      border-color: var(--orange);
+    }
+
+    .hint-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.8rem 1rem;
+      background: var(--card-bg);
+      user-select: none;
+    }
+
+    .hint-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .hint-cost {
+      font-size: 10px;
+      color: var(--muted);
+      margin-left: 8px;
+    }
+
+    .hint-arrow {
+      font-size: 10px;
+      color: var(--muted);
+      transition: transform .2s;
+    }
+
+    .hint-card.revealed .hint-arrow {
+      transform: rotate(180deg);
+    }
+
+    .hint-body {
+      display: none;
+      padding: 1rem;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      line-height: 1.8;
+      color: var(--fg);
+      background: #fffef8;
+    }
+
+    .hint-card.revealed .hint-body {
+      display: block;
+    }
+
+    /* ── CODE BLOCK ────────────────────── */
+    .code-wrap {
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .code-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.6rem 1rem;
+      background: var(--card-bg);
+      border-bottom: 1px solid var(--border);
+      font-size: 11px;
+    }
+
+    .code-filename {
+      color: var(--muted);
+      letter-spacing: .04em;
+    }
+
+    .copy-btn {
+      background: none;
+      border: 1px solid var(--border);
+      font-family: var(--mono);
+      font-size: 10px;
+      padding: 2px 10px;
+      cursor: pointer;
+      color: var(--muted);
+      letter-spacing: .04em;
+      transition: all .2s;
+    }
+
+    .copy-btn:hover {
+      background: var(--fg);
+      color: var(--bg);
+      border-color: var(--fg);
+    }
+
+    pre {
+      overflow-x: auto;
+      padding: 1.2rem;
+      font-size: 12px;
+      line-height: 1.6;
+      background: var(--bg);
+      tab-size: 4;
+    }
+
+    code {
+      font-family: var(--mono);
+    }
+
+    /* ── FLAG SUBMISSION ───────────────── */
+    .flag-section {
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      background: var(--card-bg);
+    }
+
+    .flag-title {
+      font-size: 11px;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    .flag-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .flag-input {
+      flex: 1;
+      font-family: var(--mono);
+      font-size: 13px;
+      padding: 9px 12px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--fg);
+      outline: none;
+      transition: border-color .2s;
+    }
+
+    .flag-input:focus {
+      border-color: var(--fg);
+    }
+
+    .flag-input::placeholder {
+      color: var(--border);
+    }
+
+    .submit-btn {
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 9px 20px;
+      border: 2px solid var(--fg);
+      background: var(--fg);
+      color: var(--bg);
+      cursor: pointer;
+      letter-spacing: .04em;
+      transition: all .2s;
+    }
+
+    .submit-btn:hover {
+      background: transparent;
+      color: var(--fg);
+    }
+
+    .download-btn {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 6px 14px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 700;
+      text-decoration: none;
+      border: 1px solid var(--fg);
+      background: transparent;
+      color: var(--fg);
+      cursor: pointer;
+      transition: background .2s, color .2s;
+    }
+
+    .download-btn:hover {
+      background: var(--fg);
+      color: var(--bg);
+    }
+
+    .flag-result {
+      margin-top: 0.8rem;
+      font-size: 12px;
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      display: none;
+    }
+
+    .flag-result.correct {
+      border-color: var(--green);
+      color: var(--green);
+      background: #f0fff4;
+    }
+
+    .flag-result.wrong {
+      border-color: var(--red);
+      color: var(--red);
+      background: #fff5f5;
+    }
+
+    .solved-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      background: var(--green);
+      color: white;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      margin-top: 0.5rem;
+    }
+
+    /* ── WELCOME SCREEN ────────────────── */
+    .welcome {
+      max-width: 540px;
+      padding: 3rem 2.5rem;
+    }
+
+    .welcome h2 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      letter-spacing: -.02em;
+    }
+
+    .welcome p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.85;
+      margin-bottom: 1rem;
+    }
+
+    .welcome code {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 1px 6px;
+      font-size: 12px;
+    }
+
+    .progress-bar-wrap {
+      border: 1px solid var(--border);
+      height: 6px;
+      margin: 2rem 0 0.5rem;
+      background: var(--card-bg);
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: var(--fg);
+      transition: width .4s;
+    }
+
+    .progress-label {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    /* ── RESPONSIVE ────────────────────── */
+    @media (max-width: 700px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        display: none;
+      }
+
+      .main {
+        height: auto;
+        overflow-y: visible;
+      }
+
+      .main-inner {
+        padding: 2rem 1.2rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- flag{n0_s3cr3ts_1n_html} -->
+
+  <nav class="nav">
+    <a class="nav-brand" href="index.html">
+      <img src="assets/IEEE_CS_Nirma_logo.svg" alt="IEEE CS" />
+      NovaHack
+    </a>
+    <div class="nav-right">
+      <span class="score-display">Score: <span id="total-score">0</span> pts</span>
+      <span id="solved-count" style="color:var(--muted)">0/10 solved</span>
+      <a href="index.html">← Home</a>
+    </div>
+  </nav>
+
+  <div class="layout">
+
+    <!-- ── SIDEBAR ──────────────────────── -->
+    <aside class="sidebar">
+      <div id="sidebar-list">
+        <!-- populated by JS -->
+      </div>
+    </aside>
+
+    <!-- ── MAIN ─────────────────────────── -->
+    <main class="main" id="main-panel">
+      <div class="main-inner" id="content-area">
+        <!-- welcome or challenge view rendered here -->
+      </div>
+    </main>
+
+  </div>
+
+  <script src="challenges.js"></script>
+  <audio id="bg-audio" src="assets/Neural%20Surge.mp3" loop autoplay></audio>
+  <script>
+    // Attempt to auto-play audio (browsers may require interaction)
+    document.body.addEventListener('click', () => {
+      const audio = document.getElementById('bg-audio');
+      if (audio.paused) audio.play();
+    }, { once: true });
+
+    // ── State ──────────────────────────────────────────────────────
+    const STATE = {
+      solved: JSON.parse(localStorage.getItem("cs2_solved") || "{}"),
+      hints: JSON.parse(localStorage.getItem("cs2_hints") || "{}"),
+      current: null,
+    };
+
+    function saveState() {
+      localStorage.setItem("cs2_solved", JSON.stringify(STATE.solved));
+      localStorage.setItem("cs2_hints", JSON.stringify(STATE.hints));
+    }
+
+    function totalScore() {
+      return CHALLENGES.reduce((sum, ch) => {
+        if (!STATE.solved[ch.id]) return sum;
+        const hUsed = (STATE.hints[ch.id] || []).length;
+        return sum + Math.max(0, ch.points - hUsed * 10);
+      }, 0);
+    }
+
+    // ── SHA-256 helper (async, built-in Web Crypto) ─────────────────
+    async function sha256(str) {
+      const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(str));
+      return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, "0")).join("");
+    }
+
+    // ── Sidebar ────────────────────────────────────────────────────
+    const CATEGORIES = [...new Set(CHALLENGES.map(c => c.category))];
+
+    function buildSidebar() {
+      const list = document.getElementById("sidebar-list");
+      list.innerHTML = "";
+
+      CATEGORIES.forEach(cat => {
+        const chs = CHALLENGES.filter(c => c.category === cat);
+        const wrap = document.createElement("div");
+        wrap.className = "sidebar-section";
+        wrap.innerHTML = `<p class="sidebar-label">${cat}</p>`;
+        chs.forEach(ch => {
+          const div = document.createElement("div");
+          div.className = `ch-item${STATE.solved[ch.id] ? " solved" : ""}${STATE.current === ch.id ? " active" : ""}`;
+          div.id = `sb-${ch.id}`;
+          div.innerHTML = `
+        <span class="ch-dot"></span>
+        <span>${ch.title}</span>
+        <span class="ch-pts">${ch.points}p</span>`;
+          div.onclick = () => showChallenge(ch.id);
+          wrap.appendChild(div);
+        });
+        list.appendChild(wrap);
+      });
+    }
+
+    // ── Score display ──────────────────────────────────────────────
+    function updateScoreBar() {
+      document.getElementById("total-score").textContent = totalScore();
+      const solvedN = Object.keys(STATE.solved).length;
+      document.getElementById("solved-count").textContent = `${solvedN}/10 solved`;
+    }
+
+    // ── Welcome screen ──────────────────────────────────────────────
+    function showWelcome() {
+      const solvedN = Object.keys(STATE.solved).length;
+      const pct = Math.round((solvedN / CHALLENGES.length) * 100);
+
+      document.getElementById("content-area").innerHTML = `
+    <div class="welcome">
+      <h2>Welcome to<br/>NovaHack</h2>
+      <p>
+        Select a challenge from the sidebar to begin.
+        Each challenge hides a flag in the format <code>flag{...}</code>.
+        Find it, submit it, earn points.
+      </p>
+      <p>
+        You have two hints per challenge. Each hint costs 10 points.
+        Your progress is saved in the browser automatically.
+      </p>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar" style="width:${pct}%"></div>
+      </div>
+      <p class="progress-label">${solvedN} of ${CHALLENGES.length} challenges solved (${totalScore()} pts)</p>
+    </div>`;
+    }
+
+    // ── Challenge view ──────────────────────────────────────────────
+    function showChallenge(id) {
+      STATE.current = id;
+
+      // Update sidebar active states
+      document.querySelectorAll(".ch-item").forEach(el => el.classList.remove("active"));
+      const sbEl = document.getElementById(`sb-${id}`);
+      if (sbEl) sbEl.classList.add("active");
+
+      // Scroll sidebar item into view
+      if (sbEl) sbEl.scrollIntoView({ block: "nearest" });
+
+      const ch = CHALLENGES.find(c => c.id === id);
+      if (!ch) return;
+
+      const isSolved = !!STATE.solved[ch.id];
+      const usedHints = STATE.hints[ch.id] || [];
+      const diffClass = { Easy: "easy", Medium: "medium", Hard: "hard" }[ch.difficulty] || "";
+
+      // Build hint HTML
+      const h1html = buildHintHtml(ch, 0, usedHints.includes(0));
+      const h2html = buildHintHtml(ch, 1, usedHints.includes(1));
+
+      // Script filename
+      const fname = `solve_${String(ch.id).padStart(2, "0")}.py`;
+
+      document.getElementById("content-area").innerHTML = `
+    <div class="ch-header">
+      <div class="ch-eyebrow">
+        <span class="ch-icon">${ch.icon}</span>
+        <span>#${String(ch.id).padStart(2, "0")}</span>
+        <span>·</span>
+        <span>${ch.category}</span>
+      </div>
+      <h1 class="ch-title">${ch.title}</h1>
+      <div class="ch-badges">
+        <span class="badge ${diffClass}">${ch.difficulty}</span>
+        <span class="badge">${ch.points} pts</span>
+        <span class="badge">${ch.time}</span>
+        ${isSolved ? `<span class="badge solved">✓ Solved</span>` : ""}
+      </div>
+    </div>
+
+    <div class="block">
+      <p class="block-title">Description</p>
+      <p>${ch.description}</p>
+      ${ch.attachment ? `<a href="${ch.attachment}" download class="download-btn">⇩ Download ${ch.attachment}</a>` : ""}
+      ${ch.note ? `<p style="color:var(--muted);margin-top:12px;font-size:12px;border-left:3px solid var(--border);padding-left:12px">${ch.note}</p>` : ""}
+    </div>
+
+    <div class="block">
+      <p class="block-title">Hints (click to reveal · 10 pts each)</p>
+      ${h1html}
+      ${h2html}
+    </div>
+
+    ${ch.guide ? `
+    <div class="block">
+      <p class="block-title">Solution Guide & Recommended Tools</p>
+      <div style="font-size:13px;line-height:1.75;color:var(--fg);background:var(--card-bg);border:1px solid var(--border);padding:1.2rem;">
+        ${renderMarkdown(ch.guide)}
+      </div>
+    </div>
+    ` : ""}
+
+    ${ch.script ? `
+    <div class="block">
+      <p class="block-title">${ch.category === 'Debug & Fix' ? 'Buggy Code Template — ' + fname : 'Starter Code Snippet — ' + fname}</p>
+      <div class="code-wrap">
+        <div class="code-topbar">
+          <span class="code-filename">${fname}</span>
+          <button class="copy-btn" id="copy-btn">Copy</button>
+        </div>
+        <pre><code id="code-block">${escHtml(ch.script)}</code></pre>
+      </div>
+    </div>
+    ` : ""}
+
+    <div class="flag-section">
+      <p class="flag-title">Submit Flag</p>
+      <p style="font-size:12px;color:var(--muted);margin-bottom:1rem">
+        Format: <code>flag{...}</code>
+      </p>
+      ${isSolved
+          ? `<div class="solved-badge">✓ Correctly solved — ${ch.points} pts</div>`
+          : `<div class="flag-row">
+             <input class="flag-input" id="flag-input" type="text" placeholder="flag{...}" autocomplete="off" spellcheck="false" />
+             <button class="submit-btn" id="submit-btn">Submit</button>
+           </div>
+           <div class="flag-result" id="flag-result"></div>`
+        }
+    </div>
+  `;
+
+      // Wire up events
+      document.getElementById("copy-btn").onclick = () => {
+        navigator.clipboard.writeText(ch.script).then(() => {
+          const btn = document.getElementById("copy-btn");
+          if (btn) { btn.textContent = "Copied!"; setTimeout(() => { if (btn) btn.textContent = "Copy"; }, 2000); }
+        });
+      };
+
+      if (!isSolved) {
+        document.getElementById("submit-btn").onclick = () => submitFlag(ch.id);
+        document.getElementById("flag-input").addEventListener("keydown", e => {
+          if (e.key === "Enter") submitFlag(ch.id);
+        });
+      }
+
+      // Hint toggles
+      [0, 1].forEach(i => {
+        const card = document.getElementById(`hint-${ch.id}-${i}`);
+        if (!card) return;
+        card.onclick = () => revealHint(ch.id, i);
+        if (usedHints.includes(i)) card.classList.add("revealed");
+      });
+
+      // Handle URL hash
+      window.location.hash = `ch-${ch.id}`;
+    }
+
+    function buildHintHtml(ch, idx, revealed) {
+      const hintText = idx === 0 ? ch.hint1 : ch.hint2;
+      return `
+    <div class="hint-card${revealed ? " revealed" : ""}" id="hint-${ch.id}-${idx}">
+      <div class="hint-header">
+        <span>
+          <span class="hint-label">Hint ${idx + 1}</span>
+          <span class="hint-cost">(-10 pts)</span>
+        </span>
+        <span class="hint-arrow">▼</span>
+      </div>
+      <div class="hint-body">${hintText}</div>
+    </div>`;
+    }
+
+    function revealHint(chId, idx) {
+      const hints = STATE.hints[chId] || [];
+      if (!hints.includes(idx)) {
+        hints.push(idx);
+        STATE.hints[chId] = hints;
+        saveState();
+        updateScoreBar();
+      }
+      const card = document.getElementById(`hint-${chId}-${idx}`);
+      if (card) card.classList.add("revealed");
+    }
+
+    // ── Flag submission ─────────────────────────────────────────────
+    async function submitFlag(chId) {
+      const input = document.getElementById("flag-input");
+      const result = document.getElementById("flag-result");
+      if (!input || !result) return;
+
+      const val = input.value.trim();
+      if (!val) return;
+
+      const ch = CHALLENGES.find(c => c.id === chId);
+      if (!ch) return;
+
+      // Validate format
+      if (!/^flag\{[^}]+\}$/.test(val)) {
+        result.className = "flag-result wrong";
+        result.style.display = "block";
+        result.textContent = "Invalid format. Flags look like: flag{...}";
+        return;
+      }
+
+      result.className = "flag-result";
+      result.style.display = "block";
+      result.textContent = "Checking…";
+
+      const hash = await sha256(val);
+
+      if (hash === ch.flagHash) {
+        STATE.solved[chId] = true;
+        saveState();
+        updateScoreBar();
+        buildSidebar();
+        result.className = "flag-result correct";
+        result.textContent = `✓ Correct! +${ch.points} pts`;
+        // Re-render after brief pause to show checkmark
+        setTimeout(() => showChallenge(chId), 900);
+      } else {
+        result.className = "flag-result wrong";
+        result.textContent = "✗ Incorrect flag. Try again.";
+        input.select();
+      }
+    }
+
+    // ── Escape HTML ─────────────────────────────────────────────────
+    function escHtml(str) {
+      return str
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    function renderMarkdown(md) {
+      if (!md) return "";
+      return md
+        .replace(/```(\w+)?\n([\s\S]*?)```/g, (_, lang, code) => `<div class="code-wrap" style="margin:12px 0"><div class="code-topbar"><span class="code-filename">${lang || 'code'}</span></div><pre><code>${escHtml(code.trim())}</code></pre></div>`)
+        .replace(/### (.*?)\n/g, '<h4 style="font-size:13px;font-weight:700;margin:12px 0 6px">$1</h4>')
+        .replace(/#### (.*?)\n/g, '<h5 style="font-size:12px;font-weight:700;margin:10px 0 4px">$1</h5>')
+        .replace(/`([^`]+)`/g, '<code style="background:var(--border);padding:2px 6px;font-size:12px">$1</code>')
+        .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+        .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" style="color:var(--fg);text-decoration:underline">$1</a>')
+        .replace(/\n\n/g, '<br/><br/>');
+    }
+
+    // ── Init ────────────────────────────────────────────────────────
+    buildSidebar();
+    updateScoreBar();
+
+    // Route from URL hash
+    const hashId = parseInt((window.location.hash || "").replace("#ch-", ""));
+    if (hashId && CHALLENGES.find(c => c.id === hashId)) {
+      showChallenge(hashId);
+    } else {
+      showWelcome();
+    }
+
+    // Handle hash navigation (from index.html cards)
+    window.addEventListener("hashchange", () => {
+      const id = parseInt(window.location.hash.replace("#ch-", ""));
+      if (id && CHALLENGES.find(c => c.id === id)) showChallenge(id);
+    });
+
+    // Reset button (hold Alt and click score for reset — dev convenience)
+    document.getElementById("total-score").addEventListener("dblclick", () => {
+      if (confirm("Reset all progress?")) {
+        localStorage.removeItem("cs2_solved");
+        localStorage.removeItem("cs2_hints");
+        location.reload();
+      }
+    });
+  </script>
+</body>
+
+</html>

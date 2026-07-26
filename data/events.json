@@ -1,0 +1,36 @@
+[
+  {
+    "id": "novahack-2026",
+    "title": "NovaHack CTF",
+    "type": "CTF",
+    "status": "upcoming",
+    "date": "August 22–23, 2026",
+    "startDate": "2026-08-22T10:00:00+05:30",
+    "endDate": "2026-08-23T10:00:00+05:30",
+    "duration": "24 hours",
+    "format": "Jeopardy",
+    "level": "Freshers Friendly",
+    "points": 1050,
+    "challenges": 10,
+    "description": "NovaHack is a beginner-friendly Capture The Flag competition designed for first-year CSE/IT students exploring cybersecurity for the first time. 10 jeopardy-style challenges covering HTML forensics, metadata analysis, steganography, encoding, debugging, brute force, and web forensics.",
+    "link": "./ctf/",
+    "linkLabel": "Enter CTF Arena →",
+    "tags": ["CTF", "Cybersecurity", "Beginner", "Jeopardy"]
+  },
+  {
+    "id": "hire-your-research-agent",
+    "title": "Hire Your Research Agent",
+    "type": "Workshop",
+    "status": "completed",
+    "date": "April 5, 2026",
+    "startDate": "2026-04-05T10:00:00+05:30",
+    "endDate": "2026-04-05T17:00:00+05:30",
+    "duration": "1 day",
+    "format": "Workshop",
+    "level": "All Years",
+    "description": "A hands-on workshop on building autonomous research agents using large language models and agentic frameworks. Participants built AI-powered pipelines that browse the web, summarize papers, and generate structured research reports — no prior ML experience required.",
+    "link": null,
+    "linkLabel": null,
+    "tags": ["AI", "LLM", "Agents", "Workshop"]
+  }
+]

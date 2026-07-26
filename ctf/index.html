@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NovaHack — IEEE CS Nirma</title>
+  <meta name="description" content="NovaHack CTF" />
+  <link rel="icon" href="../assets/ieee_cs_emblem.ico" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #ffffff;
+      --fg: #111111;
+      --muted: #555555;
+      --border: #dddddd;
+      --accent: #111111;
+      --green: #1a7f37;
+      --orange: #FFA300;
+      --blue: #00629B;
+      --card-bg: #fafafa;
+      --hover-bg: #f0f0f0;
+      --mono: 'Space Mono', 'Courier New', monospace;
+      --radius: 2px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--mono);
+      background: linear-gradient(rgba(255, 255, 255, 0.93), rgba(255, 255, 255, 0.93)), url('../assets/IEEE_Background.png') no-repeat center center fixed;
+      background-size: cover;
+      color: var(--fg);
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    /* ── NAV ─────────────────────────────────────── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      height: 56px;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      color: var(--fg);
+      letter-spacing: .04em;
+    }
+
+    .nav-brand img {
+      height: 28px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 13px;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--fg);
+    }
+
+    /* ── HERO ────────────────────────────────────── */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 4rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 7rem 2rem 5rem;
+    }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.2rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -.02em;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 span {
+      color: var(--orange);
+    }
+
+    .hero-desc {
+      font-size: 14px;
+      color: var(--muted);
+      max-width: 44ch;
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 22px;
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      border: 2px solid var(--fg);
+      background: var(--fg);
+      color: var(--bg);
+      cursor: pointer;
+      border-radius: var(--radius);
+      transition: background .2s, color .2s;
+      letter-spacing: .04em;
+    }
+
+    .btn:hover {
+      background: transparent;
+      color: var(--fg);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--fg);
+    }
+
+    .btn-outline:hover {
+      background: var(--fg);
+      color: var(--bg);
+    }
+
+    /* ── COUNTDOWN ───────────────────────────────── */
+    .countdown-box {
+      border: 1px solid var(--border);
+      padding: 2rem;
+      background: var(--card-bg);
+    }
+
+    .countdown-label {
+      font-size: 11px;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .countdown-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .countdown-unit {
+      background: var(--bg);
+      padding: 1.2rem 0.5rem;
+      text-align: center;
+    }
+
+    .countdown-unit .num {
+      font-size: 2.2rem;
+      font-weight: 700;
+      display: block;
+      letter-spacing: -.02em;
+    }
+
+    .countdown-unit .lbl {
+      font-size: 10px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 4px;
+      display: block;
+    }
+
+    .countdown-live {
+      display: none;
+      padding: 1.5rem 0;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--green);
+    }
+
+    .event-meta {
+      margin-top: 1.5rem;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .event-meta p {
+      margin-bottom: 4px;
+    }
+
+    .event-meta strong {
+      color: var(--fg);
+    }
+
+    /* ── SECTION ─────────────────────────────────── */
+    .section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 5rem 2rem;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 3rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1rem;
+    }
+
+    .section-title {
+      font-size: 11px;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+    }
+
+    .section-count {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    /* ── CHALLENGE GRID ──────────────────────────── */
+    .challenge-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .challenge-card {
+      background: var(--bg);
+      padding: 1.8rem;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      transition: background .15s;
+      position: relative;
+    }
+
+    .challenge-card:hover {
+      background: var(--hover-bg);
+    }
+
+    .card-icon {
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .card-category {
+      font-size: 10px;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .card-title {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+
+    .card-desc {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 1.2rem;
+    }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 11px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border: 1px solid var(--border);
+      font-size: 10px;
+      letter-spacing: .05em;
+      color: var(--muted);
+    }
+
+    .badge.easy {
+      border-color: #1a7f37;
+      color: #1a7f37;
+    }
+
+    .badge.medium {
+      border-color: #9a6700;
+      color: #9a6700;
+    }
+
+    .badge.hard {
+      border-color: #cf222e;
+      color: #cf222e;
+    }
+
+    .card-pts {
+      font-weight: 700;
+      font-size: 12px;
+    }
+
+    /* ── STATS ───────────────────────────────────── */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-bottom: 1px;
+    }
+
+    .stat-box {
+      background: var(--bg);
+      padding: 2rem 1.5rem;
+      text-align: center;
+    }
+
+    .stat-num {
+      font-size: 2.4rem;
+      font-weight: 700;
+      display: block;
+      letter-spacing: -.03em;
+    }
+
+    .stat-lbl {
+      font-size: 11px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 4px;
+      display: block;
+    }
+
+    /* ── TIMELINE / ABOUT ────────────────────────── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
+
+    .about-block h3 {
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+
+    .about-block p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.9;
+      margin-bottom: 1rem;
+    }
+
+    .rule-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .rule-list li {
+      font-size: 13px;
+      color: var(--muted);
+      padding-left: 16px;
+      position: relative;
+    }
+
+    .rule-list li::before {
+      content: "—";
+      position: absolute;
+      left: 0;
+      color: var(--border);
+    }
+
+    /* ── FOOTER ──────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    footer a {
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      color: var(--fg);
+    }
+
+    /* ── DIVIDER ─────────────────────────────────── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── RESPONSIVE ──────────────────────────────── */
+    @media (max-width: 768px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 4rem 1.5rem 3rem;
+        gap: 2rem;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .nav {
+        padding: 0 1.5rem;
+      }
+
+      .nav-links {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- flag{n0_s3cr3ts_1n_html} -->
+
+  <nav class="nav">
+    <a class="nav-brand" href="index.html">
+      <img src="../assets/IEEE_CS_Nirma_logo.svg" alt="IEEE CS" />
+      NovaHack
+    </a>
+    <ul class="nav-links">
+      <li><a href="#challenges">Challenges</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="challenges.html" id="enter-link">Enter →</a></li>
+    </ul>
+  </nav>
+
+  <!-- ── HERO ────────────────────────────── -->
+  <section class="hero">
+    <div>
+      <p class="hero-eyebrow">IEEE Computer Society · Nirma University</p>
+      <h1>Nova<span>Hack</span><br />CTF</h1>
+      <p class="hero-desc">
+        A beginner-friendly Capture The Flag competition for first-year
+        CSE/IT students. 10 challenges. 24 hours. No prior CTF experience
+        required — just curiosity.
+      </p>
+      <div class="hero-actions">
+        <a class="btn" href="challenges.html" id="cta-challenges">Enter Arena →</a>
+        <a class="btn btn-outline" href="#challenges">View Challenges</a>
+      </div>
+    </div>
+
+    <div class="countdown-box">
+      <p class="countdown-label">Event starts in</p>
+      <div class="countdown-grid" id="countdown-grid">
+        <div class="countdown-unit"><span class="num" id="cd-days">00</span><span class="lbl">Days</span></div>
+        <div class="countdown-unit"><span class="num" id="cd-hours">00</span><span class="lbl">Hours</span></div>
+        <div class="countdown-unit"><span class="num" id="cd-mins">00</span><span class="lbl">Minutes</span></div>
+        <div class="countdown-unit"><span class="num" id="cd-secs">00</span><span class="lbl">Seconds</span></div>
+      </div>
+      <p class="countdown-live" id="live-msg">🟢 THE CTF IS LIVE — Enter the Arena!</p>
+      <div class="event-meta">
+        <p><strong>Date:</strong> August 15–16, 2026</p>
+        <p><strong>Duration:</strong> 24 hours</p>
+        <p><strong>Format:</strong> Jeopardy — 10 standalone challenges</p>
+        <p><strong>Level:</strong> Freshers friendly</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── STATS ────────────────────────────── -->
+  <div class="section" id="stats" style="padding-top:0">
+    <div class="stats-grid">
+      <div class="stat-box"><span class="stat-num">10</span><span class="stat-lbl">Challenges</span></div>
+      <div class="stat-box"><span class="stat-num">1050</span><span class="stat-lbl">Total Points</span></div>
+      <div class="stat-box"><span class="stat-num">24h</span><span class="stat-lbl">Duration</span></div>
+      <div class="stat-box"><span class="stat-num">0</span><span class="stat-lbl">Prerequisites</span></div>
+    </div>
+  </div>
+
+  <!-- ── CHALLENGES ───────────────────────── -->
+  <section class="section" id="challenges">
+    <div class="section-header">
+      <span class="section-title">Challenges</span>
+      <span class="section-count">10 problems across 6 categories</span>
+    </div>
+
+    <div class="challenge-grid" id="challenge-grid">
+      <!-- populated by JS -->
+    </div>
+  </section>
+
+  <!-- ── ABOUT ────────────────────────────── -->
+  <section class="section" id="about">
+    <div class="section-header">
+      <span class="section-title">About the Event</span>
+    </div>
+    <div class="about-grid">
+      <div class="about-block">
+        <h3>What is NovaHack?</h3>
+        <p>
+          NovaHack is a Capture The Flag (CTF) competition organized by
+          the IEEE Computer Society Student Chapter at Nirma University,
+        </p>
+        <p>
+          Each challenge hides a flag — a secret string in the format
+          <code>flag{...}</code>. Find it, submit it, earn points. No experience
+          needed: every challenge comes with hints and a Python script to guide you.
+        </p>
+        <p>
+          Categories span HTML inspection, image metadata, steganography, encoding,
+          code debugging, brute force, and web forensics.
+        </p>
+      </div>
+      <div class="about-block">
+        <h3>Rules</h3>
+        <ul class="rule-list">
+          <li>Flag format is always <code>flag{...}</code></li>
+          <li>Each challenge has two hints that cost 10 points each</li>
+          <li>No sharing flags with other teams during the event</li>
+          <li>Automated scanners or DDoS against the platform is not allowed</li>
+          <li>All tools (Python, browser DevTools) are permitted</li>
+          <li>Tiebreaker: earliest last correct submission</li>
+          <li>Organizer decisions are final</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <footer>
+    <span>NovaHack - CTF</span>
+    <span>
+      <a href="https://github.com/DeepLumiere" target="_blank">GitHub</a> ·
+      <a href="mailto:ieeecs@nirma.ac.in">Contact</a>
+    </span>
+  </footer>
+
+  <script src="challenges.js"></script>
+  <audio id="bg-audio" src="../assets/../assets/System%20Breach.mp3" loop autoplay></audio>
+  <script>
+    // Attempt to auto-play audio
+    document.body.addEventListener('click', () => {
+      const audio = document.getElementById('bg-audio');
+      if(audio.paused) audio.play();
+    }, {once: true});
+    // ── Countdown ──────────────────────────────────────
+    const EVENT = new Date("2026-08-15T10:00:00+05:30").getTime();
+
+    function tick() {
+      const now = Date.now();
+      const diff = EVENT - now;
+
+      if (diff <= 0) {
+        document.getElementById("countdown-grid").style.display = "none";
+        document.getElementById("live-msg").style.display = "block";
+        return;
+      }
+
+      const d = Math.floor(diff / 86400000);
+      const h = Math.floor((diff % 86400000) / 3600000);
+      const m = Math.floor((diff % 3600000) / 60000);
+      const s = Math.floor((diff % 60000) / 1000);
+
+      document.getElementById("cd-days").textContent = String(d).padStart(2, "0");
+      document.getElementById("cd-hours").textContent = String(h).padStart(2, "0");
+      document.getElementById("cd-mins").textContent = String(m).padStart(2, "0");
+      document.getElementById("cd-secs").textContent = String(s).padStart(2, "0");
+    }
+    tick();
+    setInterval(tick, 1000);
+
+    // ── Render challenge cards ──────────────────────────
+    const diffColor = { Easy: "easy", Medium: "medium", Hard: "hard" };
+    const grid = document.getElementById("challenge-grid");
+
+    CHALLENGES.forEach(ch => {
+      const a = document.createElement("a");
+      a.className = "challenge-card";
+      a.href = `challenges.html#ch-${ch.id}`;
+      a.innerHTML = `
+      <span class="card-icon">${ch.icon}</span>
+      <p class="card-category">${ch.category}</p>
+      <p class="card-title">${ch.title}</p>
+      <p class="card-desc">${ch.description.slice(0, 100)}…</p>
+      <div class="card-meta">
+        <span class="badge ${diffColor[ch.difficulty]}">${ch.difficulty}</span>
+        <span class="card-pts">${ch.points} pts</span>
+        <span class="badge">${ch.time}</span>
+      </div>`;
+      grid.appendChild(a);
+    });
+  </script>
+</body>
+
+</html>
+
+

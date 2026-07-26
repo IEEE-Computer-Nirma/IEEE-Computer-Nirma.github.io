@@ -1,0 +1,23 @@
+[
+  {
+    "id": "novahack-ctf-2026",
+    "src": "assets/gallery/novahack_ctf.jpg",
+    "alt": "NovaHack CTF — Challenge Arena",
+    "caption": "NovaHack CTF 2026 — Challenge Arena",
+    "event": "NovaHack CTF"
+  },
+  {
+    "id": "research-agent-workshop",
+    "src": "assets/gallery/research_agent.jpg",
+    "alt": "Hire Your Research Agent Workshop",
+    "caption": "Hire Your Research Agent — April 2026 Workshop",
+    "event": "Hire Your Research Agent"
+  },
+  {
+    "id": "chapter-team",
+    "src": "assets/gallery/chapter_team.jpg",
+    "alt": "IEEE CS Nirma Team",
+    "caption": "IEEE CS Nirma University Chapter Team",
+    "event": "Chapter"
+  }
+]

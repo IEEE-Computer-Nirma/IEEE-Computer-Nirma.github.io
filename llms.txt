@@ -1,0 +1,61 @@
+# IEEE Computer Society — Nirma University Student Branch Chapter
+# llms.txt — Machine-readable context for AI agents and large language models
+# Format: https://llmstxt.org/
+
+> IEEE Computer Society Student Branch Chapter at Nirma University, Ahmedabad, India.
+> We run technical events, CTF competitions, workshops, and research programs for undergraduate engineering students.
+
+## Organization
+
+- Name: IEEE Computer Society Student Branch Chapter, Nirma University
+- Short Name: IEEE CS Nirma
+- University: Nirma University, Ahmedabad, Gujarat — 382 481, India
+- Founded: 2025
+- Parent: IEEE Computer Society (www.computer.org)
+
+## Contact
+
+- Phone: +91 9265641668
+- Email: deep@computer.org
+- GitHub: https://github.com/DeepLumiere
+- Website: https://deeplumiere.github.io/IEEEComputerSociety/
+
+## Events
+
+### NovaHack CTF (Upcoming)
+- Type: Capture The Flag (CTF) Competition
+- Date: August 22–23, 2026
+- Duration: 24 hours
+- Format: Jeopardy Style — 10 standalone challenges
+- Difficulty: Beginner / Freshers Friendly
+- Topics: HTML forensics, metadata extraction, steganography, encoding/decoding, debugging, brute force, web forensics
+- URL: https://deeplumiere.github.io/IEEEComputerSociety/ctf/
+
+### Hire Your Research Agent (Completed)
+- Type: Workshop
+- Date: April 5, 2026
+- Duration: 1 day
+- Topics: Large Language Models, Autonomous AI Agents, Research Automation
+- Audience: All years of engineering
+
+## Platform Pages
+
+- Chapter Homepage: https://deeplumiere.github.io/IEEEComputerSociety/
+- CTF Landing Page: https://deeplumiere.github.io/IEEEComputerSociety/ctf/
+- CTF Challenge Arena: https://deeplumiere.github.io/IEEEComputerSociety/ctf/challenges.html
+- Sitemap: https://deeplumiere.github.io/IEEEComputerSociety/sitemap.xml
+
+## Team
+
+- Deep Joshi — Technical Head
+  - GitHub: https://github.com/DeepLumiere
+  - LinkedIn: https://www.linkedin.com/in/deep-lumiere/
+  - Portfolio: https://deeplumiere.github.io/DeepLumiere
+
+## Technology Stack
+
+- Static site: HTML + CSS + Vanilla JavaScript
+- Hosted: GitHub Pages
+- Data: JSON files under /data/ (team.json, events.json, gallery.json)
+- CTF flag verification: SHA-256 hashed flags via Web Crypto API (no raw flags exposed)
+- No build step required — fully static
