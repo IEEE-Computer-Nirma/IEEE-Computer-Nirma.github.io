@@ -1,18 +1,26 @@
 <!-- header.html — Shared site header for all pages -->
 <!-- Usage: <div id="site-header"></div> then loadHeader(root) in shared.js -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2QKJX6PHT9"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2QKJX6PHT9');
+</script>
 <nav class="nav" id="main-nav">
-  <a class="nav-brand" href="{ROOT}index.html">
+  <a class="nav-brand" href="{ROOT}">
     <img src="{ROOT}assets/IEEE_CS_Nirma_logo.svg" alt="IEEE CS Nirma" />
     IEEE CS Nirma
   </a>
   <ul class="nav-links">
-    <li><a href="{ROOT}index.html#events">Events</a></li>
-    <li><a href="{ROOT}novahack-2026.html" target="_blank">NovaHack 2026</a></li>
-    <li><a href="{ROOT}index.html#gallery">Gallery</a></li>
-    <li><a href="{ROOT}index.html#team">Team</a></li>
-    <li><a href="{ROOT}index.html#about">About</a></li>
-    <li><a href="{ROOT}index.html#contact">Contact</a></li>
-    <li><a href="{ROOT}ctf/leaderboard.html">🏆 Leaderboard</a></li>
+    <li><a href="{ROOT}#events">Events</a></li>
+    <li><a href="{ROOT}novahack-2026" target="_blank">NovaHack 2026</a></li>
+    <li><a href="{ROOT}#gallery">Gallery</a></li>
+    <li><a href="{ROOT}#team">Team</a></li>
+    <li><a href="{ROOT}#about">About</a></li>
+    <li><a href="{ROOT}#contact">Contact</a></li>
+    <li><a href="{ROOT}ctf/leaderboard">🏆 Leaderboard</a></li>
   </ul>
   <div class="nav-right-actions">
     <a class="nav-cta" href="{ROOT}ctf/">CTF Arena →</a>

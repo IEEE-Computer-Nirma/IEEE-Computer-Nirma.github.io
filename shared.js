@@ -36,16 +36,20 @@ async function loadShared(root = '') {
 
   // Mark the current page link as active
   const currentPath = window.location.pathname;
+  const normalize = (p) => {
+    // Remove query string and hash
+    const clean = p.split(/[?#]/)[0];
+    // Strip trailing slash and .html extension
+    return clean.replace(/\/.+$/, '/').replace(/\.html$/,'').replace(/\/$/, '')
+      .split('/')
+      .filter(Boolean)
+      .pop() || 'index';
+  };
+  const page = normalize(currentPath);
   document.querySelectorAll('.nav-links a').forEach(link => {
     const href = link.getAttribute('href') || '';
-    // match on the final path segment (filename)
-    const linkFile = href.split('/').filter(Boolean).pop() || '';
-    const pageFile = currentPath.split('/').filter(Boolean).pop() || 'index.html';
-    if (linkFile && linkFile === pageFile) {
-      link.classList.add('active');
-    }
-    // Special: mark index.html links active on root page
-    if ((pageFile === '' || pageFile === 'index.html') && (linkFile === 'index.html')) {
+    const linkPath = normalize(href);
+    if (page === linkPath) {
       link.classList.add('active');
     }
   });
