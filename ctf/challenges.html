@@ -766,6 +766,72 @@
       color: var(--green);
       min-height:16px;
     }
+
+    /* ── LEADERBOARD-STYLE TABLE (reused on welcome) ── */
+    .lb-table {
+      width: 100%; border-collapse: collapse;
+      border: 1px solid var(--border);
+    }
+    .lb-table thead tr {
+      background: var(--card-bg);
+      border-bottom: 2px solid var(--border);
+    }
+    .lb-table th {
+      padding: 12px 16px;
+      font-size: 10px; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      text-align: left; color: var(--muted);
+    }
+    .lb-table tbody tr {
+      border-bottom: 1px solid var(--border);
+      transition: background .15s;
+    }
+    .lb-table tbody tr:hover { background: var(--hover-bg); }
+    .lb-table tbody tr:last-child { border-bottom: none; }
+    .lb-table td {
+      padding: 14px 16px;
+      font-size: 12px; vertical-align: middle;
+    }
+    .rank-cell {
+      font-size: 14px; font-weight: 700; width: 44px;
+      text-align: center;
+    }
+    .pts-cell {
+      font-size: 16px; font-weight: 700;
+      text-align: right;
+    }
+    .solved-cell { text-align: center; }
+    .solved-badge {
+      display: inline-block;
+      padding: 2px 10px;
+      border: 1px solid var(--border);
+      font-size: 10px; font-weight: 700;
+      letter-spacing: .06em;
+    }
+
+    /* ── STATS STRIP (matches leaderboard) ─────────── */
+    .stats-strip {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+    .stat-cell {
+      background: var(--bg);
+      padding: 1.4rem 1.2rem;
+      text-align: center;
+    }
+    .stat-num {
+      font-size: 1.6rem; font-weight: 700;
+      letter-spacing: -.02em;
+      display: block;
+    }
+    .stat-lbl {
+      font-size: 10px; color: var(--muted);
+      letter-spacing: .08em; text-transform: uppercase;
+      margin-top: 4px; display: block;
+    }
   </style>
 </head>
 
@@ -1004,41 +1070,65 @@
       const totalN  = CHALLENGES.length;
       const pct     = totalN ? Math.round((solvedN / totalN) * 100) : 0;
       const pts     = totalScore();
-
-      // Pick first unsolved challenge for quick-start
       const firstUnsolved = CHALLENGES.find(c => !STATE.solved[c.id]);
+
+      // Build table rows
+      const rows = CHALLENGES.map((ch, i) => {
+        const isSolved  = !!STATE.solved[ch.id];
+        const hintsUsed = (STATE.hints[ch.id] || []).length;
+        const earnedPts = isSolved ? Math.max(0, ch.points - hintsUsed * 10) : ch.points;
+        const diffLabel = ch.difficulty || (ch.points <= 50 ? 'Easy' : ch.points <= 100 ? 'Medium' : 'Hard');
+        const diffColor = diffLabel === 'Easy' ? 'var(--green)' : diffLabel === 'Medium' ? 'var(--orange)' : 'var(--red)';
+
+        return `
+          <tr class="ch-row" onclick="showChallenge(${ch.id})" style="cursor:pointer;">
+            <td class="rank-cell">${i + 1}</td>
+            <td>
+              <div style="font-weight:700;font-size:12px;margin-bottom:2px;">${ch.title}</div>
+              <div style="font-size:10px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;">${ch.category}</div>
+            </td>
+            <td style="text-align:center;">
+              <span style="font-size:10px;font-weight:700;color:${diffColor};letter-spacing:.06em;text-transform:uppercase;">${diffLabel}</span>
+            </td>
+            <td class="pts-cell">${earnedPts}<span style="font-size:10px;font-weight:400;color:var(--muted);margin-left:3px;">pts</span></td>
+            <td class="solved-cell">
+              ${isSolved
+                ? `<span class="solved-badge" style="background:var(--green);color:#fff;border-color:var(--green);">✓ Solved</span>`
+                : `<span class="solved-badge" style="color:var(--muted);">Unsolved</span>`}
+              ${hintsUsed > 0 ? `<div style="font-size:9px;color:var(--muted);margin-top:3px;">${hintsUsed} hint${hintsUsed>1?'s':''} used</div>` : ''}
+            </td>
+          </tr>`;
+      }).join('');
 
       document.getElementById("content-area").innerHTML = `
         <div class="wlc-root">
 
-          <!-- Glitchy top banner -->
+          <!-- Banner + typewriter -->
           <div class="wlc-banner">
             <span class="wlc-badge">LIVE</span>
             <span class="wlc-banner-text">NovaHack CTF — IEEE CS Nirma</span>
           </div>
-
-          <!-- Terminal typewriter -->
           <div class="wlc-terminal" id="wlc-terminal" aria-live="polite">
             <span class="wlc-prompt">$&nbsp;</span><span id="wlc-typed"></span><span class="wlc-cursor">▌</span>
           </div>
 
-          <!-- Stats bar -->
-          <div class="wlc-stats">
-            <div class="wlc-stat">
-              <span class="wlc-stat-val">${totalN}</span>
-              <span class="wlc-stat-lbl">Challenges</span>
+          <!-- Stats strip (same style as leaderboard) -->
+          <div class="stats-strip">
+            <div class="stat-cell">
+              <span class="stat-num">${totalN}</span>
+              <span class="stat-lbl">Challenges</span>
             </div>
-            <div class="wlc-stat">
-              <span class="wlc-stat-val">${solvedN}</span>
-              <span class="wlc-stat-lbl">Solved</span>
+            <div class="stat-cell">
+              <span class="stat-num">${solvedN}</span>
+              <span class="stat-lbl">Solved</span>
             </div>
-            <div class="wlc-stat">
-              <span class="wlc-stat-val">${pts}</span>
-              <span class="wlc-stat-lbl">Points</span>
+            <div class="stat-cell">
+              <span class="stat-num">${pts}</span>
+              <span class="stat-lbl">Your Points</span>
             </div>
-            <div class="wlc-stat">
-              <span class="wlc-stat-val">${totalN - solvedN}</span>
-              <span class="wlc-stat-lbl">Remaining</span>
+            <div class="stat-cell">
+              <span class="stat-num">${totalN - solvedN}</span>
+              <span class="stat-lbl">Remaining</span>
             </div>
           </div>
 
@@ -1048,29 +1138,37 @@
               <div class="wlc-prog-fill" id="wlc-fill" style="width:0%"></div>
             </div>
             <div class="wlc-prog-meta">
-              <span id="wlc-prog-label">${solvedN} / ${totalN} solved</span>
+              <span>${solvedN} / ${totalN} challenges solved</span>
               <span>${pct}%</span>
             </div>
           </div>
 
-          <!-- Rules -->
-          <div class="wlc-rules">
-            <div class="wlc-rule"><span class="wlc-rule-icon">⚑</span> Find the flag in the format <code>flag{...}</code></div>
-            <div class="wlc-rule"><span class="wlc-rule-icon">💡</span> Two hints per challenge — each costs <strong>10 pts</strong></div>
-            <div class="wlc-rule"><span class="wlc-rule-icon">💾</span> Progress auto-saved in your browser</div>
-            <div class="wlc-rule"><span class="wlc-rule-icon">🏆</span> Sign in with Google to appear on the leaderboard</div>
-          </div>
+          <!-- Challenges table -->
+          <table class="lb-table" id="ch-table">
+            <thead>
+              <tr>
+                <th style="width:44px;">#</th>
+                <th>Challenge</th>
+                <th style="text-align:center;width:90px;">Difficulty</th>
+                <th style="text-align:right;width:90px;">Points</th>
+                <th style="text-align:center;width:110px;">Status</th>
+              </tr>
+            </thead>
+            <tbody>${rows}</tbody>
+          </table>
 
           <!-- CTA -->
-          <button class="wlc-start-btn" id="wlc-start-btn"
-            ${firstUnsolved ? `onclick="showChallenge(${firstUnsolved.id})"` : ''}>
-            ${solvedN === 0 ? 'Start Hacking →' : solvedN === totalN ? '🏁 All Solved!' : 'Continue Hacking →'}
-          </button>
+          <div style="display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;">
+            <button class="wlc-start-btn" id="wlc-start-btn"
+              ${firstUnsolved ? `onclick="showChallenge(${firstUnsolved.id})"` : ''}>
+              ${solvedN === 0 ? 'Start Hacking →' : solvedN === totalN ? '🏁 All Solved!' : 'Continue Hacking →'}
+            </button>
+            <span style="font-size:11px;color:var(--muted);">or click any row above</span>
+          </div>
 
-          <p class="wlc-hint">or pick a challenge from the sidebar</p>
         </div>`;
 
-      // Animate progress bar after short delay
+      // Animate progress fill
       requestAnimationFrame(() => {
         setTimeout(() => {
           const fill = document.getElementById("wlc-fill");
@@ -1078,14 +1176,10 @@
         }, 200);
       });
 
-      // Typewriter effect
-      const lines = [
-        "welcome to NovaHack CTF arena",
-        "10 challenges await. Are you ready?",
-      ];
+      // Typewriter
+      const lines = ["welcome to NovaHack CTF arena", "10 challenges await. Are you ready?"];
       let lineIdx = 0, charIdx = 0;
       const typed = document.getElementById("wlc-typed");
-
       function type() {
         if (!typed) return;
         const line = lines[lineIdx];
@@ -1093,12 +1187,7 @@
           typed.textContent += line[charIdx++];
           setTimeout(type, 45);
         } else if (lineIdx < lines.length - 1) {
-          setTimeout(() => {
-            typed.textContent = "";
-            charIdx = 0;
-            lineIdx++;
-            type();
-          }, 1400);
+          setTimeout(() => { typed.textContent = ""; charIdx = 0; lineIdx++; type(); }, 1400);
         }
       }
       setTimeout(type, 400);
