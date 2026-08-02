@@ -887,6 +887,7 @@
       const navCta = document.querySelector('.nav-cta');
       if (navCta) navCta.style.display = 'none';
     }
+    if (window.updateScoreBar) window.updateScoreBar();
 
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
@@ -907,7 +908,9 @@
     const db    = getFirestore(app);
     const provider = new GoogleAuthProvider();
 
-    let currentUser = null;
+    // undefined = auth not yet resolved | null = resolved, not signed in | object = signed in
+    let currentUser = undefined;
+    let authReady   = false;
 
     // ── Google Sign-in ──────────────────────────────────
     document.getElementById("google-signin-btn").addEventListener("click", async () => {
@@ -923,19 +926,84 @@
     });
 
     function closeModal() {
-      document.getElementById("signin-modal").classList.remove("open");
+      const m = document.getElementById("signin-modal");
+      if (m) m.classList.remove("open");
     }
 
-    window.__getCurrentUser = () => currentUser;
+    // Expose auth helpers — undefined means auth not yet resolved
+    window.__getCurrentUser     = () => currentUser;
+    window.__isAuthReady        = () => authReady;
     window.__promptRegistration = () => {
-      document.getElementById("signin-modal").classList.add("open");
+      const m = document.getElementById("signin-modal");
+      if (m) m.classList.add("open");
+    };
+
+    // ── Load user's saved hints + solves from Firebase ────────────
+    async function loadUserState(user) {
+      try {
+        const userRef = doc(db, "ctf_leaderboard", user.uid);
+        const snap    = await getDoc(userRef);
+        if (!snap.exists()) return;
+        const data = snap.data();
+
+        // Merge Firebase solves into local state
+        (data.solves || []).forEach(s => {
+          if (!STATE.solved[s.id]) STATE.solved[s.id] = true;
+        });
+
+        // Merge Firebase hintsUsed into local state
+        const fbHints = data.hintsUsed || {};
+        Object.entries(fbHints).forEach(([chId, arr]) => {
+          const id = Number(chId);
+          if (!STATE.hints[id]) STATE.hints[id] = [];
+          arr.forEach(h => { if (!STATE.hints[id].includes(h)) STATE.hints[id].push(h); });
+        });
+
+        saveState();
+        updateScoreBar();
+        buildSidebar();
+        // Refresh welcome screen if currently visible
+        if (!STATE.current) showWelcome();
+      } catch(e) {
+        console.warn("loadUserState failed:", e);
+      }
+    }
+
+    // ── Save a hint usage to Firebase ────────────────────────────
+    window.__saveHintToFirebase = async (chId, hintIdx) => {
+      if (!currentUser) return;
+      try {
+        const userRef = doc(db, "ctf_leaderboard", currentUser.uid);
+        const snap    = await getDoc(userRef);
+        const base = {
+          uid: currentUser.uid, name: currentUser.displayName,
+          email: currentUser.email, photo: currentUser.photoURL,
+          totalPoints: 0, solvedCount: 0, solves: [], hintsUsed: {}
+        };
+        const data = snap.exists() ? snap.data() : base;
+        const fbHints = data.hintsUsed || {};
+        if (!fbHints[chId]) fbHints[chId] = [];
+        if (!fbHints[chId].includes(hintIdx)) {
+          fbHints[chId].push(hintIdx);
+          if (snap.exists()) {
+            await updateDoc(userRef, { hintsUsed: fbHints, lastUpdated: serverTimestamp() });
+          } else {
+            await setDoc(userRef, { ...base, hintsUsed: fbHints, lastUpdated: serverTimestamp() });
+          }
+        }
+      } catch(e) {
+        console.warn("saveHintToFirebase failed:", e);
+      }
     };
 
     onAuthStateChanged(auth, user => {
-      currentUser = user;
+      const firstResolution = !authReady;
+      authReady   = true;
+      currentUser = user;   // null = signed out, object = signed in
+
       if (user) {
         closeModal();
-        // Show user name in nav
+        // Show user avatar in nav
         const extNav = document.getElementById('ctf-nav-extension');
         if (extNav) {
           let badge = document.getElementById("user-badge");
@@ -947,17 +1015,13 @@
           }
           badge.innerHTML = `<img src="${user.photoURL}" style="width:20px;height:20px;border-radius:50%;" /> ${user.displayName.split(' ')[0]}`;
         }
+        // Sync Firebase state (hints + solves) into local STATE
+        loadUserState(user);
+      } else if (firstResolution) {
+        // Auth resolved → not signed in → mandatory registration
+        window.__promptRegistration();
       }
     });
-
-    // Show sign-in modal on flag submit if not signed in
-    window.__fbSignIn = () => {
-      if (!currentUser) {
-        window.__promptRegistration();
-        return false;
-      }
-      return true;
-    };
 
     // Record a correct submission to Firestore
     window.__recordSubmission = async (challengeId, challengeTitle, points, attempts) => {
@@ -967,26 +1031,21 @@
         const email = currentUser.email;
         const name  = currentUser.displayName;
         const photo = currentUser.photoURL;
-
-        // Leaderboard per-user doc
         const userRef = doc(db, "ctf_leaderboard", uid);
         const snap    = await getDoc(userRef);
-
         if (!snap.exists()) {
           await setDoc(userRef, {
             uid, name, email, photo,
-            totalPoints: points,
-            solvedCount: 1,
+            totalPoints: points, solvedCount: 1,
             solves: [{ id: challengeId, title: challengeTitle, points, attempts, solvedAt: new Date().toISOString() }],
-            lastUpdated: serverTimestamp()
+            hintsUsed: {}, lastUpdated: serverTimestamp()
           });
         } else {
           const data = snap.data();
           const alreadySolved = (data.solves || []).some(s => s.id === challengeId);
           if (!alreadySolved) {
             await updateDoc(userRef, {
-              totalPoints: increment(points),
-              solvedCount: increment(1),
+              totalPoints: increment(points), solvedCount: increment(1),
               solves: [...(data.solves || []), { id: challengeId, title: challengeTitle, points, attempts, solvedAt: new Date().toISOString() }],
               lastUpdated: serverTimestamp()
             });
@@ -1038,6 +1097,7 @@
 
     function buildSidebar() {
       const list = document.getElementById("sidebar-list");
+      if (!list) return;
       list.innerHTML = "";
 
       CATEGORIES.forEach(cat => {
@@ -1062,12 +1122,20 @@
 
     // ── Score display ──────────────────────────────────────────────
     function updateScoreBar() {
-      document.getElementById("total-score").textContent = totalScore();
-      const solvedN = Object.keys(STATE.solved).length;
-      document.getElementById("solved-count").textContent = `${solvedN}/10 solved`;
+      const scoreEl = document.getElementById("total-score");
+      const countEl = document.getElementById("solved-count");
+      if (scoreEl) scoreEl.textContent = totalScore();
+      if (countEl) {
+        const solvedN = Object.keys(STATE.solved).length;
+        countEl.textContent = `${solvedN}/${CHALLENGES.length} solved`;
+      }
     }
+    window.updateScoreBar = updateScoreBar;
 
     function showWelcome() {
+      const contentArea = document.getElementById("content-area");
+      if (!contentArea) return;
+
       const solvedN = Object.keys(STATE.solved).length;
       const totalN  = CHALLENGES.length;
       const pct     = totalN ? Math.round((solvedN / totalN) * 100) : 0;
@@ -1102,7 +1170,7 @@
           </tr>`;
       }).join('');
 
-      document.getElementById("content-area").innerHTML = `
+      contentArea.innerHTML = `
         <div class="wlc-root">
 
           <!-- Banner + typewriter -->
@@ -1196,11 +1264,20 @@
     }
 
     // ── Challenge view ──────────────────────────────────────────────
-    function showChallenge(id) {
-      if (window.__getCurrentUser && !window.__getCurrentUser()) {
+    // ── Helpers: auth-ready guard ────────────────────────────────
+    function requireAuth() {
+      // undefined = auth not resolved yet → allow (will gate once resolved)
+      // null     = resolved, not signed in → block
+      const u = window.__getCurrentUser ? window.__getCurrentUser() : undefined;
+      if (u === null) {
         if (window.__promptRegistration) window.__promptRegistration();
-        return;
+        return false;
       }
+      return true;
+    }
+
+    function showChallenge(id) {
+      if (!requireAuth()) return;
 
       STATE.current = id;
 
@@ -1226,7 +1303,10 @@
       // Script filename
       const fname = `solve_${String(ch.id).padStart(2, "0")}.py`;
 
-      document.getElementById("content-area").innerHTML = `
+      const contentArea = document.getElementById("content-area");
+      if (!contentArea) return;
+
+      contentArea.innerHTML = `
     <div class="ch-header">
       <div class="ch-eyebrow">
         <span class="ch-icon">${ch.icon}</span>
@@ -1329,12 +1409,15 @@
 
     function buildHintHtml(ch, idx, revealed) {
       const hintText = idx === 0 ? ch.hint1 : ch.hint2;
+      const costLabel = revealed
+        ? '<span style="color:var(--orange);">unlocked · -10 pts</span>'
+        : '(-10 pts to unlock)';
       return `
     <div class="hint-card${revealed ? " revealed" : ""}" id="hint-${ch.id}-${idx}">
       <div class="hint-header">
         <span>
           <span class="hint-label">Hint ${idx + 1}</span>
-          <span class="hint-cost">(-10 pts)</span>
+          <span class="hint-cost">${costLabel}</span>
         </span>
         <span class="hint-arrow">▼</span>
       </div>
@@ -1343,29 +1426,35 @@
     }
 
     function revealHint(chId, idx) {
-      if (window.__getCurrentUser && !window.__getCurrentUser()) {
-        if (window.__promptRegistration) window.__promptRegistration();
-        return;
-      }
+      if (!requireAuth()) return;
+
       const card = document.getElementById(`hint-${chId}-${idx}`);
       if (!card) return;
 
       const hints = STATE.hints[chId] || [];
-      if (!hints.includes(idx)) {
+      const alreadyUsed = hints.includes(idx);
+
+      if (!alreadyUsed) {
+        // First time: deduct points, persist, always open
         hints.push(idx);
         STATE.hints[chId] = hints;
         saveState();
         updateScoreBar();
+        card.classList.add("revealed");
+        // Update cost label to show unlocked state
+        const costEl = card.querySelector('.hint-cost');
+        if (costEl) costEl.innerHTML = '<span style="color:var(--orange);">unlocked · -10 pts</span>';
+        // Persist to Firebase
+        if (window.__saveHintToFirebase) window.__saveHintToFirebase(chId, idx);
+      } else {
+        // Already unlocked: just toggle open/close
+        card.classList.toggle("revealed");
       }
-      card.classList.toggle("revealed");
     }
 
     // ── Flag submission ─────────────────────────────────────────────
     async function submitFlag(chId) {
-      if (window.__getCurrentUser && !window.__getCurrentUser()) {
-        if (window.__promptRegistration) window.__promptRegistration();
-        return;
-      }
+      if (!requireAuth()) return;
 
       const input = document.getElementById("flag-input");
       const result = document.getElementById("flag-result");
@@ -1453,14 +1542,17 @@
       if (id && CHALLENGES.find(c => c.id === id)) showChallenge(id);
     });
 
-    // Reset button (hold Alt and click score for reset — dev convenience)
-    document.getElementById("total-score").addEventListener("dblclick", () => {
-      if (confirm("Reset all progress?")) {
-        localStorage.removeItem("cs2_solved");
-        localStorage.removeItem("cs2_hints");
-        location.reload();
-      }
-    });
+    // Reset button (hold Alt and double click score for reset — dev convenience)
+    const scoreResetBtn = document.getElementById("total-score");
+    if (scoreResetBtn) {
+      scoreResetBtn.addEventListener("dblclick", () => {
+        if (confirm("Reset all progress?")) {
+          localStorage.removeItem("cs2_solved");
+          localStorage.removeItem("cs2_hints");
+          location.reload();
+        }
+      });
+    }
   </script>
 </body>
 

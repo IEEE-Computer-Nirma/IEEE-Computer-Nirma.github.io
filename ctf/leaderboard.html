@@ -420,23 +420,29 @@
         renderStats(allEntries);
         renderPodium(allEntries);
         renderTable(allEntries);
-        document.getElementById("last-updated").textContent = "Updated " + new Date().toLocaleTimeString();
+        const lastUpd = document.getElementById("last-updated");
+        if (lastUpd) lastUpd.textContent = "Updated " + new Date().toLocaleTimeString();
       } catch(e) {
         console.warn("Leaderboard load error:", e);
-        document.getElementById("lb-body").innerHTML = `
-          <tr><td colspan="4">
-            <div class="lb-placeholder">
-              <span class="icon">⚠️</span>
-              <p>Could not load leaderboard. Make sure Firestore is configured and you're online.</p>
-            </div>
-          </td></tr>`;
+        const lbBody = document.getElementById("lb-body");
+        if (lbBody) {
+          lbBody.innerHTML = `
+            <tr><td colspan="4">
+              <div class="lb-placeholder">
+                <span class="icon">⚠️</span>
+                <p>Could not load leaderboard. Make sure Firestore is configured and you're online.</p>
+              </div>
+            </td></tr>`;
+        }
       }
     }
 
     function renderStats(entries) {
       const totalSolves = entries.reduce((s, e) => s + (e.solves?.length || 0), 0);
-      document.getElementById("stat-participants").textContent = entries.length;
-      document.getElementById("stat-solves").textContent      = totalSolves;
+      const partEl  = document.getElementById("stat-participants");
+      const solvesEl = document.getElementById("stat-solves");
+      if (partEl)   partEl.textContent   = entries.length;
+      if (solvesEl) solvesEl.textContent = totalSolves;
     }
 
     const medals = ["🥇", "🥈", "🥉"];
