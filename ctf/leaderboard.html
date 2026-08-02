@@ -288,7 +288,8 @@
     <div class="page-header">
       <span class="page-title">🏆 Leaderboard</span>
       <span class="page-sub">NovaHack CTF 2026 — Live Rankings</span>
-      <span id="last-updated">—</span>
+      <span id="last-updated" style="margin-left:12px;">—</span>
+      <a href="challenges" class="btn btn-outline" style="margin-left:auto;font-size:11px;padding:5px 14px;text-decoration:none;display:inline-flex;align-items:center;gap:6px;">← Back to CTF Arena</a>
     </div>
 
     <!-- Stats strip -->
@@ -399,6 +400,7 @@
     const ext = document.getElementById('ctf-nav-extension');
     if (ext) {
       ext.innerHTML = `
+        <a href="challenges" class="nav-cta" style="margin-right:10px;text-decoration:none;">← CTF Arena</a>
         <div id="user-nav-badge" style="display:none;"></div>
         <button class="btn-google" id="nav-signin-btn">
           <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" />
@@ -406,9 +408,6 @@
         </button>
       `;
       ext.style.display = 'flex';
-      // Hide the default nav CTA since we have sign in
-      const navCta = document.querySelector('.nav-cta');
-      if (navCta) navCta.style.display = 'none';
     }
 
     // ── Load leaderboard ──────────────────────────────────────────

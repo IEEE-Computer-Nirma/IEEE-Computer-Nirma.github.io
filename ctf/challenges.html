@@ -842,14 +842,13 @@
   <!-- ── SIGN-IN MODAL ─────────────────── -->
   <div class="modal-overlay" id="signin-modal">
     <div class="modal">
-      <h2>Sign in to Submit</h2>
-      <p>Sign in with your Google account to submit flags and appear on the leaderboard. Your progress is also saved locally.</p>
+      <h2>Registration Required to Play</h2>
+      <p>Please sign in with your Google account to register for NovaHack CTF. Once registered, you can unlock challenges, view hints, submit flags, and track your rank on the live leaderboard.</p>
       <button class="google-btn" id="google-signin-btn">
         <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" />
-        Continue with Google
+        Sign in with Google to Register & Play
       </button>
       <div id="signin-status"></div>
-      <button class="modal-close" id="modal-skip">Skip — just solve locally</button>
     </div>
   </div>
 
@@ -916,18 +915,21 @@
       status.textContent = "Signing in…";
       try {
         const result = await signInWithPopup(auth, provider);
-        status.textContent = `✓ Signed in as ${result.user.displayName}`;
+        status.textContent = `✓ Registered & Signed in as ${result.user.displayName}`;
         setTimeout(() => closeModal(), 1000);
       } catch (e) {
         status.textContent = "Sign-in failed. Try again.";
       }
     });
 
-    document.getElementById("modal-skip").addEventListener("click", closeModal);
-
     function closeModal() {
       document.getElementById("signin-modal").classList.remove("open");
     }
+
+    window.__getCurrentUser = () => currentUser;
+    window.__promptRegistration = () => {
+      document.getElementById("signin-modal").classList.add("open");
+    };
 
     onAuthStateChanged(auth, user => {
       currentUser = user;
@@ -951,7 +953,7 @@
     // Show sign-in modal on flag submit if not signed in
     window.__fbSignIn = () => {
       if (!currentUser) {
-        document.getElementById("signin-modal").classList.add("open");
+        window.__promptRegistration();
         return false;
       }
       return true;
@@ -1195,6 +1197,11 @@
 
     // ── Challenge view ──────────────────────────────────────────────
     function showChallenge(id) {
+      if (window.__getCurrentUser && !window.__getCurrentUser()) {
+        if (window.__promptRegistration) window.__promptRegistration();
+        return;
+      }
+
       STATE.current = id;
 
       // Update sidebar active states
@@ -1288,12 +1295,15 @@
   `;
 
       // Wire up events
-      document.getElementById("copy-btn").onclick = () => {
-        navigator.clipboard.writeText(ch.script).then(() => {
-          const btn = document.getElementById("copy-btn");
-          if (btn) { btn.textContent = "Copied!"; setTimeout(() => { if (btn) btn.textContent = "Copy"; }, 2000); }
-        });
-      };
+      const copyBtn = document.getElementById("copy-btn");
+      if (copyBtn) {
+        copyBtn.onclick = () => {
+          navigator.clipboard.writeText(ch.script).then(() => {
+            copyBtn.textContent = "Copied!";
+            setTimeout(() => { if (copyBtn) copyBtn.textContent = "Copy"; }, 2000);
+          });
+        };
+      }
 
       if (!isSolved) {
         document.getElementById("submit-btn").onclick = () => submitFlag(ch.id);
@@ -1306,7 +1316,10 @@
       [0, 1].forEach(i => {
         const card = document.getElementById(`hint-${ch.id}-${i}`);
         if (!card) return;
-        card.onclick = () => revealHint(ch.id, i);
+        card.onclick = (e) => {
+          e.stopPropagation();
+          revealHint(ch.id, i);
+        };
         if (usedHints.includes(i)) card.classList.add("revealed");
       });
 
@@ -1330,6 +1343,13 @@
     }
 
     function revealHint(chId, idx) {
+      if (window.__getCurrentUser && !window.__getCurrentUser()) {
+        if (window.__promptRegistration) window.__promptRegistration();
+        return;
+      }
+      const card = document.getElementById(`hint-${chId}-${idx}`);
+      if (!card) return;
+
       const hints = STATE.hints[chId] || [];
       if (!hints.includes(idx)) {
         hints.push(idx);
@@ -1337,12 +1357,16 @@
         saveState();
         updateScoreBar();
       }
-      const card = document.getElementById(`hint-${chId}-${idx}`);
-      if (card) card.classList.add("revealed");
+      card.classList.toggle("revealed");
     }
 
     // ── Flag submission ─────────────────────────────────────────────
     async function submitFlag(chId) {
+      if (window.__getCurrentUser && !window.__getCurrentUser()) {
+        if (window.__promptRegistration) window.__promptRegistration();
+        return;
+      }
+
       const input = document.getElementById("flag-input");
       const result = document.getElementById("flag-result");
       if (!input || !result) return;
