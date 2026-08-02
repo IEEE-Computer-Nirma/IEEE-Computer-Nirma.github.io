@@ -506,6 +506,196 @@
       color: var(--muted);
     }
 
+    /* ── NEW WELCOME SCREEN ─────────────────── */
+    .wlc-root {
+      padding: 2.5rem 2.8rem;
+      max-width: 620px;
+      display: flex;
+      flex-direction: column;
+      gap: 1.8rem;
+    }
+
+    /* Banner */
+    .wlc-banner {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .wlc-badge {
+      display: inline-block;
+      background: var(--green);
+      color: #fff;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      padding: 2px 8px;
+      animation: wlc-pulse 1.8s ease-in-out infinite;
+    }
+
+    @keyframes wlc-pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .wlc-banner-text {
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* Terminal */
+    .wlc-terminal {
+      background: #111;
+      color: #00e676;
+      font-family: var(--mono);
+      font-size: 14px;
+      padding: 1.1rem 1.4rem;
+      border: 1px solid #333;
+      min-height: 52px;
+      display: flex;
+      align-items: center;
+      gap: 0;
+      border-radius: 2px;
+    }
+
+    .wlc-prompt {
+      color: #aaa;
+      flex-shrink: 0;
+    }
+
+    .wlc-cursor {
+      color: #00e676;
+      animation: wlc-blink .9s steps(1) infinite;
+      margin-left: 1px;
+    }
+
+    @keyframes wlc-blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    /* Stats */
+    .wlc-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      border: 1px solid var(--border);
+    }
+
+    .wlc-stat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1rem .5rem;
+      border-right: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .wlc-stat:last-child { border-right: none; }
+
+    .wlc-stat-val {
+      font-size: 1.6rem;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .wlc-stat-lbl {
+      font-size: 9px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* Progress */
+    .wlc-prog-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .wlc-prog-bar {
+      height: 6px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .wlc-prog-fill {
+      height: 100%;
+      background: var(--fg);
+      transition: width .6s cubic-bezier(.4,0,.2,1);
+    }
+
+    .wlc-prog-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    /* Rules */
+    .wlc-rules {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      border: 1px solid var(--border);
+      padding: 1rem 1.2rem;
+    }
+
+    .wlc-rule {
+      font-size: 12px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .wlc-rule code {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 1px 5px;
+      font-size: 11px;
+    }
+
+    .wlc-rule-icon {
+      font-size: 13px;
+      flex-shrink: 0;
+    }
+
+    /* Start button */
+    .wlc-start-btn {
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      border: 2px solid var(--fg);
+      background: var(--fg);
+      color: var(--bg);
+      padding: 13px 28px;
+      cursor: pointer;
+      transition: background .18s, color .18s, transform .12s;
+      align-self: flex-start;
+    }
+
+    .wlc-start-btn:hover {
+      background: transparent;
+      color: var(--fg);
+      transform: translateY(-1px);
+    }
+
+    .wlc-start-btn:active {
+      transform: translateY(0);
+    }
+
+    .wlc-hint {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: -1rem;
+    }
+
     /* ── RESPONSIVE ────────────────────── */
     @media (max-width: 700px) {
       .layout {
@@ -809,28 +999,109 @@
       document.getElementById("solved-count").textContent = `${solvedN}/10 solved`;
     }
 
-    // ── Welcome screen ──────────────────────────────────────────────
     function showWelcome() {
       const solvedN = Object.keys(STATE.solved).length;
-      const pct = Math.round((solvedN / CHALLENGES.length) * 100);
+      const totalN  = CHALLENGES.length;
+      const pct     = totalN ? Math.round((solvedN / totalN) * 100) : 0;
+      const pts     = totalScore();
+
+      // Pick first unsolved challenge for quick-start
+      const firstUnsolved = CHALLENGES.find(c => !STATE.solved[c.id]);
 
       document.getElementById("content-area").innerHTML = `
-    <div class="welcome">
-      <h2>Welcome to<br/>NovaHack</h2>
-      <p>
-        Select a challenge from the sidebar to begin.
-        Each challenge hides a flag in the format <code>flag{...}</code>.
-        Find it, submit it, earn points.
-      </p>
-      <p>
-        You have two hints per challenge. Each hint costs 10 points.
-        Your progress is saved in the browser automatically.
-      </p>
-      <div class="progress-bar-wrap">
-        <div class="progress-bar" style="width:${pct}%"></div>
-      </div>
-      <p class="progress-label">${solvedN} of ${CHALLENGES.length} challenges solved (${totalScore()} pts)</p>
-    </div>`;
+        <div class="wlc-root">
+
+          <!-- Glitchy top banner -->
+          <div class="wlc-banner">
+            <span class="wlc-badge">LIVE</span>
+            <span class="wlc-banner-text">NovaHack CTF — IEEE CS Nirma</span>
+          </div>
+
+          <!-- Terminal typewriter -->
+          <div class="wlc-terminal" id="wlc-terminal" aria-live="polite">
+            <span class="wlc-prompt">$&nbsp;</span><span id="wlc-typed"></span><span class="wlc-cursor">▌</span>
+          </div>
+
+          <!-- Stats bar -->
+          <div class="wlc-stats">
+            <div class="wlc-stat">
+              <span class="wlc-stat-val">${totalN}</span>
+              <span class="wlc-stat-lbl">Challenges</span>
+            </div>
+            <div class="wlc-stat">
+              <span class="wlc-stat-val">${solvedN}</span>
+              <span class="wlc-stat-lbl">Solved</span>
+            </div>
+            <div class="wlc-stat">
+              <span class="wlc-stat-val">${pts}</span>
+              <span class="wlc-stat-lbl">Points</span>
+            </div>
+            <div class="wlc-stat">
+              <span class="wlc-stat-val">${totalN - solvedN}</span>
+              <span class="wlc-stat-lbl">Remaining</span>
+            </div>
+          </div>
+
+          <!-- Progress bar -->
+          <div class="wlc-prog-wrap">
+            <div class="wlc-prog-bar">
+              <div class="wlc-prog-fill" id="wlc-fill" style="width:0%"></div>
+            </div>
+            <div class="wlc-prog-meta">
+              <span id="wlc-prog-label">${solvedN} / ${totalN} solved</span>
+              <span>${pct}%</span>
+            </div>
+          </div>
+
+          <!-- Rules -->
+          <div class="wlc-rules">
+            <div class="wlc-rule"><span class="wlc-rule-icon">⚑</span> Find the flag in the format <code>flag{...}</code></div>
+            <div class="wlc-rule"><span class="wlc-rule-icon">💡</span> Two hints per challenge — each costs <strong>10 pts</strong></div>
+            <div class="wlc-rule"><span class="wlc-rule-icon">💾</span> Progress auto-saved in your browser</div>
+            <div class="wlc-rule"><span class="wlc-rule-icon">🏆</span> Sign in with Google to appear on the leaderboard</div>
+          </div>
+
+          <!-- CTA -->
+          <button class="wlc-start-btn" id="wlc-start-btn"
+            ${firstUnsolved ? `onclick="showChallenge(${firstUnsolved.id})"` : ''}>
+            ${solvedN === 0 ? 'Start Hacking →' : solvedN === totalN ? '🏁 All Solved!' : 'Continue Hacking →'}
+          </button>
+
+          <p class="wlc-hint">or pick a challenge from the sidebar</p>
+        </div>`;
+
+      // Animate progress bar after short delay
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          const fill = document.getElementById("wlc-fill");
+          if (fill) fill.style.width = pct + "%";
+        }, 200);
+      });
+
+      // Typewriter effect
+      const lines = [
+        "welcome to NovaHack CTF arena",
+        "10 challenges await. Are you ready?",
+      ];
+      let lineIdx = 0, charIdx = 0;
+      const typed = document.getElementById("wlc-typed");
+
+      function type() {
+        if (!typed) return;
+        const line = lines[lineIdx];
+        if (charIdx < line.length) {
+          typed.textContent += line[charIdx++];
+          setTimeout(type, 45);
+        } else if (lineIdx < lines.length - 1) {
+          setTimeout(() => {
+            typed.textContent = "";
+            charIdx = 0;
+            lineIdx++;
+            type();
+          }, 1400);
+        }
+      }
+      setTimeout(type, 400);
     }
 
     // ── Challenge view ──────────────────────────────────────────────
