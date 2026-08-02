@@ -334,19 +334,20 @@
       </div>
     </div>
 
-    <!-- Main table -->
-    <table class="lb-table">
+    <!-- Main table: Codeforces-style with per-challenge columns -->
+    <div style="overflow-x:auto;">
+    <table class="lb-table" id="lb-table-el">
       <thead>
-        <tr>
+        <tr id="lb-thead">
           <th class="rank-cell">Rank</th>
           <th>Participant</th>
-          <th>Challenges Solved</th>
-          <th style="text-align:right;">Points</th>
+          <!-- challenge columns injected by JS -->
+          <th style="text-align:right;">Score</th>
         </tr>
       </thead>
       <tbody id="lb-body">
         <tr>
-          <td colspan="4">
+          <td colspan="13">
             <div class="lb-placeholder">
               <div class="spinner"></div>
               <p>Loading leaderboard…</p>
@@ -355,6 +356,7 @@
         </tr>
       </tbody>
     </table>
+    </div>
 
     <!-- My submissions panel (if signed in) -->
     <div class="my-panel" id="my-panel" style="display:none;">
@@ -399,8 +401,8 @@
     await loadShared('../');
     const ext = document.getElementById('ctf-nav-extension');
     if (ext) {
+      // No extra CTF Arena button here — header.html already has one
       ext.innerHTML = `
-        <a href="challenges" class="nav-cta" style="margin-right:10px;text-decoration:none;">← CTF Arena</a>
         <div id="user-nav-badge" style="display:none;"></div>
         <button class="btn-google" id="nav-signin-btn">
           <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" />
@@ -480,10 +482,41 @@
       podium.innerHTML = html;
     }
 
+    // Challenges list (same order as challenges.js, hardcoded for leaderboard)
+    const CH_LIST = [
+      { id:1,  title:"Read the Room",      pts:50  },
+      { id:2,  title:"Say Cheese!",         pts:100 },
+      { id:3,  title:"Track Changes",       pts:100 },
+      { id:4,  title:"Between the Lines",   pts:150 },
+      { id:5,  title:"Can You Hear It?",    pts:150 },
+      { id:6,  title:"Off By One",          pts:100 },
+      { id:7,  title:"Brute Force 101",     pts:100 },
+      { id:8,  title:"Layers",              pts:150 },
+      { id:9,  title:"Inspect Me",          pts:150 },
+      { id:10, title:"The Long Way Round",  pts:200 },
+    ];
+
     function renderTable(entries) {
+      const colSpan = 2 + CH_LIST.length + 1;
+
+      // Build header row with challenge abbreviations
+      const thead = document.getElementById('lb-thead');
+      if (thead) {
+        thead.innerHTML = `
+          <th class="rank-cell">Rank</th>
+          <th>Participant</th>
+          ${CH_LIST.map(c =>
+            `<th class="ch-col" title="${escapeHtml(c.title)}">
+              <span class="ch-col-label">#${c.id}</span>
+              <span class="ch-col-pts">${c.pts}</span>
+            </th>`).join('')}
+          <th class="score-col">Score</th>
+        `;
+      }
+
       if (!entries.length) {
-        document.getElementById("lb-body").innerHTML = `
-          <tr><td colspan="4">
+        document.getElementById('lb-body').innerHTML = `
+          <tr><td colspan="${colSpan}">
             <div class="lb-placeholder">
               <span class="icon">🚀</span>
               <p>No submissions yet! Be the first to solve a challenge.</p>
@@ -492,42 +525,46 @@
         return;
       }
 
-      const rows = entries.map((e, i) => {
-        const rank = i + 1;
+      const rows = entries.map((e, idx) => {
+        const rank = idx + 1;
         const rankDisplay = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : `#${rank}`;
         const avatar = e.photo
           ? `<img src="${e.photo}" alt="${escapeHtml(e.name)}" />`
           : `<div class="avatar-placeholder">👤</div>`;
         const isSelf = currentUser && e.uid === currentUser.uid;
-        const selfMark = isSelf ? ' <span style="font-size:10px;color:var(--green);font-weight:700;">← you</span>' : '';
 
-        // Solve chips
-        const chips = (e.solves || [])
-          .sort((a,b) => new Date(a.solvedAt) - new Date(b.solvedAt))
-          .map(s => `<span class="solve-chip correct">${escapeHtml(s.title)} <strong>(${s.points}pts)</strong> <span style="color:var(--muted)">${s.attempts} attempt${s.attempts !== 1?'s':''} · ${fmtDate(s.solvedAt)}</span></span>`)
-          .join("");
+        // Build per-challenge cells
+        const chCells = CH_LIST.map(c => {
+          const solve = (e.solves || []).find(s => s.id === c.id);
+          if (solve) {
+            const earnedPts = solve.points;
+            const t = fmtTime(solve.solvedAt);
+            return `<td class="ch-cell solved-ch">
+              <span class="ch-pts-earned">+${earnedPts}</span>
+              <span class="ch-time">${t}</span>
+            </td>`;
+          }
+          return `<td class="ch-cell"><span class="ch-dash">&mdash;</span></td>`;
+        }).join('');
 
         return `
-          <tr${isSelf ? ' style="background:#f0fff4;"' : ''}>
+          <tr class="lb-row${isSelf ? ' self-row' : ''}">
             <td class="rank-cell"><span class="rank-medal">${rankDisplay}</span></td>
             <td>
               <div class="user-cell">
                 ${avatar}
                 <div>
-                  <div class="user-name">${escapeHtml(e.name)}${selfMark}</div>
-                  <div class="user-email">${escapeHtml(e.email || "")}</div>
+                  <div class="user-name">${escapeHtml(e.name)}${isSelf ? ' <span class="self-badge">← you</span>' : ''}</div>
+                  <div class="user-email">${escapeHtml(e.email || '')}</div>
                 </div>
               </div>
-              ${chips ? `<div class="solves-detail">${chips}</div>` : ""}
             </td>
-            <td class="solved-cell">
-              <span class="solved-badge">${e.solvedCount || 0} / 10</span>
-            </td>
-            <td class="pts-cell">${e.totalPoints}</td>
+            ${chCells}
+            <td class="pts-cell">${e.totalPoints}<span style="font-size:10px;font-weight:400;color:var(--muted);margin-left:2px;">pts</span></td>
           </tr>`;
-      }).join("");
+      }).join('');
 
-      document.getElementById("lb-body").innerHTML = rows;
+      document.getElementById('lb-body').innerHTML = rows;
     }
 
     function renderMyPanel(user, entry) {

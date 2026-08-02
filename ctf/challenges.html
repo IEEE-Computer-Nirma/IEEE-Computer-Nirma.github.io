@@ -1386,15 +1386,13 @@
       }
 
       if (!isSolved) {
-        const submitBtn = document.getElementById(`submit-btn-${ch.id}`);
-        const flagInput = document.getElementById(`flag-input-${ch.id}`);
-        if (submitBtn) submitBtn.onclick = () => submitFlag(ch.id);
-        if (flagInput) flagInput.addEventListener("keydown", e => {
+        document.getElementById("submit-btn").onclick = () => submitFlag(ch.id);
+        document.getElementById("flag-input").addEventListener("keydown", e => {
           if (e.key === "Enter") submitFlag(ch.id);
         });
       }
 
-      // Hint toggles
+      // Hint toggles — onclick only, initial state already in HTML via buildHintHtml
       [0, 1].forEach(i => {
         const card = document.getElementById(`hint-${ch.id}-${i}`);
         if (!card) return;
@@ -1402,8 +1400,8 @@
           e.stopPropagation();
           revealHint(ch.id, i);
         };
-        if (usedHints.includes(i)) card.classList.add("revealed");
       });
+
 
       // Handle URL hash
       window.location.hash = `ch-${ch.id}`;
