@@ -1363,14 +1363,12 @@
       <p style="font-size:12px;color:var(--muted);margin-bottom:1rem">
         Format: <code>flag{...}</code>
       </p>
-      ${isSolved
-          ? `<div class="solved-badge">✓ Correctly solved — ${ch.points} pts</div>`
-          : `<div class="flag-row">
-             <input class="flag-input" id="flag-input" type="text" placeholder="flag{...}" autocomplete="off" spellcheck="false" />
-             <button class="submit-btn" id="submit-btn">Submit</button>
-           </div>
-           <div class="flag-result" id="flag-result"></div>`
-        }
+      ${isSolved ? `<div class="solved-badge" style="margin-bottom:0.8rem;display:inline-block;">✓ Correctly solved — ${ch.points} pts</div>` : ""}
+      <div class="flag-row">
+        <input class="flag-input" id="flag-input" type="text" placeholder="flag{...}" autocomplete="off" spellcheck="false" />
+        <button class="submit-btn" id="submit-btn">${isSolved ? 'Verify Again' : 'Submit'}</button>
+      </div>
+      <div class="flag-result" id="flag-result"></div>
     </div>
   `;
 
@@ -1385,12 +1383,10 @@
         };
       }
 
-      if (!isSolved) {
-        document.getElementById("submit-btn").onclick = () => submitFlag(ch.id);
-        document.getElementById("flag-input").addEventListener("keydown", e => {
-          if (e.key === "Enter") submitFlag(ch.id);
-        });
-      }
+      document.getElementById("submit-btn").onclick = () => submitFlag(ch.id);
+      document.getElementById("flag-input").addEventListener("keydown", e => {
+        if (e.key === "Enter") submitFlag(ch.id);
+      });
 
       // Hint toggles — onclick only, initial state already in HTML via buildHintHtml
       [0, 1].forEach(i => {

@@ -13,7 +13,7 @@ const CHALLENGES = [
     type: "manual",
     description: "Every hacker starts by inspecting hidden areas of the web page structure. A flag has been embedded inside an HTML comment on this site.",
     hint1: "Open the Developer Tools panel in your browser.",
-    hint2: "Use DOM search to find comment tokens (`<!--`).",
+    hint2: "Use DOM search to find comment tokens (`&lt;!--`).",
     note: "Inspect page source elements using browser DevTools.",
     guide: `### 🛠️ Objective
 Find the hidden comment in the DOM tree using browser DevTools.
