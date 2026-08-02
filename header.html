@@ -1,16 +1,21 @@
-<!-- header.html -->
-<nav class="nav">
-  <a class="nav-brand" href="index.html">
-    <img src="assets/IEEE_CS_Nirma_logo.svg" alt="IEEE CS" />
-    NovaHack
+<!-- header.html — Shared site header for all pages -->
+<!-- Usage: <div id="site-header"></div> then loadHeader(root) in shared.js -->
+<nav class="nav" id="main-nav">
+  <a class="nav-brand" href="{ROOT}index.html">
+    <img src="{ROOT}assets/IEEE_CS_Nirma_logo.svg" alt="IEEE CS Nirma" />
+    IEEE CS Nirma
   </a>
   <ul class="nav-links">
-    <li><a href="novahack-2026.html">NovaHack 2026</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="ctf/index.html">CTF Arena</a></li>
-    <li><a href="ctf/leaderboard.html">🏆 Leaderboard</a></li>
-    <li><a href="gallery.html">Gallery</a></li>
-    <li><a href="team.html">Team</a></li>
-    <li><a href="contact.html">Contact</a></li>
+    <li><a href="{ROOT}index.html#events">Events</a></li>
+    <li><a href="{ROOT}novahack-2026.html" target="_blank">NovaHack 2026</a></li>
+    <li><a href="{ROOT}index.html#gallery">Gallery</a></li>
+    <li><a href="{ROOT}index.html#team">Team</a></li>
+    <li><a href="{ROOT}index.html#about">About</a></li>
+    <li><a href="{ROOT}index.html#contact">Contact</a></li>
+    <li><a href="{ROOT}ctf/leaderboard.html">🏆 Leaderboard</a></li>
   </ul>
+  <div class="nav-right-actions">
+    <a class="nav-cta" href="{ROOT}ctf/">CTF Arena →</a>
+    <div id="ctf-nav-extension" style="display:none; align-items:center; gap:15px; margin-left: 15px;"></div>
+  </div>
 </nav>

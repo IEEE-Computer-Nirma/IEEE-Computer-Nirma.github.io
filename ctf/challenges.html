@@ -8,6 +8,7 @@
   <meta name="description" content="NovaHack CTF Challenge Board — IEEE CS Nirma University" />
   <link rel="icon" href="../assets/ieee_cs_emblem.ico" />
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../shared.css" />
   <style>
     :root {
       --bg: #ffffff;
@@ -45,51 +46,7 @@
       flex-direction: column;
     }
 
-    /* ── NAV ───────────────────────────── */
-    .nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 1.5rem;
-      height: 52px;
-      border-bottom: 1px solid var(--border);
-      position: sticky;
-      top: 0;
-      background: var(--bg);
-      z-index: 200;
-      flex-shrink: 0;
-    }
-
-    .nav-brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 12px;
-      font-weight: 700;
-      text-decoration: none;
-      color: var(--fg);
-      letter-spacing: .05em;
-    }
-
-    .nav-brand img {
-      height: 26px;
-    }
-
-    .nav-right {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-      font-size: 12px;
-    }
-
-    .nav-right a {
-      color: var(--muted);
-      text-decoration: none;
-    }
-
-    .nav-right a:hover {
-      color: var(--fg);
-    }
+    /* ── NAV — see shared.css ───────────────── */
 
     .score-display {
       font-weight: 700;
@@ -640,18 +597,8 @@
     </div>
   </div>
 
-  <nav class="nav">
-    <a class="nav-brand" href="../index.html">
-      <img src="../assets/IEEE_CS_Nirma_logo.svg" alt="IEEE CS" />
-      NovaHack
-    </a>
-    <div class="nav-right">
-      <span class="score-display">Score: <span id="total-score">0</span> pts</span>
-      <span id="solved-count" style="color:var(--muted)">0/10 solved</span>
-      <a href="leaderboard.html" style="padding:5px 14px;border:1px solid var(--border);font-size:11px;letter-spacing:.06em;font-weight:700;text-transform:uppercase;">🏆 Leaderboard</a>
-      <a href="../index.html">← Home</a>
-    </div>
-  </nav>
+  <!-- ── HEADER (shared) ────────────────── -->
+  <div id="site-header"></div>
 
   <div class="layout">
 
@@ -672,7 +619,20 @@
   </div>
 
   <!-- ── FIREBASE SDK ──────────────────── -->
+  <script src="../shared.js"></script>
   <script type="module">
+    await loadShared('../');
+    const ext = document.getElementById('ctf-nav-extension');
+    if (ext) {
+      ext.innerHTML = `
+        <span class="score-display">Score: <span id="total-score">0</span> pts</span>
+        <span id="solved-count" style="color:var(--muted); font-size:12px;">0/10 solved</span>
+      `;
+      ext.style.display = 'flex';
+      const navCta = document.querySelector('.nav-cta');
+      if (navCta) navCta.style.display = 'none';
+    }
+
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
     import { getFirestore, collection, doc, setDoc, serverTimestamp, getDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
@@ -718,15 +678,17 @@
       if (user) {
         closeModal();
         // Show user name in nav
-        const navRight = document.querySelector(".nav-right");
-        let badge = document.getElementById("user-badge");
-        if (!badge) {
-          badge = document.createElement("span");
-          badge.id = "user-badge";
-          badge.style.cssText = "font-size:11px;color:var(--muted);display:flex;align-items:center;gap:6px;";
-          navRight.insertBefore(badge, navRight.firstChild);
+        const extNav = document.getElementById('ctf-nav-extension');
+        if (extNav) {
+          let badge = document.getElementById("user-badge");
+          if (!badge) {
+            badge = document.createElement("span");
+            badge.id = "user-badge";
+            badge.style.cssText = "font-size:11px;color:var(--muted);display:flex;align-items:center;gap:6px;";
+            extNav.insertBefore(badge, extNav.firstChild);
+          }
+          badge.innerHTML = `<img src="${user.photoURL}" style="width:20px;height:20px;border-radius:50%;" /> ${user.displayName.split(' ')[0]}`;
         }
-        badge.innerHTML = `<img src="${user.photoURL}" style="width:20px;height:20px;border-radius:50%;" /> ${user.displayName.split(' ')[0]}`;
       }
     });
 
@@ -929,7 +891,7 @@
 
     ${ch.guide ? `
     <div class="block">
-      <p class="block-title">Solution Guide & Recommended Tools</p>
+      <p class="block-title">Objective & Overview</p>
       <div style="font-size:13px;line-height:1.75;color:var(--fg);background:var(--card-bg);border:1px solid var(--border);padding:1.2rem;">
         ${renderMarkdown(ch.guide)}
       </div>

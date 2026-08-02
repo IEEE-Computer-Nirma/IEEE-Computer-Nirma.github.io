@@ -1,47 +1,47 @@
 [
-  {
-    "category": "Faculty Advisor",
-    "members": [
-      {
-        "username": "advisor-jane",
-        "name": "Jane Doe",
-        "role": "Faculty Advisor",
-        "image": "https://example.com/avatars/jane.jpg",
-        "github": "https://github.com/janedoe",
-        "linkedin": "https://linkedin.com/in/janedoe",
-        "website": "https://janedoe.example.com",
-        "bio": "Guides the team with academic insight and mentorship."
-      }
-    ]
-  },
-  {
-    "category": "Chair – VC – GS",
-    "members": [
-      {
-        "username": "chair-raj",
-        "name": "Raj Patel",
-        "role": "Chair – VC – GS",
-        "image": "https://example.com/avatars/raj.jpg",
-        "github": "https://github.com/rajpatel",
-        "linkedin": "https://linkedin.com/in/rajpatel",
-        "website": "https://rajpatel.example.com",
-        "bio": "Leads strategy, governance and community outreach."
-      }
-    ]
-  },
-  {
-    "category": "Technical Team",
-    "members": [
-      {
-        "username": "deep-joshi",
-        "name": "Deep Joshi",
-        "role": "Technical Head",
-        "image": "https://avatars.githubusercontent.com/u/173024745?v=4",
-        "github": "https://github.com/DeepLumiere",
-        "linkedin": "https://www.linkedin.com/in/deep-lumiere/",
-        "website": "https://deeplumiere.github.io/DeepLumiere",
-        "bio": "I dive into what I’m not good at—because the easy stuff doesn’t ignite my spirit."
-      }
-    ]
-  }
+    {
+        "category": "Faculty Advisor",
+        "members": [
+            {
+                "username": "deep-joshi",
+                "name": "Deep Joshi",
+                "role": "Technical Head",
+                "image": "https://avatars.githubusercontent.com/u/173024745?v=4",
+                "github": "https://github.com/DeepLumiere",
+                "linkedin": "https://www.linkedin.com/in/deep-lumiere/",
+                "website": "https://deeplumiere.github.io/DeepLumiere",
+                "bio": "I dive into what I’m not good at—because the easy stuff doesn’t ignite my spirit."
+            }
+        ]
+    },
+    {
+        "category": "Student Executive Committee (SEC)",
+        "members": [
+            {
+                "username": "deep-joshi",
+                "name": "Deep Joshi",
+                "role": "Technical Head",
+                "image": "https://avatars.githubusercontent.com/u/173024745?v=4",
+                "github": "https://github.com/DeepLumiere",
+                "linkedin": "https://www.linkedin.com/in/deep-lumiere/",
+                "website": "https://deeplumiere.github.io/DeepLumiere",
+                "bio": "I dive into what I’m not good at—because the easy stuff doesn’t ignite my spirit."
+            }
+        ]
+    },
+    {
+        "category": "Technical Team",
+        "members": [
+            {
+                "username": "deep-joshi",
+                "name": "Deep Joshi",
+                "role": "Technical Head",
+                "image": "https://avatars.githubusercontent.com/u/173024745?v=4",
+                "github": "https://github.com/DeepLumiere",
+                "linkedin": "https://www.linkedin.com/in/deep-lumiere/",
+                "website": "https://deeplumiere.github.io/DeepLumiere",
+                "bio": "I dive into what I’m not good at—because the easy stuff doesn’t ignite my spirit."
+            }
+        ]
+    }
 ]

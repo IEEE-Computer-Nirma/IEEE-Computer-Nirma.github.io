@@ -15,6 +15,7 @@
   <link rel="icon" href="assets/ieee_cs_emblem.ico" />
   <link rel="canonical" href="https://deeplumiere.github.io/IEEEComputerSociety/" />
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="shared.css" />
   <style>
     :root {
       --bg: #ffffff;
@@ -50,71 +51,7 @@
       line-height: 1.65;
     }
 
-    /* ── NAV ────────────────────────────── */
-    .nav {
-      position: sticky;
-      top: 0;
-      z-index: 200;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 2rem;
-      height: 56px;
-      background: rgba(255, 255, 255, 0.97);
-      border-bottom: 1px solid var(--border);
-      backdrop-filter: blur(6px);
-    }
-
-    .nav-brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 12px;
-      font-weight: 700;
-      text-decoration: none;
-      color: var(--fg);
-      letter-spacing: .06em;
-      text-transform: uppercase;
-    }
-
-    .nav-brand img {
-      height: 28px;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-      list-style: none;
-    }
-
-    .nav-links a {
-      font-size: 12px;
-      color: var(--muted);
-      text-decoration: none;
-      transition: color .2s;
-    }
-
-    .nav-links a:hover {
-      color: var(--fg);
-    }
-
-    .nav-cta {
-      font-family: var(--mono);
-      font-size: 12px;
-      font-weight: 700;
-      padding: 8px 18px;
-      border: 2px solid var(--fg);
-      background: var(--fg);
-      color: var(--bg);
-      text-decoration: none;
-      transition: all .2s;
-      letter-spacing: .04em;
-    }
-
-    .nav-cta:hover {
-      background: transparent;
-      color: var(--fg);
-    }
+    /* ── NAV — see shared.css ─────────────── */
 
     /* ── SECTION ────────────────────────── */
     .section {
@@ -687,6 +624,56 @@
       display: block;
     }
 
+    /* ── MODAL ──────────────────────────── */
+    .modal-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(4px);
+      z-index: 999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .modal-content {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      max-width: 600px;
+      width: 100%;
+      padding: 2.5rem 2rem;
+      position: relative;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+      animation: modalFadeIn 0.2s ease-out;
+    }
+
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1.2rem;
+      background: none;
+      border: none;
+      font-size: 1.8rem;
+      color: var(--muted);
+      cursor: pointer;
+      line-height: 1;
+      transition: color .2s;
+    }
+
+    .modal-close:hover {
+      color: var(--fg);
+    }
+
     /* ── CONTACT ────────────────────────── */
     .contact-grid {
       display: grid;
@@ -745,31 +732,7 @@
       margin-top: 1rem;
     }
 
-    /* ── FOOTER ─────────────────────────── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 12px;
-      color: var(--muted);
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    footer a {
-      color: var(--muted);
-      text-decoration: none;
-    }
-
-    footer a:hover {
-      color: var(--fg);
-    }
-
-    .footer-full {
-      border-top: 1px solid var(--border);
-    }
+    /* ── FOOTER — see shared.css ──────────── */
 
     /* ── RESPONSIVE ─────────────────────── */
     @media (max-width: 768px) {
@@ -783,14 +746,7 @@
         grid-template-columns: 1fr;
       }
 
-      .nav-links {
-        display: none;
-      }
-
-      .nav-cta {
-        padding: 6px 12px;
-        font-size: 11px;
-      }
+      /* nav responsive — see shared.css */
 
       .carousel-slide img {
         height: 240px;
@@ -805,21 +761,8 @@
 
 <body>
 
-  <!-- ── NAV ──────────────────────────── -->
-  <nav class="nav">
-    <a class="nav-brand" href="#">
-      <img src="assets/IEEE_CS_Nirma_logo.svg" alt="IEEE CS Nirma" />
-
-    </a>
-    <ul class="nav-links">
-      <li><a href="#events">Events</a></li>
-      <li><a href="#gallery">Gallery</a></li>
-      <li><a href="#team">Team</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-    <a class="nav-cta" href="ctf/">CTF Arena →</a>
-  </nav>
+  <!-- ── HEADER (shared) ────────────────── -->
+  <div id="site-header"></div>
 
   <!-- ── HERO ─────────────────────────── -->
   <section class="hero">
@@ -832,7 +775,7 @@
         students to go beyond the curriculum.
       </p>
       <div class="hero-actions">
-        <a class="btn" href="#novahack-2026">NovaHack 2026 Details →</a>
+        <a class="btn" href="novahack-2026.html" target="_blank" rel="noopener">NovaHack 2026 Details ↗</a>
         <a class="btn btn-outline" href="ctf/">CTF Arena</a>
       </div>
     </div>
@@ -985,16 +928,8 @@
     </div>
   </section>
 
-  <div class="footer-full">
-    <footer>
-      <span>© 2026 IEEE CS Nirma — Student Branch Chapter</span>
-      <span>
-        <a href="mailto:deep@computer.org">deep@computer.org</a> ·
-        <a href="ctf/">CTF Arena</a> ·
-        <a href="sitemap.xml">Sitemap</a>
-      </span>
-    </footer>
-  </div>
+  <!-- ── FOOTER (shared) ────────────────── -->
+  <div id="site-footer"></div>
 
   <audio id="bg-audio" src="assets/System%20Breach.mp3" loop></audio>
 
@@ -1042,10 +977,62 @@
       <p class="event-date">${esc(ev.date)} · ${esc(ev.duration)}</p>
       <p class="event-desc">${esc(ev.description)}</p>
       <div class="event-tags">${(ev.tags || []).map(t => `<span class="tag">${esc(t)}</span>`).join('')}</div>
-      ${ev.makePage ? `<a class="event-link" href="#${esc(ev.id)}">View Event Details →</a>` : (ev.link ? `<a class="event-link" href="${esc(ev.link)}" target="_blank">${esc(ev.linkLabel || 'Learn More →')}</a>` : '')}
+      ${ev.makePage ? `<a class="event-link" href="${esc(ev.link)}" target="_blank" rel="noopener">View Event Details ↗</a>` : (ev.link ? `<a class="event-link" href="${esc(ev.link)}" target="_blank" rel="noopener">${esc(ev.linkLabel || 'Learn More →')}</a>` : '')}
     </div>
   `).join('');
     }
+
+    // ── Dynamic Event Details Modal ──────────────────────────────
+    window.openEventModal = function(eventId) {
+      const events = window._eventsData || [];
+      const ev = events.find(e => e.id === eventId);
+      if (!ev) return;
+
+      let modal = document.getElementById('event-modal');
+      if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'event-modal';
+        modal.className = 'modal-backdrop';
+        document.body.appendChild(modal);
+      }
+
+      modal.innerHTML = `
+        <div class="modal-content">
+          <button class="modal-close" onclick="closeEventModal()">&times;</button>
+          <span class="event-type-badge ${ev.type ? ev.type.toLowerCase() : ''}">${esc(ev.type || 'Event')}</span>
+          <h2 style="font-size: 1.8rem; font-weight: 700; margin: 0.8rem 0 0.4rem; letter-spacing: -.02em;">${esc(ev.title)}</h2>
+          <p style="font-size: 11px; color: var(--muted); margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: .08em;">
+            ${esc(ev.date)} · ${esc(ev.duration || '')} · ${esc(ev.level || '')}
+          </p>
+          
+          <div style="font-size: 13px; color: var(--fg); line-height: 1.8; margin-bottom: 1.5rem;">
+            <p>${esc(ev.description)}</p>
+          </div>
+
+          ${ev.tags ? `
+            <div class="event-tags" style="margin-bottom: 1.8rem;">
+              ${ev.tags.map(t => `<span class="tag">${esc(t)}</span>`).join('')}
+            </div>
+          ` : ''}
+
+          <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+            ${ev.registrationUrl ? `<a href="${esc(ev.registrationUrl)}" target="_blank" rel="noopener" class="btn" style="background:var(--orange);border-color:var(--orange);color:#000;">Register on KonfHub ↗</a>` : ''}
+            ${ev.link ? `<a href="${esc(ev.link)}" target="_blank" rel="noopener" class="btn">Open Event Page ↗</a>` : ''}
+            <a href="ctf/" class="btn btn-outline">CTF Arena</a>
+            <button class="btn btn-outline" onclick="closeEventModal()">Close</button>
+          </div>
+        </div>
+      `;
+
+      modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    };
+
+    window.closeEventModal = function() {
+      const modal = document.getElementById('event-modal');
+      if (modal) modal.style.display = 'none';
+      document.body.style.overflow = '';
+    };
 
     // ── Render Team (supports categories array, subdivisions object, or flat array) ────
     function memberCard(m) {
@@ -1196,12 +1183,15 @@
         loadJSON('data/gallery.json'),
       ]);
 
+      window._eventsData = events;
       renderStats(events, team);
       renderEvents(events);
       renderTeam(team);
       buildCarousel(gallery);
     })();
   </script>
+  <script src="shared.js"></script>
+  <script>loadShared('');</script>
 </body>
 
 </html>

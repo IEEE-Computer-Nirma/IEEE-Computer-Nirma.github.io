@@ -8,6 +8,7 @@
   <meta name="description" content="NovaHack CTF" />
   <link rel="icon" href="../assets/ieee_cs_emblem.ico" />
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../shared.css" />
   <style>
     :root {
       --bg: #ffffff;
@@ -43,51 +44,7 @@
       line-height: 1.65;
     }
 
-    /* ── NAV ─────────────────────────────────────── */
-    .nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 2rem;
-      height: 56px;
-      background: var(--bg);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .nav-brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 13px;
-      font-weight: 700;
-      text-decoration: none;
-      color: var(--fg);
-      letter-spacing: .04em;
-    }
-
-    .nav-brand img {
-      height: 28px;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-      list-style: none;
-    }
-
-    .nav-links a {
-      font-size: 13px;
-      color: var(--muted);
-      text-decoration: none;
-      transition: color .2s;
-    }
-
-    .nav-links a:hover {
-      color: var(--fg);
-    }
+    /* ── NAV — see shared.css ───────────────── */
 
     /* ── HERO ────────────────────────────────────── */
     .hero {
@@ -481,19 +438,8 @@
 
   <!-- flag{n0_s3cr3ts_1n_html} -->
 
-  <nav class="nav">
-    <a class="nav-brand" href="../index.html">
-      <img src="../assets/IEEE_CS_Nirma_logo.svg" alt="IEEE CS" />
-      NovaHack
-    </a>
-    <ul class="nav-links">
-      <li><a href="../novahack-2026.html">NovaHack 2026</a></li>
-      <li><a href="#challenges">Challenges</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="leaderboard.html">🏆 Leaderboard</a></li>
-      <li><a href="challenges.html" id="enter-link">Enter →</a></li>
-    </ul>
-  </nav>
+  <!-- ── HEADER (shared) ────────────────── -->
+  <div id="site-header"></div>
 
   <!-- ── HERO ────────────────────────────── -->
   <section class="hero">
@@ -589,14 +535,11 @@
 
   <hr class="divider" />
 
-  <footer>
-    <span>NovaHack - CTF</span>
-    <span>
-      <a href="https://github.com/DeepLumiere" target="_blank">GitHub</a> ·
-      <a href="mailto:ieeecs@nirma.ac.in">Contact</a>
-    </span>
-  </footer>
+  <!-- ── FOOTER (shared) ────────────────── -->
+  <div id="site-footer"></div>
 
+  <script src="../shared.js"></script>
+  <script>loadShared('../');</script>
   <script src="challenges.js"></script>
   <audio id="bg-audio" src="../assets/System%20Breach.mp3" loop autoplay></audio>
   <script>

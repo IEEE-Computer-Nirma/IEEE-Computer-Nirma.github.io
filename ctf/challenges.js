@@ -8,19 +8,17 @@ const CHALLENGES = [
     category: "Warmup",
     difficulty: "Easy",
     points: 50,
-    time: "~3 min",
+    time: "~5 min",
     icon: "◎",
     type: "manual",
-    description: "Every hacker starts by reading source code. A flag is hidden inside the HTML of this website. Use your browser's developer tools to inspect the elements or view page source.",
-    hint1: "Press F12 (or Right Click → Inspect). Switch to the 'Elements' or 'Sources' tab.",
-    hint2: "Search for 'flag{' using Ctrl+F inside DevTools. HTML comments look like <!-- text -->.",
-    note: "No programming required! Use browser DevTools (F12) to inspect the page HTML source.",
-    guide: `### 🛠️ Recommended Method
-1. Right-click anywhere on this page and select **Inspect** (or press \`F12\`).
-2. Go to the **Elements** tab.
-3. Press \`Ctrl + F\` (or \`Cmd + F\` on Mac) and type \`flag{\`.
-4. Look for an HTML comment: \`<!-- flag{...} -->\`
-`
+    description: "Every hacker starts by inspecting hidden areas of the web page structure. A flag has been embedded inside an HTML comment on this site.",
+    hint1: "Open the Developer Tools panel in your browser.",
+    hint2: "Use DOM search to find comment tokens (`<!--`).",
+    note: "Inspect page source elements using browser DevTools.",
+    guide: `### 🛠️ Objective
+Find the hidden comment in the DOM tree using browser DevTools.
+`,
+    flagHash: "907140bb17c162384a78ffb0094289e4ebbb12d5c9a8f110ab0761cea0b34e32"
   },
   {
     id: 2,
@@ -32,34 +30,14 @@ const CHALLENGES = [
     icon: "⊡",
     attachment: "photo.jpg",
     type: "tool",
-    description: "Photos taken on smartphones secretly store camera settings, timestamps, GPS coordinates, and comments in EXIF metadata. Download photo.jpg and inspect its EXIF data.",
-    hint1: "You don't need code! Upload photo.jpg to an online viewer like https://exif.tools or use ExifTool.",
-    hint2: "In Python, you can use: from PIL import Image; img = Image.open('photo.jpg'); exif = img._getexif(). Look for the UserComment or Comment tag.",
-    note: "Download photo.jpg below and inspect its hidden metadata.",
-    guide: `### 🛠️ Recommended Solution Methods
-
-#### Option A: Online EXIF Viewer (Easiest)
-1. Download **photo.jpg** below.
-2. Visit an online viewer such as [exif.tools](https://exif.tools).
-3. Upload **photo.jpg** and check the **UserComment** or **Comments** field.
-
-#### Option B: Command Line (ExifTool)
-\`\`\`bash
-exiftool photo.jpg
-\`\`\`
-
-#### Option C: Python Script
-\`\`\`python
-from PIL import Image
-from PIL.ExifTags import TAGS
-
-img = Image.open("photo.jpg")
-exif = img._getexif()
-for tag_id, value in (exif.items() if exif else []):
-    print(f"{TAGS.get(tag_id, tag_id)}: {value}")
-\`\`\`
+    description: "Digital images carry rich embedded metadata structures (EXIF). Analyze the uploaded photo.jpg to find the hidden comment tag.",
+    hint1: "Analyze the image structure for hidden EXIF metadata attributes.",
+    hint2: "Look specifically for text attributes embedded inside user comment tags.",
+    note: "Download photo.jpg below and inspect its embedded metadata.",
+    guide: `### 🛠️ Objective
+Extract embedded EXIF data from **photo.jpg** using command-line metadata tools or Python libraries.
 `,
-    flagHash: "8df36887fc19527592c3935ace7ae327d045bf7937b4bb5701b51f5cf028c953"
+    flagHash: "eca7534215b8c4fe69006730539dede1539ff8abc2fb57f25fa9f60a4c3a1edd"
   },
   {
     id: 3,
@@ -71,30 +49,14 @@ for tag_id, value in (exif.items() if exif else []):
     icon: "⊞",
     attachment: "document.docx",
     type: "tool",
-    description: "Microsoft Word (.docx) files are actually ZIP archives containing XML files. Metadata like author names, comments, and revision notes live inside docProps/core.xml.",
-    hint1: "Rename document.docx to document.zip and extract it. Open docProps/core.xml in a text editor.",
-    hint2: "Alternatively, open File Properties in Word / LibreOffice or use Python's python-docx library.",
-    note: "Download document.docx below. Try unzipping it or inspecting document properties.",
-    guide: `### 🛠️ Recommended Solution Methods
-
-#### Option A: Unzip as an Archive (No tools needed)
-1. Download **document.docx**.
-2. Rename the file extension from \`document.docx\` to \`document.zip\`.
-3. Extract the ZIP archive.
-4. Navigate to \`docProps/core.xml\` and open it in Notepad or VS Code.
-5. Search for \`flag{\`.
-
-#### Option B: Python (python-docx)
-\`\`\`python
-from docx import Document
-
-doc = Document("document.docx")
-props = doc.core_properties
-print("Author:", props.author)
-print("Comments:", props.comments)
-\`\`\`
+    description: "Modern Office documents (.docx) use OpenXML compressed zip formats. Inspect document properties and XML sub-files for hidden metadata.",
+    hint1: "Modern docx files are compressed OpenXML archives.",
+    hint2: "Inspect internal property files such as `docProps/core.xml`.",
+    note: "Download document.docx below and inspect its inner XML metadata.",
+    guide: `### 🛠️ Objective
+Decompress the document archive or read Core Properties to retrieve the flag.
 `,
-    flagHash: "b231bbb4d65d9b027d7cb90267219155db2305ec93f311b63b1f257eb9107d46"
+    flagHash: "129a2232332ab881f8c3e70fcd4f4b7315099201ba80155b15d94eb5d5de376e"
   },
   {
     id: 4,
@@ -106,42 +68,23 @@ print("Comments:", props.comments)
     icon: "◫",
     attachment: "stego.png",
     type: "code",
-    description: "LSB (Least Significant Bit) steganography hides secret data inside image pixels. By extracting the last bit of each pixel's Red channel, you can reconstruct ASCII characters.",
-    hint1: "Extract (r & 1) for each pixel. Collect 8 bits at a time to form one ASCII character using chr(int(byte_str, 2)).",
-    hint2: "You can also upload stego.png to online steganography tools like StegOnline.",
-    note: "Download stego.png below. Write or run a python script to extract the LSB stream.",
+    description: "Data has been hidden inside the Least Significant Bits (LSB) of the image's pixel channels. Extract the LSB stream to reveal the hidden text.",
+    hint1: "Target the least significant bit of color channel values.",
+    hint2: "Group extracted bits into 8-bit bytes to form ASCII text.",
+    note: "Download stego.png below and extract the LSB bit stream.",
     script: `#!/usr/bin/env python3
-# Challenge 4 — Between the Lines
-# Steganography LSB Extractor
-# Requires: pip install Pillow
-
+# Challenge 4 — LSB Bit Extractor Template
 from PIL import Image
 
-# 1. Load image pixels
 img = Image.open("stego.png").convert("RGB")
 pixels = img.load()
 w, h = img.size
 
+# Extract bit sequence from pixel channels
 bits = []
-# 2. Extract LSB of Red channel from first 256 pixels
-for y in range(h):
-    for x in range(w):
-        r, g, b = pixels[x, y]
-        bits.append(str(r & 1))
-        if len(bits) >= 256:
-            break
-    if len(bits) >= 256:
-        break
-
-# 3. Convert 8-bit chunks into ASCII characters
-message = ""
-for i in range(0, len(bits) - 7, 8):
-    byte = "".join(bits[i:i+8])
-    message += chr(int(byte, 2))
-
-print("Extracted Message:", message)
+# TODO: Iterate pixels and collect channel LSBs
 `,
-    flagHash: "da81b2b65a2c481876be3c7a2280b809952bda9b8d04d20de01092cdc470b678"
+    flagHash: "1c1159e45a68e4525ba19f852e12fffc3dcb0452f59824712e52d90ef92bfe8c"
   },
   {
     id: 5,
@@ -153,37 +96,18 @@ print("Extracted Message:", message)
     icon: "◎",
     attachment: "audio.wav",
     type: "code",
-    description: "Audio steganography hides data inside sample values of uncompressed WAV audio. Extract the flag from audio.wav by checking the least significant bit (LSB) of audio frame samples.",
-    hint1: "Read 16-bit audio samples. Extract sample_value & 1. Reconstruct bytes from 8-bit groups.",
-    hint2: "Use Python's scipy.io.wavfile or standard wave library to read samples.",
-    note: "Download audio.wav below. Use scipy or Python wave module to read frame LSBs.",
+    description: "Audio signals can carry hidden data within uncompressed frame sample LSBs. Parse the WAV audio samples to extract the bitstream.",
+    hint1: "Audio frame sample integers store hidden data in their low-order bits.",
+    hint2: "Process audio sample arrays sequentially to accumulate bit groups.",
+    note: "Download audio.wav below and parse sample frame LSBs.",
     script: `#!/usr/bin/env python3
-# Challenge 5 — Can You Hear It?
-# Audio Steganography LSB Extractor
-# Requires: pip install scipy
-
+# Challenge 5 — Audio LSB Parse Template
 from scipy.io import wavfile
 
-# 1. Read WAV file samples
 rate, data = wavfile.read("audio.wav")
-print(f"Sample Rate: {rate} Hz, Total Samples: {len(data)}")
-
-bits = []
-# 2. Extract LSB from audio samples
-for sample in data:
-    bits.append(str(sample & 1))
-    if len(bits) >= 256:
-        break
-
-# 3. Reconstruct text
-message = ""
-for i in range(0, len(bits) - 7, 8):
-    byte = "".join(bits[i:i+8])
-    message += chr(int(byte, 2))
-
-print("Extracted Audio Message:", message)
+# TODO: Extract least significant bits from audio samples
 `,
-    flagHash: "3f6ded2a880863aaf731fcabf7198676af0ee1a335d447a492257218950d4949"
+    flagHash: "506acf8399d28d34acf8ddc52089224781943febb498e171ecc66333190598e9"
   },
   {
     id: 6,
@@ -194,26 +118,22 @@ print("Extracted Audio Message:", message)
     time: "~10 min",
     icon: "⊟",
     type: "code",
-    description: "The Python script below has a common programming bug: an off-by-one error in a loop condition. Find the bug, fix the loop condition, and run the corrected code to reveal the full flag.",
-    hint1: "Look closely at: if i < len(secret) - 1. Does len(secret) - 1 include the last character?",
-    hint2: "Change - 1 to nothing (or use i < len(secret)) so the last character isn't dropped.",
-    note: "Find and fix the loop boundary bug in the snippet below.",
+    description: "The script below fails to print the full flag due to a logic flaw in loop boundary evaluation. Analyze and correct the condition.",
+    hint1: "Examine the index termination boundary of the string iteration.",
+    hint2: "Ensure all character indices up to length - 1 are included.",
+    note: "Find and fix the loop condition in the Python code below.",
     script: `#!/usr/bin/env python3
-# Challenge 6 — Off By One
-# BUGGY CODE: Fix the loop boundary to output the full flag!
+# Challenge 6 — Debug & Fix
 
 secret = "flag{0ff_by_0n3_1s_cl4ss1c}"
 
 result = ""
 for i in range(len(secret)):
-    # 🐛 BUG IS HERE: This condition stops 1 character too early!
+    # Logic issue: Check boundary iteration limits
     if i < len(secret) - 1:
         result += secret[i]
 
-print("Result (Truncated):", result)
-
-# TODO: Fix the condition above so it prints the full string:
-# flag{0ff_by_0n3_1s_cl4ss1c}
+print("Output:", result)
 `,
     flagHash: "a60a42d4a4daa96b7323de2e1eb3be62e7fed11ea0ee83bbd06eb79e1775678c"
   },
@@ -226,29 +146,22 @@ print("Result (Truncated):", result)
     time: "~10 min",
     icon: "⊕",
     type: "code",
-    description: "A digital vault is secured by a 4-digit PIN (0000–9999). Complete the missing for-loop in the script below to test all 10,000 combinations against check_pin().",
-    hint1: "Write a for loop from 0 to 9999 using range(10000).",
-    hint2: "Inside the loop, call check_pin(pin). When check_pin returns True, break the loop.",
-    note: "Complete the TODO section in the Python code below to crack the PIN.",
+    description: "An automated verification function tests candidate numerical credentials. Construct an automated loop to test all key search space combinations.",
+    hint1: "Iterate across the entire numerical key space.",
+    hint2: "Evaluate each candidate with check_pin until verification succeeds.",
+    note: "Complete the brute force loop in Python.",
     script: `#!/usr/bin/env python3
-# Challenge 7 — Brute Force 101
-# Complete the brute-force loop below!
+# Challenge 7 — Key Space Search
 
 def check_pin(pin):
-    """Simulates vault pin verification."""
     correct_pin = 7734
     if pin == correct_pin:
-        print(f"[+] SUCCESS! PIN Cracked: {pin:04d}")
+        print(f"[+] PIN Cracked: {pin:04d}")
         print("[+] FLAG: flag{brut3_f0rc3_w0rks_1n_s3c0nds}")
         return True
     return False
 
-print("Starting Brute Force Attack...")
-
-# 🧩 TODO: Write a loop trying PINs from 0 to 9999
-# for pin in range(10000):
-#     if check_pin(pin):
-#         break
+# TODO: Automate candidate testing loop
 `,
     flagHash: "b841c2e2bc832490ca5cd4dfb5131cb2e0923eb4830d9c559dad01e475554a38"
   },
@@ -261,33 +174,14 @@ print("Starting Brute Force Attack...")
     time: "~12 min",
     icon: "⊜",
     type: "tool",
-    description: "The secret string was encoded in 3 sequential steps: Hex → ROT13 → Base64. Work in reverse to decode: Base64 Decode → ROT13 → Hex Decode.",
-    hint1: "Use CyberChef (https://gchq.github.io/CyberChef). Add operations: From Hex, ROT13, From Base64.",
-    hint2: "Hex String to decode: 666c61677b6c3433723372335f6d346b33737d",
-    note: "Solve using online tools like CyberChef or Python built-in modules.",
-    guide: `### 🛠️ Recommended Solution Methods
-
-#### Option A: CyberChef (Easiest)
-1. Open [CyberChef](https://gchq.github.io/CyberChef).
-2. Input the encoded string: \`666c61677b6c3433723372335f6d346b33737d\`
-3. Add **From Hex** recipe.
-4. Add **ROT13** recipe (amount 13).
-5. Add **From Base64** recipe.
-
-#### Option B: Python
-\`\`\`python
-import base64, codecs
-
-encoded = "666c61677b6c3433723372335f6d346b33737d"
-
-step1 = bytes.fromhex(encoded).decode()
-step2 = codecs.encode(step1, "rot_13")
-step3 = base64.b64decode(step2).decode()
-
-print("Flag:", step3)
-\`\`\`
+    description: "The cipher payload underwent multiple sequential encoding layers (Hex, ROT13, Base64). Perform reverse transformations to restore the plaintext.",
+    hint1: "Identify the sequence of transformations applied to the payload.",
+    hint2: "Reverse each encoding layer step-by-step.",
+    note: "Decode payload: 4d7a6b754d3367664155786d7079393170514f684b326a307247416c73443d3d",
+    guide: `### 🛠️ Payload
+\`4d7a6b754d3367664155786d7079393170514f684b326a307247416c73443d3d\`
 `,
-    flagHash: "f9f9eb70d03484ca2604b1049c5312b534f6b8bc7a4bfab96b5f87e7dc151261"
+    flagHash: "9d1588ea1c5bd301eb142c9e50151a6b4c6d619c9954a7025c84c04f19a7a6b3"
   },
   {
     id: 9,
@@ -298,19 +192,14 @@ print("Flag:", step3)
     time: "~12 min",
     icon: "◈",
     type: "manual",
-    description: "Web applications frequently leak confidential data in background API requests. Use browser DevTools to inspect Network traffic and discover the hidden JSON response.",
-    hint1: "Press F12 → Open the 'Network' tab → Refresh the page (Ctrl+R).",
-    hint2: "Filter by 'Fetch/XHR'. Look for an API call to secret.json or /api/ctf/.",
-    note: "No programming required! Inspect the Network tab in DevTools (F12).",
-    guide: `### 🛠️ Recommended Solution Method
-1. Press \`F12\` to open DevTools.
-2. Click on the **Network** tab.
-3. Select **Fetch/XHR** filter.
-4. Reload the page (\`Ctrl + R\` / \`Cmd + R\`).
-5. Click on \`secret.json\` in the network request list.
-6. View the **Response** tab to find the JSON key \`"flag"\`.
+    description: "Client-side web applications transmit async requests to background endpoints. Monitor network traffic logs to inspect returned payload responses.",
+    hint1: "Monitor active HTTP/XHR network requests.",
+    hint2: "Inspect payload responses for hidden endpoint JSON fields.",
+    note: "Inspect Network traffic in DevTools (F12).",
+    guide: `### 🛠️ Objective
+Capture network requests and examine JSON data endpoints.
 `,
-    flagHash: "8b3b6933ea9d16d0e8cd63c8375f586b1f1367a4468e5837feb3406761b1df37"
+    flagHash: "4574e0f06dd4110a456a1a4a3db205314893e18eeda0af09c8f23455e61616f5"
   },
   {
     id: 10,
@@ -322,45 +211,18 @@ print("Flag:", step3)
     icon: "◉",
     attachment: "final_image.png",
     type: "code",
-    description: "The final challenge combines LSB Steganography and Base64 Encoding. Extract the LSB bitstream from final_image.png to obtain a Base64 string, then decode it to get the flag.",
-    hint1: "Step 1: Extract LSB from red channel (like Challenge 4). You will get a string ending in '='.",
-    hint2: "Step 2: Use base64.b64decode(extracted_str).decode() to decode the flag.",
-    note: "Download final_image.png below. Combine Stego LSB extraction + Base64 decoding.",
+    description: "The capstone challenge embeds an encoded payload inside image channel LSBs. Extract the hidden bitstream, convert to string data, and decode the payload.",
+    hint1: "Extract LSB bitstream from image channels.",
+    hint2: "Decode the extracted string payload to reveal the flag.",
+    note: "Download final_image.png below.",
     script: `#!/usr/bin/env python3
-# Challenge 10 — Capstone: Stego + Base64
-# Requires: pip install Pillow
-
+# Challenge 10 — Capstone Extraction
 from PIL import Image
-import base64
 
-# 1. Extract LSB stream from final_image.png
 img = Image.open("final_image.png").convert("RGB")
-pixels = img.load()
-w, h = img.size
-
-bits = []
-for y in range(h):
-    for x in range(w):
-        r, g, b = pixels[x, y]
-        bits.append(str(r & 1))
-        if len(bits) >= 512:
-            break
-    if len(bits) >= 512:
-        break
-
-# 2. Convert bits to ASCII (Base64 string)
-b64_str = ""
-for i in range(0, len(bits) - 7, 8):
-    byte = "".join(bits[i:i+8])
-    b64_str += chr(int(byte, 2))
-
-print("Extracted Base64 String:", b64_str)
-
-# 3. Decode Base64
-# flag = base64.b64decode(b64_str.strip()).decode()
-# print("FLAG:", flag)
+# TODO: Extract LSB stream and decode string payload
 `,
-    flagHash: "237b30e7680055f075decdebfae5f0a37609df973cefd5b2b37e4582f56052af"
+    flagHash: "ced94b68bc82e3bf0c43cd04f9c001afb23777f8b073221df9af7747ce57c81c"
   }
 ];
 

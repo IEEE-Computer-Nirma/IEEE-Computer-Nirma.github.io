@@ -8,6 +8,7 @@
   <meta name="description" content="Live leaderboard for the NovaHack CTF — track top solvers, points, and challenge completions." />
   <link rel="icon" href="../assets/ieee_cs_emblem.ico" />
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../shared.css" />
   <style>
     :root {
       --bg: #ffffff;
@@ -40,64 +41,7 @@
       min-height: 100vh;
     }
 
-    /* ── NAV ─────────────────────────────── */
-    .nav {
-      position: sticky;
-      top: 0;
-      z-index: 200;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 2rem;
-      height: 56px;
-      background: rgba(255,255,255,0.97);
-      border-bottom: 1px solid var(--border);
-      backdrop-filter: blur(6px);
-    }
-
-    .nav-brand {
-      display: flex; align-items: center; gap: 10px;
-      font-size: 12px; font-weight: 700;
-      text-decoration: none; color: var(--fg);
-      letter-spacing: .06em; text-transform: uppercase;
-    }
-    .nav-brand img { height: 28px; }
-
-    .nav-right {
-      display: flex; align-items: center; gap: 20px;
-    }
-    .nav-right a {
-      font-size: 12px; color: var(--muted);
-      text-decoration: none; transition: color .2s;
-    }
-    .nav-right a:hover { color: var(--fg); }
-
-    #user-nav-badge {
-      display: flex; align-items: center; gap: 6px;
-      font-size: 11px; color: var(--muted);
-    }
-    #user-nav-badge img {
-      width: 22px; height: 22px; border-radius: 50%;
-    }
-
-    .btn-google {
-      display: flex; align-items: center; gap: 8px;
-      border: 1px solid var(--border);
-      background: transparent;
-      padding: 6px 14px;
-      font-family: var(--mono);
-      font-size: 11px; font-weight: 700;
-      cursor: pointer; transition: background .15s;
-    }
-    .btn-google img { width: 16px; height: 16px; }
-    .btn-google:hover { background: var(--hover-bg); }
-
-    .btn-signout {
-      background: none; border: none;
-      font-family: var(--mono); font-size: 11px;
-      color: var(--muted); cursor: pointer;
-      text-decoration: underline;
-    }
+    /* ── NAV — see shared.css ───────────────── */
 
     /* ── PAGE ───────────────────────────── */
     .page {
@@ -336,22 +280,8 @@
 
 <body>
 
-  <!-- ── NAV ────────────────────────────── -->
-  <nav class="nav">
-    <a class="nav-brand" href="../index.html">
-      <img src="../assets/IEEE_CS_Nirma_logo.svg" alt="IEEE CS Nirma" />
-      NovaHack CTF
-    </a>
-    <div class="nav-right">
-      <a href="index.html">← CTF Arena</a>
-      <a href="challenges.html">Challenges</a>
-      <div id="user-nav-badge" style="display:none;"></div>
-      <button class="btn-google" id="nav-signin-btn">
-        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" />
-        Sign in
-      </button>
-    </div>
-  </nav>
+  <!-- ── HEADER (shared) ────────────────── -->
+  <div id="site-header"></div>
 
   <!-- ── PAGE ───────────────────────────── -->
   <main class="page">
@@ -435,7 +365,10 @@
     </div>
   </main>
 
-  <!-- ── FIREBASE ───────────────────────── -->
+  <!-- ── FOOTER (shared) ────────────────── -->
+  <div id="site-footer"></div>
+
+  <script src="../shared.js"></script>
   <script type="module">
     import { initializeApp }                      from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged }
@@ -460,6 +393,23 @@
 
     let allEntries = [];
     let currentUser = null;
+
+    // Load shared nav and inject buttons before Firebase logic runs
+    await loadShared('../');
+    const ext = document.getElementById('ctf-nav-extension');
+    if (ext) {
+      ext.innerHTML = `
+        <div id="user-nav-badge" style="display:none;"></div>
+        <button class="btn-google" id="nav-signin-btn">
+          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" />
+          Sign in
+        </button>
+      `;
+      ext.style.display = 'flex';
+      // Hide the default nav CTA since we have sign in
+      const navCta = document.querySelector('.nav-cta');
+      if (navCta) navCta.style.display = 'none';
+    }
 
     // ── Load leaderboard ──────────────────────────────────────────
     async function loadLeaderboard() {

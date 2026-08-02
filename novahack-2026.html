@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NovaHack 2026 — IEEE CS Nirma</title>
+  <meta name="description"
+    content="NovaHack 2026 — Flagship 24-Hour Hackathon & CTF Arena by IEEE Computer Society Nirma University." />
+  <meta name="keywords"
+    content="NovaHack 2026, IEEE CS Nirma, Hackathon, CTF, LegalTech, AI Meeting Intelligence, Nirma University" />
+  <meta property="og:title" content="NovaHack 2026 — IEEE CS Nirma" />
+  <meta property="og:description"
+    content="Flagship 24-Hour Hackathon & CTF Arena. Register now on KonfHub!" />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="assets/ieee_cs_emblem.ico" />
+  <link rel="canonical" href="https://deeplumiere.github.io/IEEEComputerSociety/novahack-2026.html" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="shared.css" />
+  <style>
+    :root {
+      --bg: #ffffff;
+      --fg: #111111;
+      --muted: #666666;
+      --border: #dddddd;
+      --card-bg: #fafafa;
+      --hover-bg: #f4f4f4;
+      --green: #1a7f37;
+      --orange: #FFA300;
+      --blue: #00629B;
+      --red: #cf222e;
+      --mono: 'Space Mono', 'Courier New', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--mono);
+      background: linear-gradient(rgba(255, 255, 255, 0.94), rgba(255, 255, 255, 0.94)),
+        url('assets/IEEE_Background.png') no-repeat center center fixed;
+      background-size: cover;
+      color: var(--fg);
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    /* ── NAV — see shared.css ───────────────── */
+
+    /* ── CONTAINER & SECTION ────────────────────────── */
+    .section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1rem;
+    }
+
+    .section-label {
+      font-size: 11px;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .section-sub {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    /* ── HERO ────────────────────────────── */
+    .hero {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 5rem 2rem 3rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 4.5vw, 3.5rem);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -.02em;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 span {
+      color: var(--orange);
+    }
+
+    .hero-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.9;
+      margin-bottom: 2rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 24px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+      text-decoration: none;
+      border: 2px solid var(--fg);
+      background: var(--fg);
+      color: var(--bg);
+      transition: all .2s;
+      letter-spacing: .04em;
+    }
+
+    .btn:hover {
+      background: transparent;
+      color: var(--fg);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--fg);
+    }
+
+    .btn-outline:hover {
+      background: var(--fg);
+      color: var(--bg);
+    }
+
+    .btn-orange {
+      background: var(--orange);
+      border-color: var(--orange);
+      color: #000;
+    }
+
+    .btn-orange:hover {
+      background: transparent;
+      color: var(--orange);
+    }
+
+    /* ── QUICK META CARD ────────────────────────────── */
+    .meta-box {
+      border: 1px solid var(--border);
+      padding: 2rem;
+      background: var(--card-bg);
+    }
+
+    .meta-title {
+      font-size: 11px;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.2rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+      font-weight: 700;
+    }
+
+    .meta-item {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 1rem;
+      font-size: 13px;
+    }
+
+    .meta-label {
+      font-size: 10px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      width: 100px;
+      flex-shrink: 0;
+      padding-top: 2px;
+    }
+
+    .meta-value {
+      color: var(--fg);
+      font-weight: 700;
+    }
+
+    /* ── PROBLEM STATEMENTS ──────────────── */
+    .ps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(440px, 1fr));
+      gap: 2rem;
+    }
+
+    @media (max-width: 600px) {
+      .ps-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .ps-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 2.2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: border-color .2s, box-shadow .2s;
+    }
+
+    .ps-card:hover {
+      border-color: var(--fg);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    }
+
+    .ps-badge-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 1rem;
+    }
+
+    .ps-track {
+      font-size: 10px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border: 1px solid var(--fg);
+      font-weight: 700;
+    }
+
+    .ps-num {
+      font-size: 10px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .ps-card h3 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      line-height: 1.25;
+      margin-bottom: 1rem;
+      letter-spacing: -.01em;
+    }
+
+    .ps-section-title {
+      font-size: 10px;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 1.2rem 0 0.5rem;
+      font-weight: 700;
+    }
+
+    .ps-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.85;
+      margin-bottom: 0.8rem;
+    }
+
+    .ps-challenges-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .ps-challenges-list li {
+      font-size: 12px;
+      color: var(--fg);
+      padding-left: 18px;
+      position: relative;
+      line-height: 1.6;
+    }
+
+    .ps-challenges-list li::before {
+      content: "▸";
+      position: absolute;
+      left: 0;
+      color: var(--orange);
+    }
+
+    /* ── CTF HIGHLIGHT BOX ────────────────────────── */
+    .ctf-box {
+      background: var(--card-bg);
+      border: 2px dashed var(--orange);
+      padding: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .ctf-box h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    /* ── FOOTER — see shared.css ───────────── */
+
+    @media (max-width: 768px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 4rem 1.5rem 2rem;
+        gap: 2rem;
+      }
+      /* nav responsive — see shared.css */
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ── HEADER (shared) ────────────────── -->
+  <div id="site-header"></div>
+
+  <!-- ── HERO ─────────────────────────── -->
+  <section class="hero" id="overview">
+    <div>
+      <p class="hero-eyebrow">IEEE Computer Society · Nirma University</p>
+      <h1>NovaHack<br /><span>2026</span></h1>
+      <p class="hero-desc">
+        The premier 24-hour hackathon and CTF challenge hosted by IEEE Computer Society Student Branch Chapter at Nirma University, Ahmedabad. Join developers, security enthusiasts, and AI builders on <strong>August 22–23, 2026</strong>.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-orange" href="https://konfhub.com/novahack-2026" target="_blank" rel="noopener">Register on KonfHub ↗</a>
+        <a class="btn btn-outline" href="ctf/">CTF Arena →</a>
+      </div>
+    </div>
+
+    <div class="meta-box">
+      <p class="meta-title">Event Information</p>
+      <div class="meta-item">
+        <span class="meta-label">Date</span>
+        <span class="meta-value">August 22–23, 2026</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Duration</span>
+        <span class="meta-value">24 Hours</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Format</span>
+        <span class="meta-value">Hackathon & CTF Arena</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Registration</span>
+        <span class="meta-value"><a href="https://konfhub.com/novahack-2026" target="_blank" rel="noopener" style="color:var(--orange);text-decoration:underline;">konfhub.com/novahack-2026 ↗</a></span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Eligibility</span>
+        <span class="meta-value">Open to All College Students</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PROBLEM STATEMENTS ──────────────── -->
+  <section class="section" id="problems">
+    <div class="section-header">
+      <span class="section-label">Hackathon Tracks</span>
+      <span class="section-sub">Official Problem Statements</span>
+    </div>
+
+    <div class="ps-grid">
+      <!-- Problem 1 -->
+      <div class="ps-card">
+        <div>
+          <div class="ps-badge-row">
+            <span class="ps-track">Track 1 · LegalTech & Agentic AI</span>
+            <span class="ps-num">PS-01</span>
+          </div>
+          <h3>Autonomous Contract Review Agent</h3>
+          
+          <p class="ps-section-title">Problem Statement</p>
+          <p class="ps-desc">
+            Legal teams and businesses spend significant time manually reviewing contracts to identify potential risks, ensure compliance with internal policies, and verify the presence of critical clauses. This process is highly dependent on expert review, making it slow, expensive, and difficult to scale.
+          </p>
+          <p class="ps-desc">
+            Contracts such as NDAs, employment agreements, and vendor agreements often contain ambiguous language, unfavorable obligations, missing terms, or deviations from company standards that may expose organizations to legal and financial risks.
+          </p>
+          <p class="ps-desc">
+            Organizations need a more efficient way to analyze large volumes of contracts, identify potential issues early, maintain consistency with internal policies, and assist legal professionals in making faster, more informed decisions.
+          </p>
+
+          <p class="ps-section-title">Key Challenges</p>
+          <ul class="ps-challenges-list">
+            <li>Manual contract review requires significant lawyer hours.</li>
+            <li>Important clauses or risks may be overlooked due to human limitations.</li>
+            <li>Comparing contracts against company policies is repetitive and time-consuming.</li>
+            <li>Historical contract knowledge is difficult to reuse effectively.</li>
+            <li>Organizations lack a centralized understanding of recurring legal risks and patterns.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Problem 2 -->
+      <div class="ps-card">
+        <div>
+          <div class="ps-badge-row">
+            <span class="ps-track">Track 2 · Enterprise & Workflow AI</span>
+            <span class="ps-num">PS-02</span>
+          </div>
+          <h3>AI Meeting Intelligence Platform</h3>
+          
+          <p class="ps-section-title">Problem Statement</p>
+          <p class="ps-desc">
+            Organizations conduct thousands of meetings where important decisions, action items, and business context are discussed, but much of this information is lost after the meeting ends. Existing meeting tools primarily focus on transcription and summarization rather than converting conversations into actionable workflows.
+          </p>
+          <p class="ps-desc">
+            Teams often struggle to track decisions, assign ownership, update project management systems, communicate outcomes to absent stakeholders, and identify blockers emerging from discussions.
+          </p>
+          <p class="ps-desc">
+            Organizations need a system that can understand meeting context, extract meaningful business outcomes, and seamlessly connect conversations with existing workflows to improve execution and accountability.
+          </p>
+
+          <p class="ps-section-title">Key Challenges</p>
+          <ul class="ps-challenges-list">
+            <li>Meeting information is scattered across recordings, notes, and chat platforms.</li>
+            <li>Decisions and action items are often forgotten or poorly tracked.</li>
+            <li>Project management tools require manual updates after discussions.</li>
+            <li>Teams lack visibility into blockers and dependencies.</li>
+            <li>Stakeholders who miss meetings struggle to stay aligned.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTF ARENA HIGHLIGHT ──────────────── -->
+  <section class="section" id="ctf" style="padding-top:0;">
+    <div class="section-header">
+      <span class="section-label">Cybersecurity Track</span>
+      <span class="section-sub">NovaHack CTF Arena</span>
+    </div>
+
+    <div class="ctf-box">
+      <div>
+        <span class="ps-track" style="border-color: var(--orange); color: var(--orange);">Fun & Practice CTF Arena</span>
+      </div>
+      <h3>NovaHack CTF — Continuous Cybersecurity Arena</h3>
+      <p style="font-size: 13px; color: var(--muted); line-height: 1.85;">
+        The CTF launched as part of NovaHack 2026 is designed as a fun, competitive event that will <strong>continue to exist and remain active indefinitely</strong> after the hackathon for ongoing practice, learning, and skill development.
+      </p>
+      <p style="font-size: 13px; color: var(--muted); line-height: 1.85;">
+        Explore 10 hands-on challenges across Cryptography, Web Exploitation, Forensics, Reverse Engineering, OSINT, and Steganography.
+      </p>
+      <div style="margin-top: 0.5rem;">
+        <a class="btn" href="ctf/">Launch CTF Arena →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── REGISTRATION ──────────────── -->
+  <section class="section" id="register" style="padding-top:0;">
+    <div class="section-header">
+      <span class="section-label">Registration</span>
+      <span class="section-sub">Join NovaHack 2026</span>
+    </div>
+
+    <div style="background: var(--card-bg); border: 1px solid var(--border); padding: 3rem; text-align: center;">
+      <h2 style="font-size: 1.8rem; font-weight: 700; margin-bottom: 1rem;">Ready to Build & Hack?</h2>
+      <p style="font-size: 13px; color: var(--muted); max-width: 600px; margin: 0 auto 2rem; line-height: 1.8;">
+        Registration for NovaHack 2026 is officially hosted on KonfHub. Click below to register your team, access event guidelines, and secure your slot.
+      </p>
+      <a class="btn btn-orange" href="https://konfhub.com/novahack-2026" target="_blank" rel="noopener" style="font-size: 14px; padding: 14px 32px;">Register on KonfHub (https://konfhub.com/novahack-2026) ↗</a>
+    </div>
+  </section>
+
+  <!-- ── FOOTER (shared) ────────────────── -->
+  <div id="site-footer"></div>
+
+  <script src="shared.js"></script>
+  <script>loadShared('');</script>
+</body>
+
+</html>

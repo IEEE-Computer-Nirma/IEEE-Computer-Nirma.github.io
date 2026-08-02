@@ -12,6 +12,7 @@
     "level": "Open to All Students",
     "description": "NovaHack 2026 is IEEE CS Nirma's flagship event on August 22–23, 2026. It features a 24-hour hackathon with two tracks in AI & LegalTech/Enterprise Intelligence, and the NovaHack CTF arena (which remains available in general for practice after the event).",
     "link": "novahack-2026.html",
+    "registrationUrl": "https://konfhub.com/novahack-2026",
     "makePage": true,
     "tags": ["Hackathon", "CTF", "AI", "Agentic AI", "LegalTech", "Cybersecurity"]
   },
