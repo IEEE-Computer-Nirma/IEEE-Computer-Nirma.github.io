@@ -568,12 +568,77 @@
         padding: 2rem 1.2rem;
       }
     }
+    /* ── SIGN-IN MODAL ────────────────── */
+    .modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.55);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: #fff;
+      border: 1px solid var(--border);
+      padding: 2.5rem;
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+      font-family: var(--mono);
+    }
+    .modal h2 { font-size:1.2rem; margin-bottom: 0.8rem; }
+    .modal p  { font-size:12px; color:var(--muted); line-height:1.7; margin-bottom:1.5rem; }
+    .google-btn {
+      display: flex; align-items: center; justify-content: center; gap:10px;
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 10px 20px;
+      width: 100%;
+      cursor: pointer;
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 700;
+      transition: background .15s;
+    }
+    .google-btn:hover { background: var(--card-bg); }
+    .google-btn img { width: 18px; height: 18px; }
+    .modal-close {
+      margin-top:12px;
+      background:none;
+      border:none;
+      font-family:var(--mono);
+      font-size:11px;
+      color:var(--muted);
+      cursor:pointer;
+      text-decoration:underline;
+    }
+    #signin-status {
+      font-size:11px;
+      margin-top:12px;
+      color: var(--green);
+      min-height:16px;
+    }
   </style>
 </head>
 
 <body>
 
   <!-- flag{n0_s3cr3ts_1n_html} -->
+
+  <!-- ── SIGN-IN MODAL ─────────────────── -->
+  <div class="modal-overlay" id="signin-modal">
+    <div class="modal">
+      <h2>Sign in to Submit</h2>
+      <p>Sign in with your Google account to submit flags and appear on the leaderboard. Your progress is also saved locally.</p>
+      <button class="google-btn" id="google-signin-btn">
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" />
+        Continue with Google
+      </button>
+      <div id="signin-status"></div>
+      <button class="modal-close" id="modal-skip">Skip — just solve locally</button>
+    </div>
+  </div>
 
   <nav class="nav">
     <a class="nav-brand" href="../index.html">
@@ -583,6 +648,7 @@
     <div class="nav-right">
       <span class="score-display">Score: <span id="total-score">0</span> pts</span>
       <span id="solved-count" style="color:var(--muted)">0/10 solved</span>
+      <a href="leaderboard.html" style="padding:5px 14px;border:1px solid var(--border);font-size:11px;letter-spacing:.06em;font-weight:700;text-transform:uppercase;">🏆 Leaderboard</a>
       <a href="../index.html">← Home</a>
     </div>
   </nav>
@@ -605,8 +671,115 @@
 
   </div>
 
+  <!-- ── FIREBASE SDK ──────────────────── -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { getFirestore, collection, doc, setDoc, serverTimestamp, getDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAk_YmDpbaedj-McM2K7ALUqkJyIJBKcfM",
+      authDomain: "taskflow-e7f24.firebaseapp.com",
+      projectId: "taskflow-e7f24",
+      storageBucket: "taskflow-e7f24.firebasestorage.app",
+      messagingSenderId: "431732571375",
+      appId: "1:431732571375:web:12a9a4ce049fb7e779af1a",
+      measurementId: "G-5TTKVGX9DM"
+    };
+
+    const app   = initializeApp(firebaseConfig);
+    const auth  = getAuth(app);
+    const db    = getFirestore(app);
+    const provider = new GoogleAuthProvider();
+
+    let currentUser = null;
+
+    // ── Google Sign-in ──────────────────────────────────
+    document.getElementById("google-signin-btn").addEventListener("click", async () => {
+      const status = document.getElementById("signin-status");
+      status.textContent = "Signing in…";
+      try {
+        const result = await signInWithPopup(auth, provider);
+        status.textContent = `✓ Signed in as ${result.user.displayName}`;
+        setTimeout(() => closeModal(), 1000);
+      } catch (e) {
+        status.textContent = "Sign-in failed. Try again.";
+      }
+    });
+
+    document.getElementById("modal-skip").addEventListener("click", closeModal);
+
+    function closeModal() {
+      document.getElementById("signin-modal").classList.remove("open");
+    }
+
+    onAuthStateChanged(auth, user => {
+      currentUser = user;
+      if (user) {
+        closeModal();
+        // Show user name in nav
+        const navRight = document.querySelector(".nav-right");
+        let badge = document.getElementById("user-badge");
+        if (!badge) {
+          badge = document.createElement("span");
+          badge.id = "user-badge";
+          badge.style.cssText = "font-size:11px;color:var(--muted);display:flex;align-items:center;gap:6px;";
+          navRight.insertBefore(badge, navRight.firstChild);
+        }
+        badge.innerHTML = `<img src="${user.photoURL}" style="width:20px;height:20px;border-radius:50%;" /> ${user.displayName.split(' ')[0]}`;
+      }
+    });
+
+    // Show sign-in modal on flag submit if not signed in
+    window.__fbSignIn = () => {
+      if (!currentUser) {
+        document.getElementById("signin-modal").classList.add("open");
+        return false;
+      }
+      return true;
+    };
+
+    // Record a correct submission to Firestore
+    window.__recordSubmission = async (challengeId, challengeTitle, points, attempts) => {
+      if (!currentUser) return;
+      try {
+        const uid   = currentUser.uid;
+        const email = currentUser.email;
+        const name  = currentUser.displayName;
+        const photo = currentUser.photoURL;
+
+        // Leaderboard per-user doc
+        const userRef = doc(db, "ctf_leaderboard", uid);
+        const snap    = await getDoc(userRef);
+
+        if (!snap.exists()) {
+          await setDoc(userRef, {
+            uid, name, email, photo,
+            totalPoints: points,
+            solvedCount: 1,
+            solves: [{ id: challengeId, title: challengeTitle, points, attempts, solvedAt: new Date().toISOString() }],
+            lastUpdated: serverTimestamp()
+          });
+        } else {
+          const data = snap.data();
+          const alreadySolved = (data.solves || []).some(s => s.id === challengeId);
+          if (!alreadySolved) {
+            await updateDoc(userRef, {
+              totalPoints: increment(points),
+              solvedCount: increment(1),
+              solves: [...(data.solves || []), { id: challengeId, title: challengeTitle, points, attempts, solvedAt: new Date().toISOString() }],
+              lastUpdated: serverTimestamp()
+            });
+          }
+        }
+      } catch(e) {
+        console.warn("Leaderboard write failed:", e);
+      }
+    };
+  </script>
+
   <script src="challenges.js"></script>
-  <audio id="bg-audio" src="../assets/../assets/Neural%20Surge.mp3" loop autoplay></audio>
+  <audio id="bg-audio" src="../assets/Neural%20Surge.mp3" loop autoplay></audio>
   <script>
     // Attempt to auto-play audio (browsers may require interaction)
     document.body.addEventListener('click', () => {
@@ -744,7 +917,7 @@
     <div class="block">
       <p class="block-title">Description</p>
       <p>${ch.description}</p>
-      ${ch.attachment ? `<a href="${ch.attachment}" download class="download-btn">⇩ Download ${ch.attachment}</a>` : ""}
+      ${ch.attachment ? `<a href="../assets/challenges/${ch.attachment}" download class="download-btn">⇩ Download ${ch.attachment}</a>` : ""}
       ${ch.note ? `<p style="color:var(--muted);margin-top:12px;font-size:12px;border-left:3px solid var(--border);padding-left:12px">${ch.note}</p>` : ""}
     </div>
 
@@ -872,13 +1045,20 @@
 
       const hash = await sha256(val);
 
+      // Track attempts per challenge
+      STATE.attempts = STATE.attempts || {};
+      STATE.attempts[chId] = (STATE.attempts[chId] || 0) + 1;
+
       if (hash === ch.flagHash) {
+        const attempts = STATE.attempts[chId];
         STATE.solved[chId] = true;
         saveState();
         updateScoreBar();
         buildSidebar();
         result.className = "flag-result correct";
         result.textContent = `✓ Correct! +${ch.points} pts`;
+        // Record to Firebase leaderboard if signed in
+        if (window.__recordSubmission) window.__recordSubmission(ch.id, ch.title, ch.points, attempts);
         // Re-render after brief pause to show checkmark
         setTimeout(() => showChallenge(chId), 900);
       } else {

@@ -4,8 +4,8 @@ A Google-CTF-styled Capture The Flag platform for IEEE CS Nirma University's 8-h
 
 ## 📋 Files Overview
 
-- **`index.html`** — Main landing page with countdown timer and challenge placeholders (teaser phase before Aug 15)
-- **`challenges.html`** — Challenge viewer with Python scripts, hints, and flag submission (goes live Aug 15)
+- **`index.html`** — Main landing page featuring NovaHack 2026, Problem Statements, and Pre-Event CTF Arena
+- **`challenges.html`** — Challenge viewer with Python scripts, hints, and flag submission (live pre-event fun & practice arena)
 - **`challenges.js`** — Challenge data (10 challenges with scripts, hints, descriptions)
 - **`firestore-rules.js`** — Firestore security rules for team-based scoring
 - **`config.example.json`** — Firebase config template (rename to `config.json` and fill in your credentials)
@@ -98,7 +98,7 @@ In Firebase Console → Firestore Database → Create collections:
 Document: {teamId}
   - teamName: "Team Alpha"
   - members: ["alice", "bob"]
-  - joinedAt: 2026-08-15T10:00:00Z
+  - joinedAt: 2026-08-22T10:00:00Z
   - loginCode: "TEAM01"
 ```
 
@@ -118,7 +118,7 @@ Document: {challengeId}
   - challengeId: 1
   - submittedFlagHash: "SHA256_HASH_OF_SUBMITTED"
   - isCorrect: true
-  - timestamp: 2026-08-15T10:15:00Z
+  - timestamp: 2026-08-22T10:15:00Z
   - attemptNumber: 1
 ```
 
@@ -129,8 +129,8 @@ Document: {teamId}_challenge_{challengeId}
   - challengeId: 1
   - points: 50
   - attempts: 3
-  - firstViewedAt: 2026-08-15T10:05:00Z
-  - solvedAt: 2026-08-15T10:15:00Z
+  - firstViewedAt: 2026-08-22T10:05:00Z
+  - solvedAt: 2026-08-22T10:15:00Z
   - timeToSolveSeconds: 600
   - hintsUsed: 1
 ```
@@ -141,7 +141,7 @@ Document: {teamId}
   - teamName: "Team Alpha"
   - totalPoints: 200
   - totalSolves: 2
-  - lastSolveAt: 2026-08-15T10:15:00Z
+  - lastSolveAt: 2026-08-22T10:15:00Z
 ```
 
 ### 4. Firestore Security Rules
@@ -207,39 +207,28 @@ Without this, team login will silently fail.
 
 ## 🎯 Platform Lifecycle
 
-### Phase 1: Teaser (Now → Aug 15, 10:00 AM IST)
+### Phase 1: Pre-Event Fun (Now → Aug 22, 10:00 AM IST)
 
-- `index.html` serves the landing page
-- Countdown timer active
-- 10 locked challenge cards (placeholder state)
+- `index.html` serves the landing page & problem statements
+- Pre-event fun CTF arena active for practice
+- 10 challenge cards unlocked for warm-up
 - "Register Team" button points to registration form
-- No live leaderboard
+- Live leaderboard active
 
-**What to do:** Teams register, confirm attendance.
+**What to do:** Teams register, warm up with pre-event CTF challenges, review problem statements.
 
-### Phase 2: Live Event (Aug 15, 10:00 AM → Aug 16, 10:00 AM)
+### Phase 2: Live Hackathon Event (Aug 22, 10:00 AM → Aug 23, 10:00 AM)
 
-- `challenges.html` goes live with actual challenge data
-- Real-time flag submission & scoring via Firestore
+- NovaHack 2026 24-hour hackathon goes live with 2 Problem Statements:
+  1. Autonomous Contract Review Agent (AI & LegalTech)
+  2. AI Meeting Intelligence Platform (AI & Enterprise Intelligence)
+- Real-time flag submission & project evaluation
 - Leaderboard updates live as teams solve
-- All 10 challenges available simultaneously
 
-**How it works:**
-1. Team logs in with email-link auth (pre-generated codes)
-2. Selects a challenge → reads description & Python script
-3. Runs the script locally or on their machine
-4. Extracts flag → submits via form
-5. Firestore validates flag hash → updates leaderboard instantly
+### Phase 3: General Practice Arena (After Aug 23)
 
-**Scoring:**
-- Base points per challenge (50–200)
-- Hint penalty: -10% per hint used
-- Tiebreak: earliest `lastSolveAt`
-
-### Phase 3: Archive/Practice (After Aug 16)
-
-- `index.html` switches to "Challenge Over" message
-- `challenges.html` remains open as a practice platform
+- `index.html` displays event wrap-up and problem statement archives
+- `challenges.html` remains open continuously in general as a practice platform
 - All solutions are published (writeups/walkthroughs)
 - Teams can replay to learn
 
@@ -343,7 +332,7 @@ Map team code to Firestore doc during login.
 <repo>/
 ├── docs/
 │   ├── index.html          (landing/teaser page)
-│   ├── challenges.html     (challenge viewer — goes live Aug 15)
+│   ├── challenges.html     (challenge viewer — live pre-event fun & practice arena)
 │   ├── challenges.js       (challenge data)
 │   ├── firebase-init.js    (Firebase config)
 │   ├── firestore-rules.js  (security rules reference)
@@ -415,7 +404,7 @@ For a more robust system (future):
 
 ---
 
-## 📝 Post-Event (Aug 17+)
+## 📝 Post-Event (Aug 24+)
 
 1. **Publish solutions:**
    - Add writeups to `challenges.html` or a new `solutions.html`

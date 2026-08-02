@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Leaderboard — NovaHack CTF</title>
+  <meta name="description" content="Live leaderboard for the NovaHack CTF — track top solvers, points, and challenge completions." />
+  <link rel="icon" href="../assets/ieee_cs_emblem.ico" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #ffffff;
+      --fg: #111111;
+      --muted: #666666;
+      --border: #dddddd;
+      --card-bg: #fafafa;
+      --hover-bg: #f4f4f4;
+      --green: #1a7f37;
+      --orange: #FFA300;
+      --blue: #00629B;
+      --red: #cf222e;
+      --gold: #B8860B;
+      --silver: #888888;
+      --bronze: #8B4513;
+      --mono: 'Space Mono', 'Courier New', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--mono);
+      background: linear-gradient(rgba(255,255,255,0.94), rgba(255,255,255,0.94)),
+        url('../assets/IEEE_Background.png') no-repeat center center fixed;
+      background-size: cover;
+      color: var(--fg);
+      font-size: 13px;
+      line-height: 1.65;
+      min-height: 100vh;
+    }
+
+    /* ── NAV ─────────────────────────────── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      height: 56px;
+      background: rgba(255,255,255,0.97);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(6px);
+    }
+
+    .nav-brand {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 12px; font-weight: 700;
+      text-decoration: none; color: var(--fg);
+      letter-spacing: .06em; text-transform: uppercase;
+    }
+    .nav-brand img { height: 28px; }
+
+    .nav-right {
+      display: flex; align-items: center; gap: 20px;
+    }
+    .nav-right a {
+      font-size: 12px; color: var(--muted);
+      text-decoration: none; transition: color .2s;
+    }
+    .nav-right a:hover { color: var(--fg); }
+
+    #user-nav-badge {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 11px; color: var(--muted);
+    }
+    #user-nav-badge img {
+      width: 22px; height: 22px; border-radius: 50%;
+    }
+
+    .btn-google {
+      display: flex; align-items: center; gap: 8px;
+      border: 1px solid var(--border);
+      background: transparent;
+      padding: 6px 14px;
+      font-family: var(--mono);
+      font-size: 11px; font-weight: 700;
+      cursor: pointer; transition: background .15s;
+    }
+    .btn-google img { width: 16px; height: 16px; }
+    .btn-google:hover { background: var(--hover-bg); }
+
+    .btn-signout {
+      background: none; border: none;
+      font-family: var(--mono); font-size: 11px;
+      color: var(--muted); cursor: pointer;
+      text-decoration: underline;
+    }
+
+    /* ── PAGE ───────────────────────────── */
+    .page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 3rem 2rem 5rem;
+    }
+
+    .page-header {
+      display: flex; align-items: baseline; gap: 1rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1rem;
+      margin-bottom: 2.5rem;
+    }
+    .page-title {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: .15em; text-transform: uppercase;
+    }
+    .page-sub {
+      font-size: 11px; color: var(--muted);
+    }
+    #last-updated {
+      margin-left: auto;
+      font-size: 11px; color: var(--muted);
+    }
+
+    /* ── PODIUM ──────────────────────────── */
+    .podium {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-bottom: 2.5rem;
+    }
+
+    .podium-cell {
+      background: var(--bg);
+      padding: 2rem 1.5rem;
+      text-align: center;
+      position: relative;
+    }
+    .podium-cell.first  { border-top: 3px solid #FFD700; }
+    .podium-cell.second { border-top: 3px solid #C0C0C0; }
+    .podium-cell.third  { border-top: 3px solid #CD7F32; }
+
+    .podium-avatar {
+      width: 52px; height: 52px; border-radius: 50%;
+      margin: 0 auto 0.8rem;
+      display: block; object-fit: cover;
+    }
+    .podium-avatar-placeholder {
+      width: 52px; height: 52px; border-radius: 50%;
+      margin: 0 auto 0.8rem;
+      background: var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+    }
+
+    .podium-rank {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .podium-rank.first  { color: #B8860B; }
+    .podium-rank.second { color: var(--silver); }
+    .podium-rank.third  { color: var(--bronze); }
+
+    .podium-name {
+      font-size: 13px; font-weight: 700;
+      margin-bottom: 4px;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .podium-pts {
+      font-size: 20px; font-weight: 700;
+      letter-spacing: -.02em;
+    }
+    .podium-meta {
+      font-size: 10px; color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* ── LEADERBOARD TABLE ────────────────── */
+    .lb-table {
+      width: 100%; border-collapse: collapse;
+      border: 1px solid var(--border);
+    }
+
+    .lb-table thead tr {
+      background: var(--card-bg);
+      border-bottom: 2px solid var(--border);
+    }
+    .lb-table th {
+      padding: 12px 16px;
+      font-size: 10px; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      text-align: left; color: var(--muted);
+    }
+    .lb-table tbody tr {
+      border-bottom: 1px solid var(--border);
+      transition: background .15s;
+    }
+    .lb-table tbody tr:hover { background: var(--hover-bg); }
+    .lb-table tbody tr:last-child { border-bottom: none; }
+
+    .lb-table td {
+      padding: 14px 16px;
+      font-size: 12px; vertical-align: middle;
+    }
+
+    .rank-cell {
+      font-size: 14px; font-weight: 700; width: 50px;
+      text-align: center;
+    }
+    .rank-medal { font-size: 18px; }
+
+    .user-cell {
+      display: flex; align-items: center; gap: 12px;
+    }
+    .user-cell img {
+      width: 28px; height: 28px; border-radius: 50%;
+    }
+    .user-cell .avatar-placeholder {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px;
+    }
+    .user-name { font-weight: 700; }
+    .user-email { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+    .pts-cell {
+      font-size: 16px; font-weight: 700;
+      text-align: right;
+    }
+
+    .solved-cell { text-align: center; }
+    .solved-badge {
+      display: inline-block;
+      padding: 2px 10px;
+      border: 1px solid var(--border);
+      font-size: 10px; font-weight: 700;
+      letter-spacing: .06em;
+    }
+
+    .solves-detail {
+      display: flex; flex-wrap: wrap; gap: 4px;
+      margin-top: 6px;
+    }
+    .solve-chip {
+      font-size: 10px; padding: 2px 8px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    .solve-chip.correct { border-color: var(--green); color: var(--green); }
+
+    /* ── EMPTY / LOADING ─────────────────── */
+    .lb-placeholder {
+      padding: 4rem 2rem;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .lb-placeholder .icon { font-size: 2rem; margin-bottom: 1rem; display: block; }
+    .spinner {
+      display: inline-block;
+      width: 20px; height: 20px;
+      border: 2px solid var(--border);
+      border-top-color: var(--fg);
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+      margin-bottom: 1rem;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── STATS BAR ────────────────────────── */
+    .stats-strip {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-bottom: 2.5rem;
+    }
+    .stat-cell {
+      background: var(--bg);
+      padding: 1.4rem 1.2rem;
+      text-align: center;
+    }
+    .stat-num {
+      font-size: 1.6rem; font-weight: 700;
+      letter-spacing: -.02em;
+      display: block;
+    }
+    .stat-lbl {
+      font-size: 10px; color: var(--muted);
+      letter-spacing: .08em; text-transform: uppercase;
+      margin-top: 4px; display: block;
+    }
+
+    /* ── MY SUBMISSIONS ──────────────────── */
+    .my-panel {
+      margin-top: 3rem;
+    }
+    .my-panel-header {
+      display: flex; align-items: baseline; gap: 1rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .my-solves-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+    .my-solve-card {
+      background: var(--bg);
+      padding: 1.2rem;
+    }
+    .my-solve-title { font-size: 12px; font-weight: 700; margin-bottom: 6px; }
+    .my-solve-pts { font-size: 18px; font-weight: 700; }
+    .my-solve-meta { font-size: 10px; color: var(--muted); margin-top: 4px; }
+
+    /* ── RESPONSIVE ──────────────────────── */
+    @media (max-width: 600px) {
+      .podium { grid-template-columns: 1fr; }
+      .lb-table { font-size: 11px; }
+      .lb-table th, .lb-table td { padding: 10px 10px; }
+      .user-cell img, .user-cell .avatar-placeholder { display: none; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ── NAV ────────────────────────────── -->
+  <nav class="nav">
+    <a class="nav-brand" href="../index.html">
+      <img src="../assets/IEEE_CS_Nirma_logo.svg" alt="IEEE CS Nirma" />
+      NovaHack CTF
+    </a>
+    <div class="nav-right">
+      <a href="index.html">← CTF Arena</a>
+      <a href="challenges.html">Challenges</a>
+      <div id="user-nav-badge" style="display:none;"></div>
+      <button class="btn-google" id="nav-signin-btn">
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" />
+        Sign in
+      </button>
+    </div>
+  </nav>
+
+  <!-- ── PAGE ───────────────────────────── -->
+  <main class="page">
+    <div class="page-header">
+      <span class="page-title">🏆 Leaderboard</span>
+      <span class="page-sub">NovaHack CTF 2026 — Live Rankings</span>
+      <span id="last-updated">—</span>
+    </div>
+
+    <!-- Stats strip -->
+    <div class="stats-strip" id="stats-strip">
+      <div class="stat-cell">
+        <span class="stat-num" id="stat-participants">—</span>
+        <span class="stat-lbl">Participants</span>
+      </div>
+      <div class="stat-cell">
+        <span class="stat-num" id="stat-solves">—</span>
+        <span class="stat-lbl">Total Solves</span>
+      </div>
+      <div class="stat-cell">
+        <span class="stat-num" id="stat-challenges">10</span>
+        <span class="stat-lbl">Challenges</span>
+      </div>
+      <div class="stat-cell">
+        <span class="stat-num" id="stat-maxpts">1050</span>
+        <span class="stat-lbl">Max Points</span>
+      </div>
+    </div>
+
+    <!-- Podium (top 3) -->
+    <div class="podium" id="podium">
+      <div class="podium-cell first">
+        <div class="podium-avatar-placeholder">🥇</div>
+        <div class="podium-rank first">#1 · Gold</div>
+        <div class="podium-name">—</div>
+        <div class="podium-pts">—</div>
+      </div>
+      <div class="podium-cell second">
+        <div class="podium-avatar-placeholder">🥈</div>
+        <div class="podium-rank second">#2 · Silver</div>
+        <div class="podium-name">—</div>
+        <div class="podium-pts">—</div>
+      </div>
+      <div class="podium-cell third">
+        <div class="podium-avatar-placeholder">🥉</div>
+        <div class="podium-rank third">#3 · Bronze</div>
+        <div class="podium-name">—</div>
+        <div class="podium-pts">—</div>
+      </div>
+    </div>
+
+    <!-- Main table -->
+    <table class="lb-table">
+      <thead>
+        <tr>
+          <th class="rank-cell">Rank</th>
+          <th>Participant</th>
+          <th>Challenges Solved</th>
+          <th style="text-align:right;">Points</th>
+        </tr>
+      </thead>
+      <tbody id="lb-body">
+        <tr>
+          <td colspan="4">
+            <div class="lb-placeholder">
+              <div class="spinner"></div>
+              <p>Loading leaderboard…</p>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- My submissions panel (if signed in) -->
+    <div class="my-panel" id="my-panel" style="display:none;">
+      <div class="my-panel-header">
+        <span class="page-title">My Solves</span>
+        <span id="my-panel-sub" class="page-sub"></span>
+      </div>
+      <div class="my-solves-grid" id="my-solves-grid"></div>
+    </div>
+  </main>
+
+  <!-- ── FIREBASE ───────────────────────── -->
+  <script type="module">
+    import { initializeApp }                      from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged }
+                                                   from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { getFirestore, collection, getDocs, orderBy, query, limit }
+                                                   from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey:            "AIzaSyAk_YmDpbaedj-McM2K7ALUqkJyIJBKcfM",
+      authDomain:        "taskflow-e7f24.firebaseapp.com",
+      projectId:         "taskflow-e7f24",
+      storageBucket:     "taskflow-e7f24.firebasestorage.app",
+      messagingSenderId: "431732571375",
+      appId:             "1:431732571375:web:12a9a4ce049fb7e779af1a",
+      measurementId:     "G-5TTKVGX9DM"
+    };
+
+    const app  = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db   = getFirestore(app);
+    const prov = new GoogleAuthProvider();
+
+    let allEntries = [];
+    let currentUser = null;
+
+    // ── Load leaderboard ──────────────────────────────────────────
+    async function loadLeaderboard() {
+      try {
+        const q     = query(collection(db, "ctf_leaderboard"), orderBy("totalPoints", "desc"), limit(100));
+        const snap  = await getDocs(q);
+        allEntries  = snap.docs.map((d, i) => ({ rank: i + 1, ...d.data() }));
+
+        renderStats(allEntries);
+        renderPodium(allEntries);
+        renderTable(allEntries);
+        document.getElementById("last-updated").textContent = "Updated " + new Date().toLocaleTimeString();
+      } catch(e) {
+        console.warn("Leaderboard load error:", e);
+        document.getElementById("lb-body").innerHTML = `
+          <tr><td colspan="4">
+            <div class="lb-placeholder">
+              <span class="icon">⚠️</span>
+              <p>Could not load leaderboard. Make sure Firestore is configured and you're online.</p>
+            </div>
+          </td></tr>`;
+      }
+    }
+
+    function renderStats(entries) {
+      const totalSolves = entries.reduce((s, e) => s + (e.solves?.length || 0), 0);
+      document.getElementById("stat-participants").textContent = entries.length;
+      document.getElementById("stat-solves").textContent      = totalSolves;
+    }
+
+    const medals = ["🥇", "🥈", "🥉"];
+    const podiumClasses = ["first", "second", "third"];
+    const rankLabels    = ["#1 · Gold", "#2 · Silver", "#3 · Bronze"];
+
+    function renderPodium(entries) {
+      const podium = document.getElementById("podium");
+      let html = "";
+      for (let i = 0; i < 3; i++) {
+        const e = entries[i];
+        if (e) {
+          const avatarHTML = e.photo
+            ? `<img class="podium-avatar" src="${e.photo}" alt="${escapeHtml(e.name)}" />`
+            : `<div class="podium-avatar-placeholder">${medals[i]}</div>`;
+          const lastSolve = [...(e.solves || [])].sort((a,b) => new Date(b.solvedAt) - new Date(a.solvedAt))[0];
+          html += `
+            <div class="podium-cell ${podiumClasses[i]}">
+              ${avatarHTML}
+              <div class="podium-rank ${podiumClasses[i]}">${rankLabels[i]}</div>
+              <div class="podium-name">${escapeHtml(e.name)}</div>
+              <div class="podium-pts">${e.totalPoints} <span style="font-size:12px;font-weight:400;color:var(--muted)">pts</span></div>
+              <div class="podium-meta">${e.solvedCount || 0} / 10 challenges${lastSolve ? ' · Last: ' + fmtDate(lastSolve.solvedAt) : ''}</div>
+            </div>`;
+        } else {
+          html += `
+            <div class="podium-cell ${podiumClasses[i]}">
+              <div class="podium-avatar-placeholder">${medals[i]}</div>
+              <div class="podium-rank ${podiumClasses[i]}">${rankLabels[i]}</div>
+              <div class="podium-name" style="color:var(--muted)">—</div>
+              <div class="podium-pts" style="color:var(--muted)">—</div>
+            </div>`;
+        }
+      }
+      podium.innerHTML = html;
+    }
+
+    function renderTable(entries) {
+      if (!entries.length) {
+        document.getElementById("lb-body").innerHTML = `
+          <tr><td colspan="4">
+            <div class="lb-placeholder">
+              <span class="icon">🚀</span>
+              <p>No submissions yet! Be the first to solve a challenge.</p>
+            </div>
+          </td></tr>`;
+        return;
+      }
+
+      const rows = entries.map((e, i) => {
+        const rank = i + 1;
+        const rankDisplay = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : `#${rank}`;
+        const avatar = e.photo
+          ? `<img src="${e.photo}" alt="${escapeHtml(e.name)}" />`
+          : `<div class="avatar-placeholder">👤</div>`;
+        const isSelf = currentUser && e.uid === currentUser.uid;
+        const selfMark = isSelf ? ' <span style="font-size:10px;color:var(--green);font-weight:700;">← you</span>' : '';
+
+        // Solve chips
+        const chips = (e.solves || [])
+          .sort((a,b) => new Date(a.solvedAt) - new Date(b.solvedAt))
+          .map(s => `<span class="solve-chip correct">${escapeHtml(s.title)} <strong>(${s.points}pts)</strong> <span style="color:var(--muted)">${s.attempts} attempt${s.attempts !== 1?'s':''} · ${fmtDate(s.solvedAt)}</span></span>`)
+          .join("");
+
+        return `
+          <tr${isSelf ? ' style="background:#f0fff4;"' : ''}>
+            <td class="rank-cell"><span class="rank-medal">${rankDisplay}</span></td>
+            <td>
+              <div class="user-cell">
+                ${avatar}
+                <div>
+                  <div class="user-name">${escapeHtml(e.name)}${selfMark}</div>
+                  <div class="user-email">${escapeHtml(e.email || "")}</div>
+                </div>
+              </div>
+              ${chips ? `<div class="solves-detail">${chips}</div>` : ""}
+            </td>
+            <td class="solved-cell">
+              <span class="solved-badge">${e.solvedCount || 0} / 10</span>
+            </td>
+            <td class="pts-cell">${e.totalPoints}</td>
+          </tr>`;
+      }).join("");
+
+      document.getElementById("lb-body").innerHTML = rows;
+    }
+
+    function renderMyPanel(user, entry) {
+      const panel = document.getElementById("my-panel");
+      if (!user || !entry) { panel.style.display = "none"; return; }
+
+      panel.style.display = "block";
+      document.getElementById("my-panel-sub").textContent = `${entry.solvedCount || 0} solves · ${entry.totalPoints} pts`;
+
+      const grid = document.getElementById("my-solves-grid");
+      if (!entry.solves || !entry.solves.length) {
+        grid.innerHTML = `<div class="my-solve-card" style="color:var(--muted);font-size:12px;">No solves yet. Head to the <a href="challenges.html">challenges</a>!</div>`;
+        return;
+      }
+
+      grid.innerHTML = [...entry.solves]
+        .sort((a,b) => new Date(a.solvedAt) - new Date(b.solvedAt))
+        .map(s => `
+          <div class="my-solve-card">
+            <div class="my-solve-title">${escapeHtml(s.title)}</div>
+            <div class="my-solve-pts">+${s.points} <span style="font-size:12px;font-weight:400;color:var(--muted)">pts</span></div>
+            <div class="my-solve-meta">${s.attempts} attempt${s.attempts !== 1 ? 's' : ''} · ${fmtDate(s.solvedAt)}</div>
+          </div>`).join("");
+    }
+
+    // ── Auth ──────────────────────────────────────────────────────
+    document.getElementById("nav-signin-btn").addEventListener("click", async () => {
+      if (currentUser) {
+        await signOut(auth);
+      } else {
+        try { await signInWithPopup(auth, prov); } catch(e) { console.warn(e); }
+      }
+    });
+
+    onAuthStateChanged(auth, user => {
+      currentUser = user;
+      const badge = document.getElementById("user-nav-badge");
+      const btn   = document.getElementById("nav-signin-btn");
+
+      if (user) {
+        badge.style.display = "flex";
+        badge.innerHTML = `<img src="${user.photoURL}" alt="${escapeHtml(user.displayName)}" /><span>${escapeHtml(user.displayName.split(' ')[0])}</span>`;
+        btn.innerHTML = '↩ Sign out';
+        // Find my entry and render
+        const myEntry = allEntries.find(e => e.uid === user.uid);
+        renderMyPanel(user, myEntry);
+        // Re-highlight table rows
+        renderTable(allEntries);
+      } else {
+        badge.style.display = "none";
+        btn.innerHTML = `<img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" style="width:16px;height:16px;" /> Sign in`;
+        document.getElementById("my-panel").style.display = "none";
+      }
+    });
+
+    // ── Helpers ───────────────────────────────────────────────────
+    function escapeHtml(str = "") {
+      return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    function fmtDate(iso) {
+      try {
+        const d = new Date(iso);
+        return d.toLocaleDateString("en-IN", { day:"2-digit", month:"short" }) + " " +
+               d.toLocaleTimeString("en-IN", { hour:"2-digit", minute:"2-digit" });
+      } catch { return "—"; }
+    }
+
+    // ── Init ──────────────────────────────────────────────────────
+    await loadLeaderboard();
+    // Live refresh every 60s
+    setInterval(loadLeaderboard, 60000);
+  </script>
+
+</body>
+</html>

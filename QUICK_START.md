@@ -84,7 +84,7 @@ Document ID: (auto)
 Fields:
   teamName: "Team Alpha"
   members: ["Alice", "Bob"]
-  joinedAt: 2026-08-15 10:00:00
+  joinedAt: 2026-08-22 10:00:00
   loginCode: "TEAM01"
 ```
 
@@ -134,11 +134,11 @@ Empty collection:
    - ✅ Live leaderboard section (empty for now)
    - ✅ Navigation bar
 
-3. On Aug 15, switch `index.html` to serve `challenges.html` or add navigation that reveals challenges on event day.
+3. On Aug 22, NovaHack 2026 event goes live with problem statements and live challenge submissions.
 
 ---
 
-## 🎯 Before the Hackathon (Aug 14)
+## 🎯 Before the Hackathon (Aug 21)
 
 - [ ] Generate SHA-256 hashes of all 10 flags
   ```bash
@@ -152,7 +152,7 @@ Empty collection:
 
 ---
 
-## 🚀 On Event Day (Aug 15, 9:00 AM)
+## 🚀 On Event Day (Aug 22, 9:00 AM)
 
 1. **Go live:** Announce the CTF URL to all teams
 2. **Team login:** Teams use pre-assigned codes to sign in

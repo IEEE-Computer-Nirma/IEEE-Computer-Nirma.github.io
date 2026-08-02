@@ -288,6 +288,122 @@
       color: var(--blue);
     }
 
+    .event-type-badge.hackathon {
+      border-color: var(--green);
+      color: var(--green);
+    }
+
+    /* ── PROBLEM STATEMENTS ──────────────── */
+    .ps-intro {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      font-size: 13px;
+      line-height: 1.8;
+      color: var(--muted);
+    }
+
+    .ps-intro strong {
+      color: var(--fg);
+    }
+
+    .ps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(440px, 1fr));
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 600px) {
+      .ps-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .ps-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 2.2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: border-color .2s, box-shadow .2s;
+    }
+
+    .ps-card:hover {
+      border-color: var(--fg);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    }
+
+    .ps-badge-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 1rem;
+    }
+
+    .ps-track {
+      font-size: 10px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border: 1px solid var(--fg);
+      font-weight: 700;
+    }
+
+    .ps-num {
+      font-size: 10px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .ps-card h3 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      line-height: 1.25;
+      margin-bottom: 1rem;
+      letter-spacing: -.01em;
+    }
+
+    .ps-section-title {
+      font-size: 10px;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 1.2rem 0 0.5rem;
+      font-weight: 700;
+    }
+
+    .ps-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.85;
+      margin-bottom: 0.8rem;
+    }
+
+    .ps-challenges-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .ps-challenges-list li {
+      font-size: 12px;
+      color: var(--fg);
+      padding-left: 18px;
+      position: relative;
+      line-height: 1.6;
+    }
+
+    .ps-challenges-list li::before {
+      content: "▸";
+      position: absolute;
+      left: 0;
+      color: var(--orange);
+    }
+
     .event-status {
       font-size: 10px;
       letter-spacing: .08em;
@@ -448,70 +564,127 @@
     }
 
     /* ── TEAM ───────────────────────────── */
-    .team-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 1px;
-      background: var(--border);
-      border: 1px solid var(--border);
+    /* ── TEAM CATEGORIES ─────────────────── */
+    .team-category {
+      margin-bottom: 3.5rem;
+      text-align: center;
+    }
+
+    .team-category:last-child {
+      margin-bottom: 0;
+    }
+
+    .team-category-title {
+      font-size: 11px;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+    }
+
+    .team-category-title::before {
+      content: '✦';
+      color: var(--orange);
+      font-size: 10px;
+    }
+
+    .team-category-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.5rem;
     }
 
     .team-card {
-      background: var(--bg);
-      padding: 2rem;
-      transition: background .15s;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 2rem 1.8rem;
+      width: 100%;
+      max-width: 320px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
     }
 
     .team-card:hover {
-      background: var(--hover-bg);
+      border-color: var(--fg);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
     }
 
     .team-avatar {
-      width: 56px;
-      height: 56px;
+      width: 72px;
+      height: 72px;
       border-radius: 50%;
       border: 2px solid var(--border);
-      margin-bottom: 1rem;
+      margin-bottom: 1.2rem;
       object-fit: cover;
+      transition: border-color .2s;
+    }
+
+    .team-card:hover .team-avatar {
+      border-color: var(--orange);
     }
 
     .team-name {
-      font-size: 14px;
+      font-size: 16px;
       font-weight: 700;
-      margin-bottom: 3px;
+      letter-spacing: -.01em;
+      margin-bottom: 4px;
     }
 
     .team-role {
-      font-size: 10px;
+      font-size: 11px;
       letter-spacing: .1em;
       text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 0.8rem;
+      color: var(--orange);
+      font-weight: 700;
+      margin-bottom: 1rem;
     }
 
     .team-bio {
       font-size: 12px;
       color: var(--muted);
-      line-height: 1.7;
-      margin-bottom: 1rem;
-      font-style: italic;
+      line-height: 1.65;
+      margin-bottom: 1.2rem;
     }
 
     .team-links {
       display: flex;
-      gap: 10px;
+      justify-content: center;
+      gap: 12px;
+      margin-top: auto;
+      padding-top: 1rem;
+      width: 100%;
+      border-top: 1px solid var(--border);
     }
 
     .team-links a {
       font-size: 11px;
+      font-weight: 700;
       color: var(--muted);
       text-decoration: none;
-      border-bottom: 1px solid var(--border);
+      transition: color .2s;
     }
 
     .team-links a:hover {
       color: var(--fg);
-      border-color: var(--fg);
+    }
+
+    /* Override team-grid when using categories */
+    #team-grid:has(.team-category) {
+      display: block;
     }
 
     /* ── CONTACT ────────────────────────── */
@@ -659,8 +832,8 @@
         students to go beyond the curriculum.
       </p>
       <div class="hero-actions">
-        <a class="btn" href="ctf/">Enter CTF Arena →</a>
-        <a class="btn btn-outline" href="#events">View Events</a>
+        <a class="btn" href="#novahack-2026">NovaHack 2026 Details →</a>
+        <a class="btn btn-outline" href="ctf/">CTF Arena</a>
       </div>
     </div>
 
@@ -725,9 +898,7 @@
           real skills beyond the classroom.
         </p>
         <p>
-          Our flagship event, <strong>NovaHack CTF</strong>, is a beginner-friendly
-          Capture The Flag competition running every year for first-year CSE/IT students
-          discovering cybersecurity for the first time.
+          Our flagship event, <strong>NovaHack 2026</strong> (August 22–23, 2026), features a 24-hour hackathon and the <strong>NovaHack CTF</strong>, a Capture The Flag arena which is kept open in general after the event for continuous practice.
         </p>
       </div>
       <div>
@@ -871,39 +1042,87 @@
       <p class="event-date">${esc(ev.date)} · ${esc(ev.duration)}</p>
       <p class="event-desc">${esc(ev.description)}</p>
       <div class="event-tags">${(ev.tags || []).map(t => `<span class="tag">${esc(t)}</span>`).join('')}</div>
-      ${ev.link ? `<a class="event-link" href="${esc(ev.link)}">${esc(ev.linkLabel)}</a>` : ''}
+      ${ev.makePage ? `<a class="event-link" href="#${esc(ev.id)}">View Event Details →</a>` : (ev.link ? `<a class="event-link" href="${esc(ev.link)}" target="_blank">${esc(ev.linkLabel || 'Learn More →')}</a>` : '')}
     </div>
   `).join('');
     }
 
-    // ── Render Team ──────────────────────────────────────────────
-    function renderTeam(team) {
-      const grid = document.getElementById('team-grid');
-      const countEl = document.getElementById('team-count');
-      if (!team) { grid.innerHTML = '<p style="padding:2rem;color:var(--muted)">Failed to load team.</p>'; return; }
-
-      countEl.textContent = `${team.length} member${team.length !== 1 ? 's' : ''}`;
-
-      grid.innerHTML = team.map(m => `
-    <div class="team-card">
-      <img class="team-avatar" src="${esc(m.image)}" alt="${esc(m.name)}" loading="lazy" />
+    // ── Render Team (supports categories array, subdivisions object, or flat array) ────
+    function memberCard(m) {
+      return `
+    <div class="team-card" id="${esc(m.username || m.id || (m.name ? m.name.toLowerCase().replace(/\s+/g,'-') : 'member'))}">
+      <img class="team-avatar" src="${esc(m.image || m.photo)}" alt="${esc(m.name)}" loading="lazy"
+           onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(m.name || 'User')}&background=111&color=fff'" />
       <p class="team-name">${esc(m.name)}</p>
       <p class="team-role">${esc(m.role)}</p>
-      <p class="team-bio">"${esc(m.bio)}"</p>
+      ${m.bio ? `<p class="team-bio">"${esc(m.bio)}"</p>` : ''}
       <div class="team-links">
         ${m.github ? `<a href="${esc(m.github)}" target="_blank">GitHub</a>` : ''}
         ${m.linkedin ? `<a href="${esc(m.linkedin)}" target="_blank">LinkedIn</a>` : ''}
         ${m.website ? `<a href="${esc(m.website)}" target="_blank">Portfolio</a>` : ''}
       </div>
-    </div>
-  `).join('');
+    </div>`;
+    }
+
+    function countTotalMembers(team) {
+      if (!team) return 0;
+      if (Array.isArray(team)) {
+        if (team.length > 0 && team[0].category && Array.isArray(team[0].members)) {
+          return team.reduce((acc, cat) => acc + (cat.members ? cat.members.length : 0), 0);
+        }
+        return team.length;
+      }
+      return Object.values(team).flat().length;
+    }
+
+    function renderTeam(team) {
+      const grid = document.getElementById('team-grid');
+      const countEl = document.getElementById('team-count');
+      if (!team) { grid.innerHTML = '<p style="padding:2rem;color:var(--muted)">Failed to load team.</p>'; return; }
+
+      const totalCount = countTotalMembers(team);
+      countEl.textContent = `${totalCount} member${totalCount !== 1 ? 's' : ''}`;
+
+      // Case 1: Array of categories [{ category: "...", members: [...] }]
+      if (Array.isArray(team) && team.length > 0 && team[0].category) {
+        grid.innerHTML = team.map(cat => {
+          if (!cat.members || !cat.members.length) return '';
+          return `
+          <div class="team-category">
+            <h3 class="team-category-title">${esc(cat.category)}</h3>
+            <div class="team-category-grid">${cat.members.map(memberCard).join('')}</div>
+          </div>`;
+        }).join('');
+      } 
+      // Case 2: Flat array of members [{ name: "...", role: "..." }]
+      else if (Array.isArray(team)) {
+        grid.innerHTML = team.map(memberCard).join('');
+      } 
+      // Case 3: Object of subdivisions { facultyAdvisor: [...], technicalTeam: [...] }
+      else {
+        const CATEGORY_LABELS = {
+          facultyAdvisor: 'Faculty Advisor',
+          chairVCGS: 'Chair — VC — GS',
+          technicalTeam: 'Technical Team',
+          others: 'Others',
+        };
+        grid.innerHTML = Object.entries(team).map(([key, members]) => {
+          if (!members || !members.length) return '';
+          const label = CATEGORY_LABELS[key] || key.replace(/([A-Z])/g, ' $1').trim();
+          return `
+          <div class="team-category">
+            <h3 class="team-category-title">${esc(label)}</h3>
+            <div class="team-category-grid">${members.map(memberCard).join('')}</div>
+          </div>`;
+        }).join('');
+      }
     }
 
     // ── Render Hero Stats ────────────────────────────────────────
     function renderStats(events, team) {
       const statsEl = document.getElementById('hero-stats');
       const evCount = events ? events.length : 2;
-      const teamCount = team ? team.length : 1;
+      const teamCount = countTotalMembers(team) || 1;
       statsEl.innerHTML = `
     <div class="stat-cell"><span class="stat-n">${evCount}</span><span class="stat-l">Events Run</span></div>
     <div class="stat-cell"><span class="stat-n">150+</span><span class="stat-l">Members</span></div>

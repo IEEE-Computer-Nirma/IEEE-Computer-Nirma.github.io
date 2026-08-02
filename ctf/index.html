@@ -482,13 +482,15 @@
   <!-- flag{n0_s3cr3ts_1n_html} -->
 
   <nav class="nav">
-    <a class="nav-brand" href="index.html">
+    <a class="nav-brand" href="../index.html">
       <img src="../assets/IEEE_CS_Nirma_logo.svg" alt="IEEE CS" />
       NovaHack
     </a>
     <ul class="nav-links">
+      <li><a href="../novahack-2026.html">NovaHack 2026</a></li>
       <li><a href="#challenges">Challenges</a></li>
       <li><a href="#about">About</a></li>
+      <li><a href="leaderboard.html">🏆 Leaderboard</a></li>
       <li><a href="challenges.html" id="enter-link">Enter →</a></li>
     </ul>
   </nav>
@@ -499,18 +501,18 @@
       <p class="hero-eyebrow">IEEE Computer Society · Nirma University</p>
       <h1>Nova<span>Hack</span><br />CTF</h1>
       <p class="hero-desc">
-        A beginner-friendly Capture The Flag competition for first-year
-        CSE/IT students. 10 challenges. 24 hours. No prior CTF experience
-        required — just curiosity.
+        The Capture The Flag challenge arena for NovaHack 2026.
+        10 challenges. 24 hours. Kept open in general after the event for continuous practice.
       </p>
       <div class="hero-actions">
         <a class="btn" href="challenges.html" id="cta-challenges">Enter Arena →</a>
+        <a class="btn btn-outline" href="leaderboard.html">🏆 Leaderboard</a>
         <a class="btn btn-outline" href="#challenges">View Challenges</a>
       </div>
     </div>
 
     <div class="countdown-box">
-      <p class="countdown-label">Event starts in</p>
+      <p class="countdown-label">CTF Arena Opens In</p>
       <div class="countdown-grid" id="countdown-grid">
         <div class="countdown-unit"><span class="num" id="cd-days">00</span><span class="lbl">Days</span></div>
         <div class="countdown-unit"><span class="num" id="cd-hours">00</span><span class="lbl">Hours</span></div>
@@ -519,8 +521,8 @@
       </div>
       <p class="countdown-live" id="live-msg">🟢 THE CTF IS LIVE — Enter the Arena!</p>
       <div class="event-meta">
-        <p><strong>Date:</strong> August 15–16, 2026</p>
-        <p><strong>Duration:</strong> 24 hours</p>
+        <p><strong>Date:</strong> August 22–23, 2026</p>
+        <p><strong>Duration:</strong> 24 hours (Live & General Practice)</p>
         <p><strong>Format:</strong> Jeopardy — 10 standalone challenges</p>
         <p><strong>Level:</strong> Freshers friendly</p>
       </div>
@@ -556,19 +558,18 @@
     </div>
     <div class="about-grid">
       <div class="about-block">
-        <h3>What is NovaHack?</h3>
+        <h3>What is NovaHack CTF?</h3>
         <p>
-          NovaHack is a Capture The Flag (CTF) competition organized by
-          the IEEE Computer Society Student Chapter at Nirma University,
+          NovaHack CTF is a Capture The Flag (CTF) competition organized by
+          the IEEE Computer Society Student Chapter at Nirma University as part of NovaHack 2026 (August 22–23, 2026).
+        </p>
+        <p>
+          It serves as the official cybersecurity track of the event and is kept open in general after the event as an ongoing practice arena.
         </p>
         <p>
           Each challenge hides a flag — a secret string in the format
           <code>flag{...}</code>. Find it, submit it, earn points. No experience
           needed: every challenge comes with hints and a Python script to guide you.
-        </p>
-        <p>
-          Categories span HTML inspection, image metadata, steganography, encoding,
-          code debugging, brute force, and web forensics.
         </p>
       </div>
       <div class="about-block">
@@ -597,7 +598,7 @@
   </footer>
 
   <script src="challenges.js"></script>
-  <audio id="bg-audio" src="../assets/../assets/System%20Breach.mp3" loop autoplay></audio>
+  <audio id="bg-audio" src="../assets/System%20Breach.mp3" loop autoplay></audio>
   <script>
     // Attempt to auto-play audio
     document.body.addEventListener('click', () => {
@@ -605,7 +606,7 @@
       if(audio.paused) audio.play();
     }, {once: true});
     // ── Countdown ──────────────────────────────────────
-    const EVENT = new Date("2026-08-15T10:00:00+05:30").getTime();
+    const EVENT = new Date("2026-08-22T10:00:00+05:30").getTime();
 
     function tick() {
       const now = Date.now();

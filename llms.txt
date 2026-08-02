@@ -3,7 +3,7 @@
 # Format: https://llmstxt.org/
 
 > IEEE Computer Society Student Branch Chapter at Nirma University, Ahmedabad, India.
-> We run technical events, CTF competitions, workshops, and research programs for undergraduate engineering students.
+> We run technical events, hackathons, CTF competitions, workshops, and research programs for undergraduate engineering students.
 
 ## Organization
 
@@ -20,16 +20,33 @@
 - GitHub: https://github.com/DeepLumiere
 - Website: https://deeplumiere.github.io/IEEEComputerSociety/
 
+## Flagship Event: NovaHack 2026
+
+- Date: August 22–23, 2026
+- Format: 24-Hour Hackathon + Pre-Event Fun CTF
+- Pre-Event Fun CTF: Held prior to the main hackathon as a fun warm-up activity and kept open in general after the event as a continuous practice arena.
+
+### Problem Statements (Hackathon Tracks)
+
+1. **Autonomous Contract Review Agent**
+   - Track: AI & LegalTech / Agentic AI
+   - Summary: Automated analysis of contracts (NDAs, vendor agreements) to identify potential legal risks, policy deviations, and missing clauses.
+   - Key Challenges: Lawyer hours, human oversights, policy comparison repetition, knowledge reuse, legal risk visibility.
+
+2. **AI Meeting Intelligence Platform**
+   - Track: AI & Enterprise Intelligence
+   - Summary: Intelligent conversation understanding that converts meeting discussions, decisions, and action items into automated workflows and project updates.
+   - Key Challenges: Information loss, action item tracking, manual project updates, blocker visibility, stakeholder alignment.
+
 ## Events
 
-### NovaHack CTF (Upcoming)
-- Type: Capture The Flag (CTF) Competition
+### NovaHack 2026 Hackathon & Pre-Event CTF (Upcoming)
+- Type: Hackathon & Capture The Flag (CTF) Competition
 - Date: August 22–23, 2026
 - Duration: 24 hours
-- Format: Jeopardy Style — 10 standalone challenges
-- Difficulty: Beginner / Freshers Friendly
-- Topics: HTML forensics, metadata extraction, steganography, encoding/decoding, debugging, brute force, web forensics
-- URL: https://deeplumiere.github.io/IEEEComputerSociety/ctf/
+- Format: 24-Hour Hackathon + 10 Jeopardy-style CTF challenges (Pre-Event Fun & Persistent Practice)
+- Difficulty: All Years / Freshers Friendly
+- URL: https://deeplumiere.github.io/IEEEComputerSociety/
 
 ### Hire Your Research Agent (Completed)
 - Type: Workshop
@@ -41,6 +58,7 @@
 ## Platform Pages
 
 - Chapter Homepage: https://deeplumiere.github.io/IEEEComputerSociety/
+- Problem Statements: https://deeplumiere.github.io/IEEEComputerSociety/#problem-statements
 - CTF Landing Page: https://deeplumiere.github.io/IEEEComputerSociety/ctf/
 - CTF Challenge Arena: https://deeplumiere.github.io/IEEEComputerSociety/ctf/challenges.html
 - Sitemap: https://deeplumiere.github.io/IEEEComputerSociety/sitemap.xml
