@@ -1,5 +1,22 @@
 [
   {
+    "id": "nextwave-2026",
+    "title": "NextWave 2026",
+    "type": "Hackathon",
+    "status": "upcoming",
+    "date": "November 25 – December 1, 2026 (Tentative)",
+    "startDate": "2026-11-25T09:00:00+05:30",
+    "endDate": "2026-12-01T18:00:00+05:30",
+    "duration": "Multi-day",
+    "format": "Build Sprint & Hackathon",
+    "level": "Open to All Students",
+    "description": "NextWave 2026 is a premier hackathon hosted by IEEE Computer Society, ITSS and SPS student chapters at Nirma University. Bringing together developers, engineers, and tech enthusiasts to build tomorrow's solutions.",
+    "link": "nextwave-2026/index.html",
+    "registrationUrl": "nextwave-2026/index.html",
+    "makePage": false,
+    "tags": ["Hackathon", "Web3", "AI", "Software", "Hardware", "Design"]
+  },
+  {
     "id": "novahack-2026",
     "title": "NovaHack 2026",
     "type": "Hackathon",

@@ -1,0 +1,30 @@
+{
+  "hosts": [
+    {
+      "logoUrl": "assets/img/logo-ieee-cs.svg",
+      "websiteUrl": "https://www.computer.org"
+    },
+    {
+      "logoUrl": "assets/img/logo-ieee-itss.svg",
+      "websiteUrl": "https://itss.deeplumiere.github.io/IEEEComputerSociety"
+    },
+    {
+      "logoUrl": "assets/img/logo-ieee-sps.svg",
+      "websiteUrl": "https://sps.deeplumiere.github.io/IEEEComputerSociety"
+    }
+  ],
+  "sponsors": [
+    {
+      "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg",
+      "websiteUrl": "https://google.com"
+    },
+    {
+      "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg",
+      "websiteUrl": "https://ibm.com"
+    },
+    {
+      "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg",
+      "websiteUrl": "https://microsoft.com"
+    }
+  ]
+}

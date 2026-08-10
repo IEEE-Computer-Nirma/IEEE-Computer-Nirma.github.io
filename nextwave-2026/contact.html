@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Us — NextWave 2026</title>
+<link rel="icon" href="assets/img/hackathon-logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="container nav">
+    <a href="index.html" class="brand">
+      <img src="assets/img/hackathon-logo.svg" alt="NextWave 2026 logo">
+      <span data-content="event.name">NextWave 2026</span>
+    </a>
+    <ul class="nav-links">
+      <li><a class="link-anim" href="index.html">Home</a></li>
+      <li><a class="link-anim" href="hosts.html">Hosts</a></li>
+      <li><a class="link-anim" href="speakers.html">Speak</a></li>
+      <li><a class="link-anim" href="sponsorship.html">Sponsor</a></li>
+      <li><a class="link-anim active" href="contact.html">Contact</a></li>
+    </ul>
+    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" style="padding-bottom:56px;">
+    <div class="container">
+      <span class="eyebrow">Contact</span>
+      <h1 style="font-size: clamp(34px, 5vw, 56px);">Talk to the team.</h1>
+      <p class="hero-lede">Questions about NextWave 2026 — schedule, venue, eligibility, or anything else. We usually reply within a day or two.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0;">
+    <div class="container split">
+      <div class="form-shell" style="margin:0;">
+        <form id="contactForm" class="form-grid" novalidate>
+          <div class="form-row-2">
+            <div class="field">
+              <label for="c-name">Full name</label>
+              <input id="c-name" name="name" type="text" required autocomplete="name">
+            </div>
+            <div class="field">
+              <label for="c-phone">Phone</label>
+              <input id="c-phone" name="phone" type="tel" required autocomplete="tel">
+            </div>
+          </div>
+          <div class="form-row-2">
+            <div class="field">
+              <label for="c-email">Email</label>
+              <input id="c-email" name="email" type="email" required autocomplete="email">
+            </div>
+            <div class="field">
+              <label for="c-company">College / organisation</label>
+              <input id="c-company" name="company" type="text" autocomplete="organization">
+            </div>
+          </div>
+          <div class="field">
+            <label for="c-message">Message</label>
+            <textarea id="c-message" name="message" required placeholder="How can we help?"></textarea>
+          </div>
+          <div>
+            <button type="submit" class="btn btn-primary">Send message</button>
+          </div>
+          <div class="form-status" role="status" aria-live="polite"></div>
+        </form>
+      </div>
+
+      <aside class="contact-info">
+        <span class="eyebrow" style="margin-bottom:20px;">Organising team</span>
+        <dl style="margin:0;">
+          <dt>Name</dt>
+          <dd data-content="contact.name">Deep Joshi</dd>
+          <dt>Email</dt>
+          <dd><a class="link-anim" href="mailto:deep@computer.org" data-content="contact.email">deep@computer.org</a></dd>
+          <dt>Phone</dt>
+          <dd><a class="link-anim" href="tel:+919265641668" data-content="contact.phone">+91 92656 41668</a></dd>
+          <dt>Venue</dt>
+          <dd data-content="event.venue">Institute of Technology, Nirma University, Ahmedabad</dd>
+        </dl>
+      </aside>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand" data-content="event.name">NextWave 2026</div>
+        <p style="max-width: 32ch; color:#b8b8b8;" data-content="event.tagline">A premier build sprint hosted by three IEEE chapters at Nirma University.</p>
+        <div class="footer-logos" id="footer-logos"></div>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <a class="link-anim" href="index.html">Home</a>
+        <a class="link-anim" href="hosts.html">Hosts</a>
+        <a class="link-anim" href="speakers.html">Call for speakers</a>
+        <a class="link-anim" href="sponsorship.html">Sponsorship</a>
+        <a class="link-anim" href="contact.html">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <span id="footer-contact-role" style="display:none; color:#8a8a8a; font-size:13px; margin-bottom:10px;"></span>
+        <a class="link-anim" href="mailto:deep@computer.org" data-content="contact.email">deep@computer.org</a>
+        <a class="link-anim" href="tel:+919265641668" data-content="contact.phone">+91 92656 41668</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year"></span> IEEE Computer Society, ITSS &amp; SPS — Nirma University Student Chapters.</span>
+      <a class="link-anim" href="leads.html">Team login</a>
+    </div>
+  </div>
+</footer>
+
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+<script src="assets/js/main.js"></script>
+<script type="module" src="assets/js/firebase-forms.js"></script>
+</body>
+</html>

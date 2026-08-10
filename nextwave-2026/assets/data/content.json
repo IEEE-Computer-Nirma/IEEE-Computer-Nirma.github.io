@@ -1,0 +1,34 @@
+{
+  "event": {
+    "name": "NextWave 2026",
+    "tagline": "A premier build sprint hosted by three IEEE chapters at Nirma University.",
+    "status": "COMING SOON",
+    "launchDate": "2026-11-25T09:00:00+05:30",
+    "venue": "Institute of Technology, Nirma University, Ahmedabad",
+    "editionNote": "Dates, venue and theme are placeholders — update this file once finalised."
+  },
+  "organizers": [
+    {
+      "name": "IEEE Computer Society",
+      "chapter": "Nirma University Student Chapter",
+      "logo": "assets/img/logo-ieee-cs.svg"
+    },
+    {
+      "name": "IEEE ITSS",
+      "chapter": "Nirma University Student Chapter",
+      "logo": "assets/img/logo-ieee-itss.svg"
+    },
+    {
+      "name": "IEEE SPS",
+      "chapter": "Nirma University Student Chapter",
+      "logo": "assets/img/logo-ieee-sps.svg"
+    }
+  ],
+  "hostingNote": "This edition is organised by the above three chapters at Nirma University. Other IEEE student chapters, sections and institutions are welcome to co-host, run a local track, or host a future edition at their own campus — reach out via the Sponsorship / Partner form.",
+  "contact": {
+    "name": "Deep Joshi",
+    "role": "IEEE Computer Society — Nirma University",
+    "email": "deep@computer.org",
+    "phone": "+91 92656 41668"
+  }
+}
