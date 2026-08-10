@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Team Login — NextWave 2026</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="assets/img/hackathon-logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container nav">
+    <a href="index.html" class="brand">
+      <img src="assets/img/hackathon-logo.svg" alt="NextWave 2026 logo">
+      <span data-content="event.name">NextWave 2026</span>
+    </a>
+    <ul class="nav-links">
+      <li><a class="link-anim" href="index.html">Home</a></li>
+      <li><a class="link-anim" href="hosts.html">Hosts</a></li>
+      <li><a class="link-anim" href="speakers.html">Speak</a></li>
+      <li><a class="link-anim" href="sponsorship.html">Sponsor</a></li>
+      <li><a class="link-anim" href="contact.html">Contact</a></li>
+    </ul>
+    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main>
+
+  <!-- LOGIN GATE -->
+  <div id="login-shell" class="login-shell">
+    <h1>Team login</h1>
+    <p class="sub">This page shows every contact, speaker and sponsorship submission. Sign in with your organiser account.</p>
+    <form id="loginForm" class="form-grid" novalidate>
+      <div class="field">
+        <label for="login-email">Email</label>
+        <input id="login-email" type="email" required autocomplete="username">
+      </div>
+      <div class="field">
+        <label for="login-password">Password</label>
+        <input id="login-password" type="password" required autocomplete="current-password">
+      </div>
+      <div class="form-status error" id="login-error" style="display:none;">Invalid email or password.</div>
+      <button type="submit" class="btn btn-primary">Sign in</button>
+    </form>
+  </div>
+
+  <!-- LEADS DASHBOARD (hidden until authenticated) -->
+  <section class="section" id="leads-shell" style="display:none; padding-top:48px;">
+    <div class="container">
+      <div class="leads-toolbar">
+        <div>
+          <span class="eyebrow" style="margin-bottom:8px;">Organiser dashboard</span>
+          <h1 style="font-size:28px;">Submissions</h1>
+          <div class="who" id="leads-who"></div>
+        </div>
+        <button id="sign-out-btn" class="btn">Sign out</button>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Type</th>
+              <th>Name</th>
+              <th>Phone</th>
+              <th>Org / company</th>
+              <th>Message</th>
+            </tr>
+          </thead>
+          <tbody id="table-body">
+            <tr><td colspan="6" class="text-center text-muted">Sign in to load submissions.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-bottom" style="margin-top:0; border-top:none; padding-top:0;">
+      <span>© <span id="year"></span> IEEE Computer Society, ITSS &amp; SPS — Nirma University Student Chapters.</span>
+      <a class="link-anim" href="index.html">Back to site</a>
+    </div>
+  </div>
+</footer>
+
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+<script type="module" src="assets/js/firebase-config.js"></script>
+<script type="module" src="assets/js/firebase-auth.js"></script>
+<script type="module" src="assets/js/firebase-leads.js"></script>
+</body>
+</html>

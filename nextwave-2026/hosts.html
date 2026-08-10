@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hosts &amp; Sponsors — NextWave 2026</title>
+<link rel="icon" href="assets/img/hackathon-logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<style>
+  .hosts-sponsor-section {
+    margin-bottom: 64px;
+  }
+  .dynamic-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 32px;
+    margin-top: 32px;
+  }
+  .partner-card {
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius);
+    padding: 40px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 160px;
+    transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+  }
+  .partner-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--color-accent);
+    box-shadow: 0 10px 24px -14px rgba(255,163,0,.45);
+  }
+  .partner-card img {
+    max-height: 80px;
+    max-width: 100%;
+    object-fit: contain;
+  }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="container nav">
+    <a href="index.html" class="brand">
+      <img src="assets/img/hackathon-logo.svg" alt="NextWave 2026 logo">
+      <span data-content="event.name">NextWave 2026</span>
+    </a>
+    <ul class="nav-links">
+      <li><a class="link-anim" href="index.html">Home</a></li>
+      <li><a class="link-anim active" href="hosts.html">Hosts</a></li>
+      <li><a class="link-anim" href="speakers.html">Speak</a></li>
+      <li><a class="link-anim" href="sponsorship.html">Sponsor</a></li>
+      <li><a class="link-anim" href="contact.html">Contact</a></li>
+    </ul>
+    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" style="padding-bottom:56px;">
+    <div class="container">
+      <span class="eyebrow">Hosts &amp; Sponsors</span>
+      <h1 style="font-size: clamp(34px, 5vw, 56px);">Our Partners</h1>
+      <p class="hero-lede">Meet the organisations and chapters supporting and hosting NextWave 2026.</p>
+      <div style="margin-top: 24px;">
+        <a href="assets/sponsors_prospectus.pdf" class="btn btn-primary" target="_blank">Sponsor Prospectus 📥</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0;">
+    <div class="container">
+
+      <div class="hosts-sponsor-section">
+        <h2>Organising Co-Hosts</h2>
+        <p>NextWave 2026 is proudly presented by the joint collaboration of IEEE student chapters.</p>
+        <div id="hosts-grid" class="dynamic-grid">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+
+      <div class="hosts-sponsor-section" style="margin-top: 80px;">
+        <h2>Event Sponsors</h2>
+        <p>Valued organizations fueling technology, education, and community.</p>
+        <div id="sponsors-grid" class="dynamic-grid">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand" data-content="event.name">NextWave 2026</div>
+        <p style="max-width: 32ch; color:#b8b8b8;" data-content="event.tagline">A premier build sprint hosted by three IEEE chapters at Nirma University.</p>
+        <div class="footer-logos" id="footer-logos"></div>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <a class="link-anim" href="index.html">Home</a>
+        <a class="link-anim" href="hosts.html">Hosts</a>
+        <a class="link-anim" href="speakers.html">Call for speakers</a>
+        <a class="link-anim" href="sponsorship.html">Sponsorship</a>
+        <a class="link-anim" href="contact.html">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <span id="footer-contact-role" style="display:none; color:#8a8a8a; font-size:13px; margin-bottom:10px;"></span>
+        <a class="link-anim" href="mailto:deep@computer.org" data-content="contact.email">deep@computer.org</a>
+        <a class="link-anim" href="tel:+919265641668" data-content="contact.phone">+91 92656 41668</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year"></span> IEEE Computer Society, ITSS &amp; SPS — Nirma University Student Chapters.</span>
+      <a class="link-anim" href="leads.html">Team login</a>
+    </div>
+  </div>
+</footer>
+
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+<script src="assets/js/main.js"></script>
+<script>
+  // Dynamically load and populate hosts and sponsors
+  document.addEventListener('DOMContentLoaded', async () => {
+    try {
+      const res = await fetch('assets/data/hosts-sponsors.json');
+      const data = await res.json();
+
+      const hostsGrid = document.getElementById('hosts-grid');
+      const sponsorsGrid = document.getElementById('sponsors-grid');
+
+      if (hostsGrid && data.hosts) {
+        hostsGrid.innerHTML = data.hosts.map(h => `
+          <a href="${h.websiteUrl}" target="_blank" rel="noopener" class="partner-card">
+            <img src="${h.logoUrl}" alt="Host Logo" loading="lazy">
+          </a>
+        `).join('');
+      }
+
+      if (sponsorsGrid && data.sponsors) {
+        sponsorsGrid.innerHTML = data.sponsors.map(s => `
+          <a href="${s.websiteUrl}" target="_blank" rel="noopener" class="partner-card">
+            <img src="${s.logoUrl}" alt="Sponsor Logo" loading="lazy">
+          </a>
+        `).join('');
+      }
+    } catch (err) {
+      console.error('Failed to load hosts/sponsors JSON', err);
+    }
+  });
+</script>
+</body>
+</html>

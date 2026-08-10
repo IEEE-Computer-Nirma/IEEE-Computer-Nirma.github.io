@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <circle cx="100" cy="100" r="96" fill="#FFFFFF" stroke="#111111" stroke-width="3"/>
+  <circle cx="100" cy="100" r="78" fill="none" stroke="#FFA300" stroke-width="2"/>
+  <text x="100" y="92" text-anchor="middle" font-family="Arial, sans-serif" font-size="30" font-weight="700" fill="#111111">IEEE</text>
+  <text x="100" y="122" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="600" letter-spacing="1" fill="#FFA300">ITSS</text>
+  <text x="100" y="142" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#5F5F5F">NIRMA UNIVERSITY</text>
+  <text x="100" y="180" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#B5B5B5">PLACEHOLDER — REPLACE WITH OFFICIAL LOGO</text>
+</svg>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sponsorship &amp; Partnerships — NextWave 2026</title>
+<link rel="icon" href="assets/img/hackathon-logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="container nav">
+    <a href="index.html" class="brand">
+      <img src="assets/img/hackathon-logo.svg" alt="NextWave 2026 logo">
+      <span data-content="event.name">NextWave 2026</span>
+    </a>
+    <ul class="nav-links">
+      <li><a class="link-anim" href="index.html">Home</a></li>
+      <li><a class="link-anim" href="hosts.html">Hosts</a></li>
+      <li><a class="link-anim" href="speakers.html">Speak</a></li>
+      <li><a class="link-anim active" href="sponsorship.html">Sponsor</a></li>
+      <li><a class="link-anim" href="contact.html">Contact</a></li>
+    </ul>
+    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" style="padding-bottom:56px;">
+    <div class="container">
+      <span class="eyebrow">Sponsorship &amp; partnerships</span>
+      <h1 style="font-size: clamp(34px, 5vw, 56px);">Back the build — or bring it to your campus.</h1>
+      <p class="hero-lede" data-content="hostingNote">This edition is organised by the above three chapters at Nirma University. Other IEEE student chapters, sections and institutions are welcome to co-host, run a local track, or host a future edition at their own campus — reach out via the Sponsorship / Partner form.</p>
+      <div style="margin-top: 24px;">
+        <a href="assets/sponsors_prospectus.pdf" class="btn btn-primary" target="_blank">Download Sponsor Prospectus 📥</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0;">
+    <div class="container">
+      <div class="form-shell">
+        <form id="sponsorForm" class="form-grid" novalidate>
+          <div class="form-row-2">
+            <div class="field">
+              <label for="sp-org">Organisation / chapter name</label>
+              <input id="sp-org" name="organization" type="text" required>
+            </div>
+            <div class="field">
+              <label for="sp-name">Contact person</label>
+              <input id="sp-name" name="name" type="text" required autocomplete="name">
+            </div>
+          </div>
+          <div class="form-row-2">
+            <div class="field">
+              <label for="sp-email">Email</label>
+              <input id="sp-email" name="email" type="email" required autocomplete="email">
+            </div>
+            <div class="field">
+              <label for="sp-phone">Phone</label>
+              <input id="sp-phone" name="phone" type="tel" required autocomplete="tel">
+            </div>
+          </div>
+          <div class="field">
+            <label for="sp-interest">I'm interested in</label>
+            <select id="sp-interest" name="interest">
+              <option value="Sponsorship">Sponsoring this edition</option>
+              <option value="Co-hosting">Co-hosting / running a local track</option>
+              <option value="Host future edition">Hosting a future edition at our campus</option>
+              <option value="In-kind support">In-kind support (venue, food, swag, etc.)</option>
+              <option value="Other">Something else</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="sp-message">Tell us more</label>
+            <textarea id="sp-message" name="message" required placeholder="What you have in mind, and how we can help make it happen."></textarea>
+            <p class="field-hint">For chapters outside Nirma University: include your section/branch and rough timeline.</p>
+          </div>
+          <div>
+            <button type="submit" class="btn btn-primary">Send enquiry</button>
+          </div>
+          <div class="form-status" role="status" aria-live="polite"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand" data-content="event.name">NextWave 2026</div>
+        <p style="max-width: 32ch; color:#b8b8b8;" data-content="event.tagline">A premier build sprint hosted by three IEEE chapters at Nirma University.</p>
+        <div class="footer-logos" id="footer-logos"></div>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <a class="link-anim" href="index.html">Home</a>
+        <a class="link-anim" href="hosts.html">Hosts</a>
+        <a class="link-anim" href="speakers.html">Call for speakers</a>
+        <a class="link-anim" href="sponsorship.html">Sponsorship</a>
+        <a class="link-anim" href="contact.html">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <span id="footer-contact-role" style="display:none; color:#8a8a8a; font-size:13px; margin-bottom:10px;"></span>
+        <a class="link-anim" href="mailto:deep@computer.org" data-content="contact.email">deep@computer.org</a>
+        <a class="link-anim" href="tel:+919265641668" data-content="contact.phone">+91 92656 41668</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year"></span> IEEE Computer Society, ITSS &amp; SPS — Nirma University Student Chapters.</span>
+      <a class="link-anim" href="leads.html">Team login</a>
+    </div>
+  </div>
+</footer>
+
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+<script src="assets/js/main.js"></script>
+<script type="module" src="assets/js/firebase-forms.js"></script>
+</body>
+</html>

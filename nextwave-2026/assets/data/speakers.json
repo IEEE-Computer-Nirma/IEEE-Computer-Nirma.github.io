@@ -1,0 +1,23 @@
+[
+  {
+    "name": "Alex Rivera",
+    "photoUrl": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200&h=200",
+    "websiteUrl": "https://github.com/alexrivera",
+    "role": "Lead Architect, Cloudflare",
+    "bio": "Specializes in secure edge computing and serverless architectures."
+  },
+  {
+    "name": "Sarah Chen",
+    "photoUrl": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=200&h=200",
+    "websiteUrl": "https://linkedin.com/in/sarahchen",
+    "role": "AI Research Scientist, Google DeepMind",
+    "bio": "Focuses on large language models and multi-agent system workflows."
+  },
+  {
+    "name": "Marcus Vance",
+    "photoUrl": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=200&h=200",
+    "websiteUrl": "https://marcusvance.dev",
+    "role": "Core Security Engineer, Trail of Bits",
+    "bio": "Cybersecurity researcher specializing in automated threat modeling and smart contracts."
+  }
+]

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Call for Speakers — NextWave 2026</title>
+<link rel="icon" href="assets/img/hackathon-logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<style>
+  .speakers-section {
+    margin-bottom: 64px;
+  }
+  .speakers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 32px;
+    margin-top: 32px;
+  }
+  .speaker-card {
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius);
+    padding: 30px;
+    background: #fff;
+    text-align: center;
+    transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .speaker-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--color-accent);
+    box-shadow: 0 10px 24px -14px rgba(255,163,0,.45);
+  }
+  .speaker-photo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 18px;
+    border: 2px solid var(--color-line);
+    transition: border-color var(--transition);
+  }
+  .speaker-card:hover .speaker-photo {
+    border-color: var(--color-accent);
+  }
+  .speaker-name {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .speaker-role {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--color-accent-ink);
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .speaker-bio {
+    font-size: 14px;
+    color: var(--color-ink-soft);
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+  .speaker-web {
+    margin-top: auto;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    font-weight: 600;
+  }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="container nav">
+    <a href="index.html" class="brand">
+      <img src="assets/img/hackathon-logo.svg" alt="NextWave 2026 logo">
+      <span data-content="event.name">NextWave 2026</span>
+    </a>
+    <ul class="nav-links">
+      <li><a class="link-anim" href="index.html">Home</a></li>
+      <li><a class="link-anim" href="hosts.html">Hosts</a></li>
+      <li><a class="link-anim active" href="speakers.html">Speak</a></li>
+      <li><a class="link-anim" href="sponsorship.html">Sponsor</a></li>
+      <li><a class="link-anim" href="contact.html">Contact</a></li>
+    </ul>
+    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" style="padding-bottom:56px;">
+    <div class="container">
+      <span class="eyebrow">Call for speakers</span>
+      <h1 style="font-size: clamp(34px, 5vw, 56px);">Share what you know.</h1>
+      <p class="hero-lede">Run a workshop, deliver a keynote, or mentor teams on the floor. We're looking for practitioners, researchers and builders across software, hardware and design.</p>
+      <div style="margin-top: 24px; display: flex; gap: 12px; flex-wrap: wrap;">
+        <a href="assets/sponsors_prospectus.pdf" class="btn btn-primary" target="_blank">Sponsor Prospectus 📥</a>
+        <a href="#apply-form" class="btn">Apply to speak ↓</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dynamic Featured Speakers Section -->
+  <section class="section" style="padding-top:0; padding-bottom: 40px;">
+    <div class="container">
+      <div class="speakers-section">
+        <h2>Featured Speakers</h2>
+        <p>Learn from industry leaders and expert developers holding sessions at NextWave 2026.</p>
+        <div id="speakers-grid" class="speakers-grid">
+          <!-- Populated dynamically from assets/data/speakers.json -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0;" id="apply-form">
+    <div class="container">
+      <div class="section-head" style="text-align: center; margin: 0 auto 48px;">
+        <h2>Speaker Application</h2>
+        <p>Want to speak at NextWave 2026? Submit your details below and our team will get in touch!</p>
+      </div>
+      <div class="form-shell">
+        <form id="speakerForm" class="form-grid" novalidate>
+          <div class="form-row-2">
+            <div class="field">
+              <label for="s-name">Full name</label>
+              <input id="s-name" name="name" type="text" required autocomplete="name">
+            </div>
+            <div class="field">
+              <label for="s-phone">Phone</label>
+              <input id="s-phone" name="phone" type="tel" required autocomplete="tel">
+            </div>
+          </div>
+          <div class="form-row-2">
+            <div class="field">
+              <label for="s-email">Email</label>
+              <input id="s-email" name="email" type="email" required autocomplete="email">
+            </div>
+            <div class="field">
+              <label for="s-org">Organisation / designation</label>
+              <input id="s-org" name="organization" type="text" placeholder="e.g. SDE II, Company">
+            </div>
+          </div>
+          <div class="form-row-2">
+            <div class="field">
+              <label for="s-format">Session format</label>
+              <select id="s-format" name="format">
+                <option value="Talk">Talk (30–45 min)</option>
+                <option value="Workshop">Hands-on workshop</option>
+                <option value="Keynote">Keynote</option>
+                <option value="Mentor">Mentor only (no session)</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="s-title">Proposed talk / session title</label>
+              <input id="s-title" name="talkTitle" type="text">
+            </div>
+          </div>
+          <div class="field">
+            <label for="s-bio">Short bio</label>
+            <textarea id="s-bio" name="bio" placeholder="A couple of lines on your background and expertise."></textarea>
+          </div>
+          <div class="field">
+            <label for="s-message">Session abstract / anything else</label>
+            <textarea id="s-message" name="message" required placeholder="What will attendees walk away with?"></textarea>
+          </div>
+          <div>
+            <button type="submit" class="btn btn-primary">Submit application</button>
+          </div>
+          <div class="form-status" role="status" aria-live="polite"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand" data-content="event.name">NextWave 2026</div>
+        <p style="max-width: 32ch; color:#b8b8b8;" data-content="event.tagline">A premier build sprint hosted by three IEEE chapters at Nirma University.</p>
+        <div class="footer-logos" id="footer-logos"></div>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <a class="link-anim" href="index.html">Home</a>
+        <a class="link-anim" href="hosts.html">Hosts</a>
+        <a class="link-anim" href="speakers.html">Call for speakers</a>
+        <a class="link-anim" href="sponsorship.html">Sponsorship</a>
+        <a class="link-anim" href="contact.html">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <span id="footer-contact-role" style="display:none; color:#8a8a8a; font-size:13px; margin-bottom:10px;"></span>
+        <a class="link-anim" href="mailto:deep@computer.org" data-content="contact.email">deep@computer.org</a>
+        <a class="link-anim" href="tel:+919265641668" data-content="contact.phone">+91 92656 41668</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year"></span> IEEE Computer Society, ITSS &amp; SPS — Nirma University Student Chapters.</span>
+      <a class="link-anim" href="leads.html">Team login</a>
+    </div>
+  </div>
+</footer>
+
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+<script src="assets/js/main.js"></script>
+<script type="module" src="assets/js/firebase-forms.js"></script>
+<script>
+  // Dynamically load speakers list
+  document.addEventListener('DOMContentLoaded', async () => {
+    try {
+      const res = await fetch('assets/data/speakers.json');
+      const speakers = await res.json();
+      const grid = document.getElementById('speakers-grid');
+      if (grid && speakers) {
+        grid.innerHTML = speakers.map(s => `
+          <div class="speaker-card">
+            <img class="speaker-photo" src="${s.photoUrl}" alt="${s.name}" loading="lazy" onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(s.name)}&background=111&color=fff'">
+            <div class="speaker-name">${s.name}</div>
+            <div class="speaker-role">${s.role}</div>
+            ${s.bio ? `<p class="speaker-bio">${s.bio}</p>` : ''}
+            <a href="${s.websiteUrl}" target="_blank" rel="noopener" class="speaker-web link-anim">Website / Portfolio ↗</a>
+          </div>
+        `).join('');
+      }
+    } catch (err) {
+      console.error('Failed to load speakers JSON', err);
+    }
+  });
+</script>
+</body>
+</html>
