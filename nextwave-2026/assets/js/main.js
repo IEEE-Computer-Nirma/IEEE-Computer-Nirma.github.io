@@ -1,70 +1,9 @@
-// Shared across every NextWave 2026 page: mobile nav, header/footer shared loading, content.json hydration, countdown.
+// NextWave 2026 — Local page hydration (content.json filling, organizers rendering, countdown).
 
 const CONTENT_URL = (() => {
   // Works whether the page lives at the site root or one level deep.
   return document.body.dataset.contentPath || 'assets/data/content.json';
 })();
-
-async function fetchPartial(file) {
-  try {
-    const res = await fetch(file);
-    if (!res.ok) throw new Error(res.status);
-    return await res.text();
-  } catch (e) {
-    console.warn('Failed to load partial:', file, e);
-    return '';
-  }
-}
-
-async function loadNextWaveShared() {
-  const headerEl = document.getElementById('site-header');
-  const footerEl = document.getElementById('site-footer');
-
-  const [headerHtml, footerHtml] = await Promise.all([
-    headerEl ? fetchPartial('header.html') : Promise.resolve(''),
-    footerEl ? fetchPartial('footer.html') : Promise.resolve('')
-  ]);
-
-  if (headerEl && headerHtml) {
-    headerEl.innerHTML = headerHtml;
-    // Set active link in header nav based on current pathname
-    const currentPath = window.location.pathname;
-    let activeId = 'nav-home';
-    if (currentPath.includes('hosts.html')) activeId = 'nav-hosts';
-    else if (currentPath.includes('speakers.html')) activeId = 'nav-speak';
-    else if (currentPath.includes('sponsorship.html')) activeId = 'nav-sponsor';
-    else if (currentPath.includes('contact.html')) activeId = 'nav-contact';
-
-    const activeLink = document.getElementById(activeId);
-    if (activeLink) {
-      activeLink.classList.add('active');
-    }
-  }
-
-  if (footerEl && footerHtml) {
-    footerEl.innerHTML = footerHtml;
-    const yearEl = document.getElementById('year');
-    if (yearEl) {
-      yearEl.textContent = new Date().getFullYear();
-    }
-  }
-
-  // Initialize navigation toggle after elements are injected
-  initNavToggle();
-}
-
-function initNavToggle() {
-  const toggle = document.querySelector('.nav-toggle');
-  const links = document.querySelector('.nav-links');
-  if (!toggle || !links) return;
-  toggle.addEventListener('click', () => {
-    const open = links.classList.toggle('open');
-    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-  });
-  links.querySelectorAll('a').forEach((a) =>
-    a.addEventListener('click', () => links.classList.remove('open'))
-  );
-}
 
 function fillTextTargets(root, content) {
   root.querySelectorAll('[data-content]').forEach((el) => {
@@ -153,7 +92,6 @@ async function hydrateFromContent() {
   }
 }
 
-document.addEventListener('DOMContentLoaded', async () => {
-  await loadNextWaveShared();
-  await hydrateFromContent();
+document.addEventListener('DOMContentLoaded', () => {
+  hydrateFromContent();
 });

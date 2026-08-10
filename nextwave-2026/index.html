@@ -8,6 +8,7 @@
 <link rel="icon" href="assets/img/hackathon-logo.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared.css">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
@@ -96,8 +97,14 @@
 </main>
 
 <!-- Shared Site Footer loaded dynamically -->
-<div id="site-footer" class="site-footer"></div>
+<div id="site-footer"></div>
 
+<script src="../shared.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', async () => {
+    await loadShared('../');
+  });
+</script>
 <script src="assets/js/main.js"></script>
 </body>
 </html>
