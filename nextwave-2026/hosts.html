@@ -44,24 +44,8 @@
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
 
-<header class="site-header">
-  <div class="container nav">
-    <a href="index.html" class="brand">
-      <img src="assets/img/hackathon-logo.svg" alt="NextWave 2026 logo">
-      <span data-content="event.name">NextWave 2026</span>
-    </a>
-    <ul class="nav-links">
-      <li><a class="link-anim" href="index.html">Home</a></li>
-      <li><a class="link-anim active" href="hosts.html">Hosts</a></li>
-      <li><a class="link-anim" href="speakers.html">Speak</a></li>
-      <li><a class="link-anim" href="sponsorship.html">Sponsor</a></li>
-      <li><a class="link-anim" href="contact.html">Contact</a></li>
-    </ul>
-    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
-</header>
+<!-- Shared Site Header loaded dynamically -->
+<div id="site-header"></div>
 
 <main id="main">
   <section class="hero" style="padding-bottom:56px;">
@@ -98,37 +82,9 @@
   </section>
 </main>
 
-<footer class="site-footer">
-  <div class="container">
-    <div class="footer-grid">
-      <div>
-        <div class="footer-brand" data-content="event.name">NextWave 2026</div>
-        <p style="max-width: 32ch; color:#b8b8b8;" data-content="event.tagline">A premier build sprint hosted by three IEEE chapters at Nirma University.</p>
-        <div class="footer-logos" id="footer-logos"></div>
-      </div>
-      <div class="footer-col">
-        <h4>Navigate</h4>
-        <a class="link-anim" href="index.html">Home</a>
-        <a class="link-anim" href="hosts.html">Hosts</a>
-        <a class="link-anim" href="speakers.html">Call for speakers</a>
-        <a class="link-anim" href="sponsorship.html">Sponsorship</a>
-        <a class="link-anim" href="contact.html">Contact</a>
-      </div>
-      <div class="footer-col">
-        <h4>Contact</h4>
-        <span id="footer-contact-role" style="display:none; color:#8a8a8a; font-size:13px; margin-bottom:10px;"></span>
-        <a class="link-anim" href="mailto:deep@computer.org" data-content="contact.email">deep@computer.org</a>
-        <a class="link-anim" href="tel:+919265641668" data-content="contact.phone">+91 92656 41668</a>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <span>© <span id="year"></span> IEEE Computer Society, ITSS &amp; SPS — Nirma University Student Chapters.</span>
-      <a class="link-anim" href="leads.html">Team login</a>
-    </div>
-  </div>
-</footer>
+<!-- Shared Site Footer loaded dynamically -->
+<div id="site-footer" class="site-footer"></div>
 
-<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 <script src="assets/js/main.js"></script>
 <script>
   // Dynamically load and populate hosts and sponsors
