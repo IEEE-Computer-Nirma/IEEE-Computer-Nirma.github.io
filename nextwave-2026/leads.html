@@ -5,31 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Team Login — NextWave 2026</title>
 <meta name="robots" content="noindex, nofollow">
-<link rel="icon" href="assets/img/hackathon-logo.svg" type="image/svg+xml">
+<link class="icon" href="assets/img/hackathon-logo.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
-<header class="site-header">
-  <div class="container nav">
-    <a href="index.html" class="brand">
-      <img src="assets/img/hackathon-logo.svg" alt="NextWave 2026 logo">
-      <span data-content="event.name">NextWave 2026</span>
-    </a>
-    <ul class="nav-links">
-      <li><a class="link-anim" href="index.html">Home</a></li>
-      <li><a class="link-anim" href="hosts.html">Hosts</a></li>
-      <li><a class="link-anim" href="speakers.html">Speak</a></li>
-      <li><a class="link-anim" href="sponsorship.html">Sponsor</a></li>
-      <li><a class="link-anim" href="contact.html">Contact</a></li>
-    </ul>
-    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
-</header>
+<!-- Shared Site Header loaded dynamically -->
+<div id="site-header"></div>
 
 <main>
 
@@ -85,16 +69,10 @@
 
 </main>
 
-<footer class="site-footer">
-  <div class="container">
-    <div class="footer-bottom" style="margin-top:0; border-top:none; padding-top:0;">
-      <span>© <span id="year"></span> IEEE Computer Society, ITSS &amp; SPS — Nirma University Student Chapters.</span>
-      <a class="link-anim" href="index.html">Back to site</a>
-    </div>
-  </div>
-</footer>
+<!-- Shared Site Footer loaded dynamically -->
+<div id="site-footer" class="site-footer"></div>
 
-<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+<script src="assets/js/main.js"></script>
 <script type="module" src="assets/js/firebase-config.js"></script>
 <script type="module" src="assets/js/firebase-auth.js"></script>
 <script type="module" src="assets/js/firebase-leads.js"></script>
