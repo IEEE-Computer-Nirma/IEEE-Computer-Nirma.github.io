@@ -437,3 +437,71 @@ tbody tr:hover { background: #fffaf0; }
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; scroll-behavior: auto !important; }
 }
+
+/* ---------- NextWave 2026 Sub-Navigation Menu Bar ---------- */
+.nextwave-subnav {
+  border-bottom: 1px solid var(--color-line);
+  background: #ffffff;
+  position: sticky;
+  top: 56px; /* Sits directly below main site header (56px) */
+  z-index: 100;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+}
+.nextwave-subnav .subnav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 52px;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+.nextwave-subnav .brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 15px;
+}
+.nextwave-subnav .brand img {
+  height: 24px;
+  width: auto;
+}
+.nextwave-subnav-links {
+  display: flex;
+  gap: 24px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  text-transform: uppercase;
+}
+.nextwave-subnav-links a {
+  color: var(--color-ink-soft);
+  font-weight: 500;
+  transition: color var(--transition);
+}
+.nextwave-subnav-links a:hover {
+  color: var(--color-ink);
+}
+.nextwave-subnav-links a.active {
+  color: var(--color-accent-ink);
+  border-bottom: 2px solid var(--color-accent);
+  padding-bottom: 15px;
+}
+
+@media (max-width: 600px) {
+  .nextwave-subnav .subnav-container {
+    flex-direction: column;
+    height: auto;
+    padding: 12px;
+    gap: 10px;
+  }
+  .nextwave-subnav-links {
+    gap: 14px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}

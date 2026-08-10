@@ -1,5 +1,5 @@
 /**
- * shared.js — Centralized Header & Footer Loader with fallback for file:// protocol.
+ * shared.js — Centralized Header & Footer Loader with fallback for local prototyping.
  *
  * Usage: call loadShared(root) where root is the relative path to the
  * project root from the current page, e.g. '' for root pages, '../' for nextwave-2026/.
@@ -12,10 +12,7 @@ async function loadShared(root = '') {
   root = root.replace(/\/?$/, '/').replace(/^\//, '');
   if (root === '/') root = '';
 
-  const isNextWave = window.location.pathname.includes('nextwave-2026');
-
-  // Fallback HTML structures for file:// protocol (local browsing) or fetch failure
-  const fallbackMainHeader = `
+  const fallbackHeader = `
     <nav class="nav" id="main-nav">
       <a class="nav-brand" href="{ROOT}">
         <img src="{ROOT}assets/IEEE_CS_Nirma_logo.svg" alt="IEEE CS Nirma" />
@@ -37,26 +34,7 @@ async function loadShared(root = '') {
     </nav>
   `;
 
-  const fallbackNextWaveHeader = `
-    <nav class="nav" id="main-nav">
-      <a class="nav-brand" href="{ROOT}nextwave-2026/">
-        <img src="{ROOT}nextwave-2026/assets/img/hackathon-logo.svg" alt="NextWave 2026 logo">
-        <span data-content="event.name">NextWave 2026</span>
-      </a>
-      <ul class="nav-links">
-        <li><a id="nav-home" href="{ROOT}nextwave-2026/index.html">Home</a></li>
-        <li><a id="nav-hosts" href="{ROOT}nextwave-2026/hosts.html">Hosts</a></li>
-        <li><a id="nav-speak" href="{ROOT}nextwave-2026/speakers.html">Speak</a></li>
-        <li><a id="nav-sponsor" href="{ROOT}nextwave-2026/sponsorship.html">Sponsor</a></li>
-        <li><a id="nav-contact" href="{ROOT}nextwave-2026/contact.html">Contact</a></li>
-      </ul>
-      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
-    </nav>
-  `;
-
-  const fallbackMainFooter = `
+  const fallbackFooter = `
     <div class="footer-full">
       <footer class="site-footer">
         <span>© 2026 IEEE CS Nirma — Student Branch Chapter</span>
@@ -66,21 +44,6 @@ async function loadShared(root = '') {
           <a href="{ROOT}nextwave-2026/">NextWave 2026</a> ·
           <a href="{ROOT}ctf/">CTF Arena</a> ·
           <a href="{ROOT}ctf/leaderboard">🏆 Leaderboard</a> ·
-          <a href="mailto:deep@computer.org">deep@computer.org</a>
-        </span>
-      </footer>
-    </div>
-  `;
-
-  const fallbackNextWaveFooter = `
-    <div class="footer-full">
-      <footer class="site-footer">
-        <span>© 2026 IEEE CS Nirma — Student Branch Chapter</span>
-        <span>
-          <a href="{ROOT}nextwave-2026/">Home</a> ·
-          <a href="{ROOT}nextwave-2026/hosts.html">Hosts</a> ·
-          <a href="{ROOT}nextwave-2026/speakers.html">Speakers</a> ·
-          <a href="{ROOT}nextwave-2026/sponsorship.html">Sponsorship</a> ·
           <a href="mailto:deep@computer.org">deep@computer.org</a>
         </span>
       </footer>
@@ -102,8 +65,8 @@ async function loadShared(root = '') {
     }
   }
 
-  const headerHtml = isNextWave ? fallbackNextWaveHeader.replace(/\{ROOT\}/g, root) : await fetchPartial('header.html', fallbackMainHeader);
-  const footerHtml = isNextWave ? fallbackNextWaveFooter.replace(/\{ROOT\}/g, root) : await fetchPartial('footer.html', fallbackMainFooter);
+  const headerHtml = await fetchPartial('header.html', fallbackHeader);
+  const footerHtml = await fetchPartial('footer.html', fallbackFooter);
 
   const headerEl = document.getElementById('site-header');
   const footerEl = document.getElementById('site-footer');
@@ -112,32 +75,21 @@ async function loadShared(root = '') {
 
   // Active state marking for navigation links
   const currentPath = window.location.pathname;
-  if (isNextWave) {
-    let activeId = 'nav-home';
-    if (currentPath.includes('hosts.html')) activeId = 'nav-hosts';
-    else if (currentPath.includes('speakers.html')) activeId = 'nav-speak';
-    else if (currentPath.includes('sponsorship.html')) activeId = 'nav-sponsor';
-    else if (currentPath.includes('contact.html')) activeId = 'nav-contact';
-
-    const activeLink = document.getElementById(activeId);
-    if (activeLink) activeLink.classList.add('active');
-  } else {
-    const normalize = (p) => {
-      const clean = p.split(/[?#]/)[0];
-      return clean.replace(/\/.+$/, '/').replace(/\.html$/,'').replace(/\/$/, '')
-        .split('/')
-        .filter(Boolean)
-        .pop() || 'index';
-    };
-    const page = normalize(currentPath);
-    document.querySelectorAll('.nav-links a').forEach(link => {
-      const href = link.getAttribute('href') || '';
-      const linkPath = normalize(href);
-      if (page === linkPath) {
-        link.classList.add('active');
-      }
-    });
-  }
+  const normalize = (p) => {
+    const clean = p.split(/[?#]/)[0];
+    return clean.replace(/\/.+$/, '/').replace(/\.html$/,'').replace(/\/$/, '')
+      .split('/')
+      .filter(Boolean)
+      .pop() || 'index';
+  };
+  const page = normalize(currentPath);
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    const href = link.getAttribute('href') || '';
+    const linkPath = normalize(href);
+    if (page === linkPath || (currentPath.includes('nextwave-2026') && linkPath.includes('nextwave-2026'))) {
+      link.classList.add('active');
+    }
+  });
 
   // Set up mobile nav toggle behavior globally
   const toggle = document.querySelector('.nav-toggle');
