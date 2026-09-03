@@ -31,5 +31,21 @@
     "link": null,
     "linkLabel": null,
     "tags": ["AI", "LLM", "Agents", "Workshop"]
+  },
+  {
+    "id": "future-of-ai",
+    "title": "Future of AI",
+    "type": "Masterclass",
+    "status": "completed",
+    "date": "April 2, 2026",
+    "startDate": "2026-04-02T10:00:00+05:30",
+    "endDate": "2026-04-02T17:00:00+05:30",
+    "duration": "1 day",
+    "format": "Masterclass",
+    "level": "Open to All",
+    "description": "IEEE Computer Society at Nirma University presented a masterclass on the AI revolution featuring Naren Kachroo, Head of Sales, AI at Google Cloud India, bridging the gap between cutting-edge technology and real-world impact.",
+    "link": null,
+    "linkLabel": null,
+    "tags": ["AI", "Google Cloud", "Masterclass", "Innovation"]
   }
 ]

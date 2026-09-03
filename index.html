@@ -467,31 +467,34 @@
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      background: rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.92);
+      color: #111111;
       border: 1px solid var(--border);
-      font-family: var(--mono);
-      font-size: 14px;
-      font-weight: 700;
-      width: 40px;
-      height: 40px;
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
       cursor: pointer;
       z-index: 10;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: background .2s;
+      transition: all .2s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     }
 
     .carousel-btn:hover {
-      background: #fff;
+      background: #ffffff;
+      color: var(--orange);
+      border-color: var(--fg);
+      transform: translateY(-50%) scale(1.08);
     }
 
     .carousel-btn.prev {
-      left: 12px;
+      left: 16px;
     }
 
     .carousel-btn.next {
-      right: 12px;
+      right: 16px;
     }
 
     .carousel-dots {
@@ -844,8 +847,12 @@
       <div class="carousel-track" id="carousel-track">
         <!-- Populated by JS from data/gallery.json -->
       </div>
-      <button class="carousel-btn prev" id="prev-btn" aria-label="Previous">&#8592;</button>
-      <button class="carousel-btn next" id="next-btn" aria-label="Next">&#8594;</button>
+      <button class="carousel-btn prev" id="prev-btn" aria-label="Previous">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      </button>
+      <button class="carousel-btn next" id="next-btn" aria-label="Next">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
     </div>
     <div class="carousel-dots" id="carousel-dots"></div>
   </section>
@@ -1218,16 +1225,16 @@
       document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === carouselIdx));
     }
 
-    // ── Hero Canvas Animation (Google CTF Style Code Nodes) ──────────
+    // ── Hero Canvas Animation (Minimal Abstract Geometry & Constellation) ──
     function initHeroCanvas() {
       const canvas = document.getElementById('hero-canvas');
       if (!canvas) return;
       const ctx = canvas.getContext('2d');
-      const symbols = ['0', '1', '{ }', '</>', '//', '0x4A', '=>', 'fn', ';', '++', 'return', '*'];
 
       let width = 0;
       let height = 0;
-      let particles = [];
+      let nodes = [];
+      let time = 0;
       let mouse = { x: -1000, y: -1000 };
 
       function resize() {
@@ -1238,21 +1245,20 @@
         canvas.width = width * dpr;
         canvas.height = height * dpr;
         ctx.scale(dpr, dpr);
-        initParticles();
+        initNodes();
       }
 
-      function initParticles() {
-        particles = [];
-        const count = Math.min(Math.floor((width * height) / 12000), 35);
+      function initNodes() {
+        nodes = [];
+        const count = Math.min(Math.floor((width * height) / 10000), 40);
         for (let i = 0; i < count; i++) {
-          particles.push({
+          nodes.push({
             x: Math.random() * width,
             y: Math.random() * height,
-            vx: (Math.random() - 0.5) * 0.4,
-            vy: (Math.random() - 0.5) * 0.4,
-            symbol: symbols[Math.floor(Math.random() * symbols.length)],
-            size: Math.random() * 3 + 10,
-            isOrange: Math.random() < 0.2
+            vx: (Math.random() - 0.5) * 0.35,
+            vy: (Math.random() - 0.5) * 0.35,
+            radius: Math.random() * 2 + 1,
+            isAccent: Math.random() < 0.25
           });
         }
       }
@@ -1268,58 +1274,100 @@
         mouse.y = -1000;
       });
 
+      function drawAbstractShapes() {
+        // Rotating subtle wireframe geometric polygon
+        time += 0.005;
+        const centerX = width * 0.75;
+        const centerY = height * 0.45;
+        const polyRadius = Math.min(width, height) * 0.25;
+
+        ctx.save();
+        ctx.translate(centerX, centerY);
+        ctx.rotate(time * 0.5);
+
+        ctx.strokeStyle = 'rgba(230, 230, 230, 0.6)';
+        ctx.lineWidth = 1;
+        const sides = 6;
+        ctx.beginPath();
+        for (let i = 0; i <= sides; i++) {
+          const angle = (i * 2 * Math.PI) / sides;
+          const px = Math.cos(angle) * polyRadius;
+          const py = Math.sin(angle) * polyRadius;
+          if (i === 0) ctx.moveTo(px, py);
+          else ctx.lineTo(px, py);
+        }
+        ctx.stroke();
+
+        ctx.rotate(-time * 0.8);
+        ctx.strokeStyle = 'rgba(255, 163, 0, 0.15)';
+        ctx.beginPath();
+        for (let i = 0; i <= 3; i++) {
+          const angle = (i * 2 * Math.PI) / 3;
+          const px = Math.cos(angle) * (polyRadius * 0.7);
+          const py = Math.sin(angle) * (polyRadius * 0.7);
+          if (i === 0) ctx.moveTo(px, py);
+          else ctx.lineTo(px, py);
+        }
+        ctx.stroke();
+
+        ctx.restore();
+      }
+
       function animate() {
         ctx.clearRect(0, 0, width, height);
 
-        // Grid dots background
-        ctx.fillStyle = '#e8e8e8';
-        const gridStep = 40;
-        for (let x = 20; x < width; x += gridStep) {
-          for (let y = 20; y < height; y += gridStep) {
-            ctx.fillRect(x, y, 1.5, 1.5);
+        // Abstract subtle dot grid background
+        ctx.fillStyle = '#f0f0f0';
+        const gridStep = 45;
+        for (let x = 22; x < width; x += gridStep) {
+          for (let y = 22; y < height; y += gridStep) {
+            ctx.fillRect(x, y, 1.2, 1.2);
           }
         }
 
-        // Draw connections
-        for (let i = 0; i < particles.length; i++) {
-          for (let j = i + 1; j < particles.length; j++) {
-            const dx = particles[i].x - particles[j].x;
-            const dy = particles[i].y - particles[j].y;
+        drawAbstractShapes();
+
+        // Connecting lines
+        for (let i = 0; i < nodes.length; i++) {
+          for (let j = i + 1; j < nodes.length; j++) {
+            const dx = nodes[i].x - nodes[j].x;
+            const dy = nodes[i].y - nodes[j].y;
             const dist = Math.sqrt(dx * dx + dy * dy);
-            if (dist < 120) {
-              const alpha = (1 - dist / 120) * 0.25;
+            if (dist < 130) {
+              const alpha = (1 - dist / 130) * 0.22;
               ctx.strokeStyle = `rgba(180, 180, 180, ${alpha})`;
               ctx.lineWidth = 1;
               ctx.beginPath();
-              ctx.moveTo(particles[i].x, particles[i].y);
-              ctx.lineTo(particles[j].x, particles[j].y);
+              ctx.moveTo(nodes[i].x, nodes[i].y);
+              ctx.lineTo(nodes[j].x, nodes[j].y);
               ctx.stroke();
             }
           }
         }
 
-        // Update and draw particles
-        ctx.font = '11px "Space Mono", monospace';
-        particles.forEach(p => {
-          p.x += p.vx;
-          p.y += p.vy;
+        // Nodes update & draw
+        nodes.forEach(n => {
+          n.x += n.vx;
+          n.y += n.vy;
 
-          if (p.x < 0) p.x = width;
-          if (p.x > width) p.x = 0;
-          if (p.y < 0) p.y = height;
-          if (p.y > height) p.y = 0;
+          if (n.x < 0) n.x = width;
+          if (n.x > width) n.x = 0;
+          if (n.y < 0) n.y = height;
+          if (n.y > height) n.y = 0;
 
-          // Mouse attraction
-          const mdx = mouse.x - p.x;
-          const mdy = mouse.y - p.y;
+          // Mouse influence
+          const mdx = mouse.x - n.x;
+          const mdy = mouse.y - n.y;
           const mdist = Math.sqrt(mdx * mdx + mdy * mdy);
-          if (mdist < 100) {
-            p.x += (mdx / mdist) * 0.3;
-            p.y += (mdy / mdist) * 0.3;
+          if (mdist < 120) {
+            n.x += (mdx / mdist) * 0.25;
+            n.y += (mdy / mdist) * 0.25;
           }
 
-          ctx.fillStyle = p.isOrange ? '#FFA300' : '#888888';
-          ctx.fillText(p.symbol, p.x, p.y);
+          ctx.fillStyle = n.isAccent ? '#FFA300' : '#222222';
+          ctx.beginPath();
+          ctx.arc(n.x, n.y, n.radius, 0, Math.PI * 2);
+          ctx.fill();
         });
 
         requestAnimationFrame(animate);

@@ -7,6 +7,13 @@
     "event": "HackDays Ahmedabad"
   },
   {
+    "id": "future-of-ai",
+    "src": "assets/gallery/future_of_ai.png",
+    "alt": "Future of AI Masterclass with Naren Kachroo",
+    "caption": "Future of AI Masterclass with Naren Kachroo — April 2, 2026",
+    "event": "Future of AI"
+  },
+  {
     "id": "research-agent-workshop",
     "src": "assets/gallery/research_agent.jpg",
     "alt": "Hire Your Research Agent Workshop",
