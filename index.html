@@ -8,13 +8,14 @@
   <meta name="description"
     content="IEEE Computer Society Student Branch Chapter at Nirma University, Ahmedabad. We build, hack, and learn together." />
   <meta name="keywords"
-    content="IEEE, Computer Society, Nirma University, CTF, NovaHack, cybersecurity, student chapter" />
+    content="IEEE, Computer Society, Nirma University, HackDays Ahmedabad, hackathon, student chapter" />
   <meta property="og:title" content="IEEE CS Nirma" />
   <meta property="og:description" content="IEEE Computer Society Student Branch Chapter at Nirma University." />
   <meta property="og:type" content="website" />
   <link rel="icon" href="assets/ieee_cs_emblem.ico" />
   <link rel="canonical" href="https://deeplumiere.github.io/IEEEComputerSociety/" />
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
   <link rel="stylesheet" href="shared.css" />
   <style>
     :root {
@@ -501,6 +502,26 @@
     }
 
     /* ── TEAM ───────────────────────────── */
+    .team-avatar-icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--hover-bg);
+      color: var(--muted);
+      font-size: 38px;
+      transition: border-color .2s, color .2s;
+    }
+
+    .team-card:hover .team-avatar-icon {
+      border-color: var(--orange);
+      color: var(--orange);
+    }
+
     /* ── TEAM CATEGORIES ─────────────────── */
     .team-category {
       margin-bottom: 3.5rem;
@@ -771,12 +792,12 @@
       <h1>Build.<br />Hack.<br /><span>Learn.</span></h1>
       <p class="hero-desc">
         We are the IEEE Computer Society Student Branch Chapter at Nirma University, Ahmedabad.
-        We run technical events, workshops, CTF competitions, and research programs that challenge
+        We run technical events, workshops, hackathons, and research programs that challenge
         students to go beyond the curriculum.
       </p>
       <div class="hero-actions">
-        <a class="btn" href="novahack-2026" target="_blank" rel="noopener">NovaHack 2026 Details ↗</a>
-        <a class="btn btn-outline" href="ctf/">CTF Arena</a>
+        <a class="btn" href="https://events.mlh.com/events/14703-hack-days-ahmedabad" target="_blank" rel="noopener">HackDays Ahmedabad ↗</a>
+        <a class="btn btn-outline" href="#events">View Events</a>
       </div>
     </div>
 
@@ -841,7 +862,7 @@
           real skills beyond the classroom.
         </p>
         <p>
-          Our flagship event, <strong>NovaHack 2026</strong> (August 22–23, 2026), features a 24-hour hackathon and the <strong>NovaHack CTF</strong>, a Capture The Flag arena which is kept open in general after the event for continuous practice.
+          Our flagship event, <strong>HackDays Ahmedabad</strong> (September 26, 2026), brings together developers, engineers, and tech enthusiasts to build tomorrow's solutions.
         </p>
       </div>
       <div>
@@ -909,8 +930,8 @@
       <div class="contact-block">
         <h3>Quick Links</h3>
         <div class="contact-item">
-          <span class="contact-label">CTF</span>
-          <span class="contact-value"><a href="ctf/">NovaHack CTF Arena</a></span>
+          <span class="contact-label">HackDays</span>
+          <span class="contact-value"><a href="https://events.mlh.com/events/14703-hack-days-ahmedabad" target="_blank" rel="noopener">HackDays Ahmedabad</a></span>
         </div>
         <div class="contact-item">
           <span class="contact-label">IEEE CS</span>
@@ -1016,9 +1037,7 @@
           ` : ''}
 
           <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-            ${ev.registrationUrl ? `<a href="${esc(ev.registrationUrl)}" target="_blank" rel="noopener" class="btn" style="background:var(--orange);border-color:var(--orange);color:#000;">Register on KonfHub ↗</a>` : ''}
-            ${ev.link ? `<a href="${esc(ev.link)}" target="_blank" rel="noopener" class="btn">Open Event Page ↗</a>` : ''}
-            <a href="ctf/" class="btn btn-outline">CTF Arena</a>
+            ${ev.registrationUrl ? `<a href="${esc(ev.registrationUrl)}" target="_blank" rel="noopener" class="btn" style="background:var(--orange);border-color:var(--orange);color:#000;">Register ↗</a>` : ''}
             <button class="btn btn-outline" onclick="closeEventModal()">Close</button>
           </div>
         </div>
@@ -1036,18 +1055,25 @@
 
     // ── Render Team (supports categories array, subdivisions object, or flat array) ────
     function memberCard(m) {
+      const avatarHtml = (m.image || m.photo)
+        ? `<img class="team-avatar" src="${esc(m.image || m.photo)}" alt="${esc(m.name)}" loading="lazy"
+               onerror="this.outerHTML='<div class=\\'team-avatar-icon\\'><span class=\\'material-symbols-outlined\\'>account_circle</span></div>'" />`
+        : `<div class="team-avatar-icon"><span class="material-symbols-outlined">account_circle</span></div>`;
+
+      const hasLinks = m.github || m.linkedin || m.website;
+
       return `
     <div class="team-card" id="${esc(m.username || m.id || (m.name ? m.name.toLowerCase().replace(/\s+/g,'-') : 'member'))}">
-      <img class="team-avatar" src="${esc(m.image || m.photo)}" alt="${esc(m.name)}" loading="lazy"
-           onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(m.name || 'User')}&background=111&color=fff'" />
+      ${avatarHtml}
       <p class="team-name">${esc(m.name)}</p>
       <p class="team-role">${esc(m.role)}</p>
       ${m.bio ? `<p class="team-bio">"${esc(m.bio)}"</p>` : ''}
+      ${hasLinks ? `
       <div class="team-links">
         ${m.github ? `<a href="${esc(m.github)}" target="_blank">GitHub</a>` : ''}
         ${m.linkedin ? `<a href="${esc(m.linkedin)}" target="_blank">LinkedIn</a>` : ''}
         ${m.website ? `<a href="${esc(m.website)}" target="_blank">Portfolio</a>` : ''}
-      </div>
+      </div>` : ''}
     </div>`;
     }
 
@@ -1113,7 +1139,7 @@
       statsEl.innerHTML = `
     <div class="stat-cell"><span class="stat-n">${evCount}</span><span class="stat-l">Events Run</span></div>
     <div class="stat-cell"><span class="stat-n">150+</span><span class="stat-l">Members</span></div>
-    <div class="stat-cell"><span class="stat-n">10</span><span class="stat-l">CTF Challenges</span></div>
+    <div class="stat-cell"><span class="stat-n">500+</span><span class="stat-l">Participants</span></div>
     <div class="stat-cell"><span class="stat-n">${teamCount}</span><span class="stat-l">Core Team</span></div>
   `;
     }
