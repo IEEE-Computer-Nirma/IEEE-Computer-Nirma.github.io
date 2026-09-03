@@ -1,47 +1,120 @@
 [
-    {
-        "category": "Faculty Advisor",
-        "members": [
-            {
-                "username": "deep-joshi",
-                "name": "Deep Joshi",
-                "role": "Technical Head",
-                "image": "https://avatars.githubusercontent.com/u/173024745?v=4",
-                "github": "https://github.com/DeepLumiere",
-                "linkedin": "https://www.linkedin.com/in/deep-lumiere/",
-                "website": "https://deeplumiere.github.io/DeepLumiere",
-                "bio": "I dive into what I’m not good at—because the easy stuff doesn’t ignite my spirit."
-            }
-        ]
-    },
-    {
-        "category": "Student Executive Committee (SEC)",
-        "members": [
-            {
-                "username": "deep-joshi",
-                "name": "Deep Joshi",
-                "role": "Technical Head",
-                "image": "https://avatars.githubusercontent.com/u/173024745?v=4",
-                "github": "https://github.com/DeepLumiere",
-                "linkedin": "https://www.linkedin.com/in/deep-lumiere/",
-                "website": "https://deeplumiere.github.io/DeepLumiere",
-                "bio": "I dive into what I’m not good at—because the easy stuff doesn’t ignite my spirit."
-            }
-        ]
-    },
-    {
-        "category": "Technical Team",
-        "members": [
-            {
-                "username": "deep-joshi",
-                "name": "Deep Joshi",
-                "role": "Technical Head",
-                "image": "https://avatars.githubusercontent.com/u/173024745?v=4",
-                "github": "https://github.com/DeepLumiere",
-                "linkedin": "https://www.linkedin.com/in/deep-lumiere/",
-                "website": "https://deeplumiere.github.io/DeepLumiere",
-                "bio": "I dive into what I’m not good at—because the easy stuff doesn’t ignite my spirit."
-            }
-        ]
-    }
+  {
+    "category": "Faculty Advisor",
+    "members": [
+      {
+        "id": "dr-umesh-bodhke",
+        "name": "Dr Umesh Bodhke",
+        "role": "Faculty Advisor",
+        "image": "",
+        "bio": ""
+      }
+    ]
+  },
+  {
+    "category": "Core Team",
+    "members": [
+      {
+        "id": "deep-joshi",
+        "name": "Deep Joshi",
+        "role": "Chair",
+        "image": "https://avatars.githubusercontent.com/u/173024745?v=4",
+        "github": "https://github.com/DeepLumiere",
+        "linkedin": "https://www.linkedin.com/in/deep-lumiere/",
+        "website": "https://deeplumiere.github.io/DeepLumiere",
+        "bio": ""
+      },
+      {
+        "id": "vedanshi-malay-bhatt",
+        "name": "Vedanshi Malay Bhatt",
+        "role": "Vice Chair",
+        "image": "",
+        "bio": ""
+      },
+      {
+        "id": "divy-shah",
+        "name": "Divy Shah",
+        "role": "Secretary",
+        "image": "",
+        "bio": ""
+      },
+      {
+        "id": "franky-kirtikumar-patel",
+        "name": "Franky Kirtikumar Patel",
+        "role": "Join Secretary",
+        "image": "",
+        "bio": ""
+      },
+      {
+        "id": "sakshi-chavda",
+        "name": "Sakshi Chavda",
+        "role": "Treasurer",
+        "image": "",
+        "bio": ""
+      },
+      {
+        "id": "mahi-sunil-acharya",
+        "name": "Mahi Sunil Acharya",
+        "role": "Treasurer",
+        "image": "",
+        "bio": ""
+      },
+      {
+        "id": "palak-sinojia",
+        "name": "Palak Sinojia",
+        "role": "Technical Head",
+        "image": "",
+        "bio": ""
+      },
+      {
+        "id": "priyansh-patel",
+        "name": "Priyansh Patel",
+        "role": "Technical Head",
+        "image": "",
+        "bio": ""
+      },
+      {
+        "id": "ridham-mayur-shah",
+        "name": "Ridham Mayur Shah",
+        "role": "Web Master",
+        "image": "",
+        "bio": ""
+      },
+      {
+        "id": "patel-meet-rameshbhai",
+        "name": "PATEL MEET RAMESHBHAI",
+        "role": "Web Master",
+        "image": "",
+        "bio": ""
+      },
+      {
+        "id": "vishwa-ghori",
+        "name": "Vishwa Ghori",
+        "role": "Creatives",
+        "image": "",
+        "bio": ""
+      },
+      {
+        "id": "keya-jeni",
+        "name": "Keya Jeni",
+        "role": "Creatives",
+        "image": "",
+        "bio": ""
+      },
+      {
+        "id": "pari-pancholi",
+        "name": "Pari Pancholi",
+        "role": "Marketing",
+        "image": "",
+        "bio": ""
+      },
+      {
+        "id": "neha-siju-kananthanam",
+        "name": "Neha Siju Kananthanam",
+        "role": "Marketing",
+        "image": "",
+        "bio": ""
+      }
+    ]
+  }
 ]

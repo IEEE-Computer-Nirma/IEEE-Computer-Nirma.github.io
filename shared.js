@@ -19,17 +19,14 @@ async function loadShared(root = '') {
       </a>
       <ul class="nav-links">
         <li><a href="{ROOT}#events">Events</a></li>
-        <li><a href="{ROOT}novahack-2026" target="_blank">NovaHack 2026</a></li>
-        <li><a href="{ROOT}nextwave-2026/">NextWave 2026</a></li>
+        <li><a href="https://events.mlh.com/events/14703-hack-days-ahmedabad" target="_blank" rel="noopener">HackDays Ahmedabad</a></li>
         <li><a href="{ROOT}#gallery">Gallery</a></li>
         <li><a href="{ROOT}#team">Team</a></li>
         <li><a href="{ROOT}#about">About</a></li>
         <li><a href="{ROOT}#contact">Contact</a></li>
-        <li><a href="{ROOT}ctf/leaderboard">🏆 Leaderboard</a></li>
       </ul>
       <div class="nav-right-actions">
-        <a class="nav-cta" href="{ROOT}ctf/">CTF Arena →</a>
-        <div id="ctf-nav-extension" style="display:none; align-items:center; gap:15px; margin-left: 15px;"></div>
+        <a class="nav-cta" href="https://events.mlh.com/events/14703-hack-days-ahmedabad" target="_blank" rel="noopener">HackDays Ahmedabad →</a>
       </div>
     </nav>
   `;
@@ -40,10 +37,7 @@ async function loadShared(root = '') {
         <span>© 2026 IEEE CS Nirma — Student Branch Chapter</span>
         <span>
           <a href="{ROOT}">Home</a> ·
-          <a href="{ROOT}novahack-2026" target="_blank">NovaHack 2026</a> ·
-          <a href="{ROOT}nextwave-2026/">NextWave 2026</a> ·
-          <a href="{ROOT}ctf/">CTF Arena</a> ·
-          <a href="{ROOT}ctf/leaderboard">🏆 Leaderboard</a> ·
+          <a href="https://events.mlh.com/events/14703-hack-days-ahmedabad" target="_blank" rel="noopener">HackDays Ahmedabad</a> ·
           <a href="mailto:deep@computer.org">deep@computer.org</a>
         </span>
       </footer>
@@ -86,7 +80,7 @@ async function loadShared(root = '') {
   document.querySelectorAll('.nav-links a').forEach(link => {
     const href = link.getAttribute('href') || '';
     const linkPath = normalize(href);
-    if (page === linkPath || (currentPath.includes('nextwave-2026') && linkPath.includes('nextwave-2026'))) {
+    if (page === linkPath) {
       link.classList.add('active');
     }
   });
