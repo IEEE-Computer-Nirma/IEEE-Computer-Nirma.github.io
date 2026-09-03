@@ -44,12 +44,11 @@
 
     body {
       font-family: var(--mono);
-      background: linear-gradient(rgba(255, 255, 255, 0.94), rgba(255, 255, 255, 0.94)),
-        url('assets/IEEE_Background.png') no-repeat center center fixed;
-      background-size: cover;
+      background: var(--bg);
       color: var(--fg);
       font-size: 13px;
       line-height: 1.65;
+      position: relative;
     }
 
     /* ── NAV — see shared.css ─────────────── */
@@ -90,6 +89,23 @@
       grid-template-columns: 1fr 1fr;
       gap: 5rem;
       align-items: center;
+      position: relative;
+    }
+
+    #hero-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.75;
+    }
+
+    .hero > * {
+      position: relative;
+      z-index: 1;
     }
 
     .hero-eyebrow {
@@ -787,9 +803,10 @@
 
   <!-- ── HERO ─────────────────────────── -->
   <section class="hero">
+    <canvas id="hero-canvas"></canvas>
     <div>
       <p class="hero-eyebrow">IEEE Computer Society · Nirma University</p>
-      <h1>Build.<br />Hack.<br /><span>Learn.</span></h1>
+      <h1>Turning Curiosity<br /><span>to Code.</span></h1>
       <p class="hero-desc">
         We are the IEEE Computer Society Student Branch Chapter at Nirma University, Ahmedabad.
         We run technical events, workshops, hackathons, and research programs that challenge
@@ -1201,6 +1218,118 @@
       document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === carouselIdx));
     }
 
+    // ── Hero Canvas Animation (Google CTF Style Code Nodes) ──────────
+    function initHeroCanvas() {
+      const canvas = document.getElementById('hero-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const symbols = ['0', '1', '{ }', '</>', '//', '0x4A', '=>', 'fn', ';', '++', 'return', '*'];
+
+      let width = 0;
+      let height = 0;
+      let particles = [];
+      let mouse = { x: -1000, y: -1000 };
+
+      function resize() {
+        const rect = canvas.parentElement.getBoundingClientRect();
+        width = rect.width;
+        height = rect.height;
+        const dpr = window.devicePixelRatio || 1;
+        canvas.width = width * dpr;
+        canvas.height = height * dpr;
+        ctx.scale(dpr, dpr);
+        initParticles();
+      }
+
+      function initParticles() {
+        particles = [];
+        const count = Math.min(Math.floor((width * height) / 12000), 35);
+        for (let i = 0; i < count; i++) {
+          particles.push({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            vx: (Math.random() - 0.5) * 0.4,
+            vy: (Math.random() - 0.5) * 0.4,
+            symbol: symbols[Math.floor(Math.random() * symbols.length)],
+            size: Math.random() * 3 + 10,
+            isOrange: Math.random() < 0.2
+          });
+        }
+      }
+
+      window.addEventListener('mousemove', e => {
+        const rect = canvas.getBoundingClientRect();
+        mouse.x = e.clientX - rect.left;
+        mouse.y = e.clientY - rect.top;
+      });
+
+      window.addEventListener('mouseleave', () => {
+        mouse.x = -1000;
+        mouse.y = -1000;
+      });
+
+      function animate() {
+        ctx.clearRect(0, 0, width, height);
+
+        // Grid dots background
+        ctx.fillStyle = '#e8e8e8';
+        const gridStep = 40;
+        for (let x = 20; x < width; x += gridStep) {
+          for (let y = 20; y < height; y += gridStep) {
+            ctx.fillRect(x, y, 1.5, 1.5);
+          }
+        }
+
+        // Draw connections
+        for (let i = 0; i < particles.length; i++) {
+          for (let j = i + 1; j < particles.length; j++) {
+            const dx = particles[i].x - particles[j].x;
+            const dy = particles[i].y - particles[j].y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 120) {
+              const alpha = (1 - dist / 120) * 0.25;
+              ctx.strokeStyle = `rgba(180, 180, 180, ${alpha})`;
+              ctx.lineWidth = 1;
+              ctx.beginPath();
+              ctx.moveTo(particles[i].x, particles[i].y);
+              ctx.lineTo(particles[j].x, particles[j].y);
+              ctx.stroke();
+            }
+          }
+        }
+
+        // Update and draw particles
+        ctx.font = '11px "Space Mono", monospace';
+        particles.forEach(p => {
+          p.x += p.vx;
+          p.y += p.vy;
+
+          if (p.x < 0) p.x = width;
+          if (p.x > width) p.x = 0;
+          if (p.y < 0) p.y = height;
+          if (p.y > height) p.y = 0;
+
+          // Mouse attraction
+          const mdx = mouse.x - p.x;
+          const mdy = mouse.y - p.y;
+          const mdist = Math.sqrt(mdx * mdx + mdy * mdy);
+          if (mdist < 100) {
+            p.x += (mdx / mdist) * 0.3;
+            p.y += (mdy / mdist) * 0.3;
+          }
+
+          ctx.fillStyle = p.isOrange ? '#FFA300' : '#888888';
+          ctx.fillText(p.symbol, p.x, p.y);
+        });
+
+        requestAnimationFrame(animate);
+      }
+
+      window.addEventListener('resize', resize);
+      resize();
+      animate();
+    }
+
     // ── Init ──────────────────────────────────────────────────────
     (async () => {
       const [events, team, gallery] = await Promise.all([
@@ -1210,6 +1339,7 @@
       ]);
 
       window._eventsData = events;
+      initHeroCanvas();
       renderStats(events, team);
       renderEvents(events);
       renderTeam(team);
