@@ -575,9 +575,31 @@
 
     .team-category-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      grid-template-columns: repeat(3, 1fr);
       gap: 1.5rem;
       justify-content: center;
+    }
+
+    .team-category-grid.single-member {
+      display: flex;
+      justify-content: center;
+    }
+
+    .team-category-grid.single-member .team-card {
+      width: 100%;
+      max-width: 320px;
+    }
+
+    @media (max-width: 900px) {
+      .team-category-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .team-category-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
     .team-card {
@@ -1135,10 +1157,11 @@
           if (!cat.members || !cat.members.length) return '';
           // Shuffle members within categories with multiple members (e.g. Core Team) so they feel equal
           const displayMembers = cat.members.length > 1 ? shuffleArray(cat.members) : cat.members;
+          const gridClass = cat.members.length === 1 ? 'team-category-grid single-member' : 'team-category-grid';
           return `
           <div class="team-category">
             <h3 class="team-category-title">${esc(cat.category)}</h3>
-            <div class="team-category-grid">${displayMembers.map(memberCard).join('')}</div>
+            <div class="${gridClass}">${displayMembers.map(memberCard).join('')}</div>
           </div>`;
         }).join('');
       } 
