@@ -3,9 +3,11 @@
   "version": "2.0.0",
   "description": "CyberSurge 2.0 CTF Platform — IEEE CS Nirma University",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "node scripts/generate.js && vite build",
+    "generate": "node scripts/generate.js",
     "preview": "vite preview"
   },
   "devDependencies": {
