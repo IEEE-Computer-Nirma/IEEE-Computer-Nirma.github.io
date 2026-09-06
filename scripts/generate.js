@@ -51,6 +51,14 @@ function updateHTMLMetadata(metaConfig) {
     // Head inner construction
     const metaBlockLines = [
       '  <!-- ── AUTO-GENERATED META TAGS & SEO ── -->',
+      '  <!-- Google tag (gtag.js) -->',
+      '  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2QKJX6PHT9"></script>',
+      '  <script>',
+      '    window.dataLayer = window.dataLayer || [];',
+      '    function gtag(){dataLayer.push(arguments);}',
+      '    gtag(\'js\', new Date());',
+      '    gtag(\'config\', \'G-2QKJX6PHT9\');',
+      '  </script>',
       `  <title>${esc(title)}</title>`,
       `  <meta name="description" content="${esc(description)}" />`,
       `  <meta name="keywords" content="${esc(keywords)}" />`,
