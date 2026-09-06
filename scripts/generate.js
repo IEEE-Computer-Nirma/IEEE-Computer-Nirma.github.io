@@ -25,7 +25,7 @@ function esc(str) {
     .replace(/"/g, '&quot;');
 }
 
-// ── 1. UPDATE HTML META TAGS & JSON-LD ───────────────────────────
+// ── 1. UPDATE HTML META TAGS & HEAD SAFELY WITHOUT REMOVING STYLES / SCRIPTS ───
 function updateHTMLMetadata(metaConfig) {
   console.log('--- Updating HTML Meta Tags & Structured Data ---');
   const site = metaConfig.site || {};
@@ -48,9 +48,14 @@ function updateHTMLMetadata(metaConfig) {
     const ogTitle = pageMeta.ogTitle || title;
     const ogDescription = pageMeta.ogDescription || description;
 
-    // Head inner construction
+    // Relative depth fix for favicon
+    const isSubdir = pageRelPath.includes('/') && !pageRelPath.startsWith('./');
+    const faviconPath = isSubdir ? '../favicon.ico' : 'favicon.ico';
+
+    // Page-specific metadata tags block
     const metaBlockLines = [
-      '  <!-- ── AUTO-GENERATED META TAGS & SEO ── -->',
+      '<!-- ── AUTO-GENERATED META TAGS & SEO ── -->',
+      `  <link rel="icon" href="${faviconPath}" />`,
       '  <!-- Google tag (gtag.js) -->',
       '  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2QKJX6PHT9"></script>',
       '  <script>',
@@ -80,30 +85,30 @@ function updateHTMLMetadata(metaConfig) {
       metaBlockLines.push(`  <meta name="twitter:site" content="${esc(site.twitterHandle)}" />`);
     }
 
-    // Append JSON-LD structured data scripts
     if (pageMeta.structuredData && Array.isArray(pageMeta.structuredData)) {
       metaBlockLines.push('  <!-- Structured Data (Schema.org) -->');
       for (const sd of pageMeta.structuredData) {
         metaBlockLines.push(`  <script type="application/ld+json">\n${JSON.stringify(sd, null, 2)}\n  </script>`);
       }
     }
-    metaBlockLines.push('  <!-- ── END AUTO-GENERATED META TAGS ── -->');
+    metaBlockLines.push('<!-- ── END AUTO-GENERATED META TAGS ── -->');
 
     const metaBlockStr = metaBlockLines.join('\n');
 
-    // Replace existing block if present, or replace <title>...</title> and adjacent meta tags
     const autoBlockRegex = /<!-- ── AUTO-GENERATED META TAGS & SEO ── -->[\s\S]*?<!-- ── END AUTO-GENERATED META TAGS ── -->/;
 
     if (autoBlockRegex.test(html)) {
       html = html.replace(autoBlockRegex, metaBlockStr.trim());
     } else {
-      // Replace existing title & tags in head
-      const titleRegex = /<title>[\s\S]*?<\/title>/i;
-      if (titleRegex.test(html)) {
-        html = html.replace(titleRegex, metaBlockStr.trim());
-      } else {
-        html = html.replace(/<head>/i, `<head>\n${metaBlockStr.trim()}\n`);
-      }
+      // Safely replace title, meta description/keywords, og, twitter, and canonical without removing stylesheet links or styles
+      html = html
+        .replace(/<title>[\s\S]*?<\/title>/gi, '')
+        .replace(/<meta\s+name=["'](description|keywords)["'][\s\S]*?>/gi, '')
+        .replace(/<meta\s+property=["']og:[\s\S]*?>/gi, '')
+        .replace(/<meta\s+name=["']twitter:[\s\S]*?>/gi, '')
+        .replace(/<link\s+rel=["'](icon|canonical)["'][\s\S]*?>/gi, '');
+
+      html = html.replace(/<head>/i, `<head>\n  ${metaBlockStr.trim()}\n`);
     }
 
     fs.writeFileSync(fullPagePath, html, 'utf8');
@@ -201,7 +206,6 @@ function generateLLMSTxt(metaConfig) {
 
 `;
 
-  // Dynamically include events from data/events.json
   if (Array.isArray(events) && events.length > 0) {
     events.forEach(ev => {
       llmsContent += `### ${ev.title} (${ev.status ? ev.status.toUpperCase() : 'EVENT'})\n`;
@@ -224,7 +228,6 @@ function generateLLMSTxt(metaConfig) {
   llmsContent += `- Sitemap: ${site.baseUrl}/sitemap.xml\n`;
 
   llmsContent += `\n## Core Team\n\n`;
-  // Extract key members from team.json
   if (Array.isArray(team)) {
     team.forEach(cat => {
       if (cat.category && Array.isArray(cat.members)) {
