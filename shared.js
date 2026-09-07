@@ -2,7 +2,7 @@
  * shared.js — Centralized Header & Footer Loader with fallback for local prototyping.
  *
  * Usage: call loadShared(root) where root is the relative path to the
- * project root from the current page, e.g. '' for root pages, '../' for nextwave-2026/.
+ * project root from the current page, e.g. '' for root pages, '../' for subdirectories.
  *
  * The page must have:
  *   <div id="site-header"></div>   — where the nav will be injected
@@ -34,7 +34,7 @@ async function loadShared(root = '') {
   const fallbackFooter = `
     <div class="footer-full">
       <footer class="site-footer">
-        <span>© 2026 IEEE CS Nirma — Student Branch Chapter</span>
+        <span>© 2026 IEEE Computer Society Nirma University</span>
         <span>
           <a href="{ROOT}">Home</a> ·
           <a href="https://events.mlh.com/events/14703-hack-days-ahmedabad" target="_blank" rel="noopener">HackDays Ahmedabad</a> ·

@@ -1,17 +1,17 @@
-# IEEE Computer Society — Nirma University Student Branch Chapter
+# IEEE Computer Society Nirma University
 # llms.txt — Machine-readable context for AI agents and large language models
 # Standard format: https://llmstxt.org/
 
-> IEEE Computer Society Student Branch Chapter at Nirma University, Ahmedabad, India.
+> IEEE Computer Society Nirma University, Ahmedabad, India.
 > We run technical events, hackathons, CTF competitions, workshops, and research programs for undergraduate engineering students.
 
 ## Organization
 
-- Name: IEEE Computer Society Student Branch Chapter, Nirma University
-- Short Name: IEEE CS Nirma
+- Name: IEEE Computer Society Nirma University
+- Short Name: IEEE CS Nirma University
 - University: Nirma University, Ahmedabad, Gujarat — 382 481, India
 - Parent Organization: IEEE Computer Society (www.computer.org)
-- Website: https://deeplumiere.github.io/IEEEComputerSociety/
+- Website: https://ieee-computer-nirma.github.io/
 
 ## Contact
 
@@ -62,12 +62,12 @@
 
 ## Key Platform Pages
 
-- IEEE CS Nirma — Computer Society Student Branch Chapter at Nirma University: https://deeplumiere.github.io/IEEEComputerSociety/
-- NovaHack 2026 — Flagship 24-Hour Hackathon & Pre-Event CTF | IEEE CS Nirma: https://deeplumiere.github.io/IEEEComputerSociety/novahack-2026
-- NovaHack CTF — Capture The Flag Arena | IEEE CS Nirma: https://deeplumiere.github.io/IEEEComputerSociety/ctf/
-- CTF Challenges — NovaHack Arena | IEEE CS Nirma: https://deeplumiere.github.io/IEEEComputerSociety/ctf/challenges.html
-- Live Leaderboard — NovaHack CTF Arena: https://deeplumiere.github.io/IEEEComputerSociety/ctf/leaderboard.html
-- Sitemap: https://deeplumiere.github.io/IEEEComputerSociety/sitemap.xml
+- IEEE Computer Society Nirma University — Official Portal: https://ieee-computer-nirma.github.io/
+- NovaHack 2026 — Flagship 24-Hour Hackathon & Pre-Event CTF | IEEE Computer Society Nirma University: https://ieee-computer-nirma.github.io/novahack-2026
+- NovaHack CTF — Capture The Flag Arena | IEEE Computer Society Nirma University: https://ieee-computer-nirma.github.io/ctf/
+- CTF Challenges — NovaHack Arena | IEEE Computer Society Nirma University: https://ieee-computer-nirma.github.io/ctf/challenges.html
+- Live Leaderboard — NovaHack CTF Arena | IEEE Computer Society Nirma University: https://ieee-computer-nirma.github.io/ctf/leaderboard.html
+- Sitemap: https://ieee-computer-nirma.github.io/sitemap.xml
 
 ## Core Team
 

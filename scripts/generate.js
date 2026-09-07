@@ -161,17 +161,17 @@ function generateLLMSTxt(metaConfig) {
   const events = readJSON('data/events.json') || [];
   const team = readJSON('data/team.json') || [];
 
-  let llmsContent = `# IEEE Computer Society — Nirma University Student Branch Chapter
+  let llmsContent = `# IEEE Computer Society Nirma University
 # llms.txt — Machine-readable context for AI agents and large language models
 # Standard format: https://llmstxt.org/
 
-> IEEE Computer Society Student Branch Chapter at Nirma University, Ahmedabad, India.
+> IEEE Computer Society Nirma University, Ahmedabad, India.
 > We run technical events, hackathons, CTF competitions, workshops, and research programs for undergraduate engineering students.
 
 ## Organization
 
-- Name: IEEE Computer Society Student Branch Chapter, Nirma University
-- Short Name: IEEE CS Nirma
+- Name: IEEE Computer Society Nirma University
+- Short Name: IEEE CS Nirma University
 - University: Nirma University, Ahmedabad, Gujarat — 382 481, India
 - Parent Organization: IEEE Computer Society (www.computer.org)
 - Website: ${site.baseUrl}/

@@ -1,6 +1,6 @@
 # IEEE Computer Society — Nirma University Student Chapter
 
-Official web portal for the IEEE Computer Society Student Branch Chapter at Nirma University, Ahmedabad. Built with plain HTML5, CSS3, dynamic vanilla JavaScript, and runtime JSON data assets.
+Official web portal for the IEEE Computer Society Nirma University, Ahmedabad. Built with plain HTML5, CSS3, dynamic vanilla JavaScript, and runtime JSON data assets.
 
 ## 🌟 Highlights & Features
 
@@ -71,5 +71,5 @@ The repository is configured for static hosting via **GitHub Pages**. Simply com
 
 ---
 
-**IEEE Computer Society Student Branch Chapter — Nirma University, Ahmedabad**
+**IEEE Computer Society Nirma University — Nirma University, Ahmedabad**
 Contact: [deep@computer.org](mailto:deep@computer.org)

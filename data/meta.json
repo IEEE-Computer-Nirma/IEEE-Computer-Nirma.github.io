@@ -1,10 +1,10 @@
 {
   "site": {
-    "name": "IEEE Computer Society — Nirma University Student Branch Chapter",
-    "shortName": "IEEE CS Nirma",
-    "baseUrl": "https://deeplumiere.github.io/IEEEComputerSociety",
-    "logo": "https://deeplumiere.github.io/IEEEComputerSociety/assets/IEEE_CS_Nirma_logo.svg",
-    "ogImage": "https://deeplumiere.github.io/IEEEComputerSociety/assets/gallery/hackdays_ahmedbad.png",
+    "name": "IEEE Computer Society Nirma University",
+    "shortName": "IEEE CS Nirma University",
+    "baseUrl": "https://ieee-computer-nirma.github.io",
+    "logo": "https://ieee-computer-nirma.github.io/assets/IEEE_CS_Nirma_logo.svg",
+    "ogImage": "https://ieee-computer-nirma.github.io/assets/gallery/hackdays_ahmedbad.png",
     "twitterHandle": "@ieee_cs_sbnu",
     "address": {
       "@type": "PostalAddress",
@@ -17,29 +17,29 @@
   "pages": {
     "index.html": {
       "path": "/",
-      "title": "IEEE CS Nirma — Computer Society Student Branch Chapter at Nirma University",
-      "description": "Official web portal of IEEE Computer Society Student Branch Chapter at Nirma University, Ahmedabad. Hackathons, CTF competitions, AI workshops, and technical events for engineering students.",
+      "title": "IEEE Computer Society Nirma University — Official Portal",
+      "description": "Official web portal of IEEE Computer Society Nirma University, Ahmedabad. Hackathons, CTF competitions, AI workshops, and technical events for engineering students.",
       "keywords": [
-        "IEEE Computer Society",
+        "IEEE Computer Society Nirma University",
         "Nirma University",
         "IEEE CS Nirma",
         "HackDays Ahmedabad",
         "NovaHack 2026",
         "CTF Competition",
-        "Student Chapter Ahmedabad",
+        "Ahmedabad",
         "Engineering Hackathon Gujarat"
       ],
-      "ogTitle": "IEEE Computer Society — Nirma University Student Chapter",
-      "ogDescription": "Official portal of IEEE CS Nirma University. Building curiosity to code through hackathons, workshops, and research programs.",
+      "ogTitle": "IEEE Computer Society Nirma University",
+      "ogDescription": "Official portal of IEEE Computer Society Nirma University. Building curiosity to code through hackathons, workshops, and research programs.",
       "ogType": "website",
       "structuredData": [
         {
           "@context": "https://schema.org",
           "@type": "EducationalOrganization",
-          "name": "IEEE Computer Society Student Branch Chapter at Nirma University",
-          "alternateName": "IEEE CS Nirma",
-          "url": "https://deeplumiere.github.io/IEEEComputerSociety/",
-          "logo": "https://deeplumiere.github.io/IEEEComputerSociety/assets/IEEE_CS_Nirma_logo.svg",
+          "name": "IEEE Computer Society Nirma University",
+          "alternateName": "IEEE CS Nirma University",
+          "url": "https://ieee-computer-nirma.github.io/",
+          "logo": "https://ieee-computer-nirma.github.io/assets/IEEE_CS_Nirma_logo.svg",
           "parentOrganization": {
             "@type": "Organization",
             "name": "IEEE Computer Society",
@@ -66,14 +66,14 @@
         {
           "@context": "https://schema.org",
           "@type": "WebSite",
-          "name": "IEEE CS Nirma",
-          "url": "https://deeplumiere.github.io/IEEEComputerSociety/"
+          "name": "IEEE Computer Society Nirma University",
+          "url": "https://ieee-computer-nirma.github.io/"
         }
       ]
     },
     "novahack-2026.html": {
       "path": "/novahack-2026",
-      "title": "NovaHack 2026 — Flagship 24-Hour Hackathon & Pre-Event CTF | IEEE CS Nirma",
+      "title": "NovaHack 2026 — Flagship 24-Hour Hackathon & Pre-Event CTF | IEEE Computer Society Nirma University",
       "description": "NovaHack 2026: 24-Hour Flagship Hackathon & Pre-Event Jeopardy CTF organized by IEEE Computer Society Nirma University on August 22–23, 2026.",
       "keywords": [
         "NovaHack 2026",
@@ -91,7 +91,7 @@
           "@context": "https://schema.org",
           "@type": "Event",
           "name": "NovaHack 2026",
-          "description": "24-Hour Flagship Hackathon and Pre-Event CTF Arena hosted by IEEE CS Nirma University.",
+          "description": "24-Hour Flagship Hackathon and Pre-Event CTF Arena hosted by IEEE Computer Society Nirma University.",
           "startDate": "2026-08-22T09:00:00+05:30",
           "endDate": "2026-08-23T09:00:00+05:30",
           "eventStatus": "https://schema.org/EventScheduled",
@@ -110,14 +110,14 @@
           "organizer": {
             "@type": "Organization",
             "name": "IEEE Computer Society Nirma University",
-            "url": "https://deeplumiere.github.io/IEEEComputerSociety/"
+            "url": "https://ieee-computer-nirma.github.io/"
           }
         }
       ]
     },
     "ctf/index.html": {
       "path": "/ctf/",
-      "title": "NovaHack CTF — Capture The Flag Arena | IEEE CS Nirma",
+      "title": "NovaHack CTF — Capture The Flag Arena | IEEE Computer Society Nirma University",
       "description": "NovaHack Jeopardy-style CTF Competition. Test your cybersecurity, web exploitation, forensics, and cryptography skills.",
       "keywords": [
         "NovaHack CTF",
@@ -126,19 +126,19 @@
         "Capture The Flag Ahmedabad",
         "Jeopardy CTF"
       ],
-      "ogTitle": "NovaHack CTF Arena — IEEE CS Nirma",
+      "ogTitle": "NovaHack CTF Arena — IEEE Computer Society Nirma University",
       "ogDescription": "Solve Jeopardy CTF challenges in Web, Forensics, Steganography, OSINT, and Crypto.",
       "ogType": "website"
     },
     "ctf/challenges.html": {
       "path": "/ctf/challenges.html",
-      "title": "CTF Challenges — NovaHack Arena | IEEE CS Nirma",
+      "title": "CTF Challenges — NovaHack Arena | IEEE Computer Society Nirma University",
       "description": "Interactive CTF Challenge Board for NovaHack. Solve web, cryptography, steganography, and OSINT challenges with real-time flag submission.",
       "keywords": [
         "CTF Challenges",
         "NovaHack Challenge Board",
         "Cybersecurity Exercises",
-        "IEEE CS Nirma CTF"
+        "IEEE Computer Society Nirma University CTF"
       ],
       "ogTitle": "NovaHack CTF Challenges",
       "ogDescription": "Interactive Jeopardy challenge board for NovaHack CTF. Submit flags and climb the leaderboard.",
@@ -146,7 +146,7 @@
     },
     "ctf/leaderboard.html": {
       "path": "/ctf/leaderboard.html",
-      "title": "Live Leaderboard — NovaHack CTF Arena",
+      "title": "Live Leaderboard — NovaHack CTF Arena | IEEE Computer Society Nirma University",
       "description": "Real-time leaderboard for NovaHack CTF competition. View top teams, points, solved challenges, and rankings.",
       "keywords": [
         "CTF Leaderboard",
