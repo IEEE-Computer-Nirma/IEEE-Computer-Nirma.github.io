@@ -7,6 +7,13 @@
     "event": "HackDays Ahmedabad"
   },
   {
+    "id": "hackdays-ahmedabad-grp",
+    "src": "assets/gallery/GroupPhoto00.jpeg",
+    "alt": "HackDays Ahmedabad Group Photo",
+    "caption": "HackDays Ahmedabad — September 26, 2026",
+    "event": "HackDays Ahmedabad"
+  },
+  {
     "id": "future-of-ai",
     "src": "assets/gallery/future_of_ai.png",
     "alt": "Future of AI Masterclass with Naren Kachroo",
