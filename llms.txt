@@ -41,7 +41,14 @@
 
 ## Events
 
-### HackDays Ahmedabad (UPCOMING)
+### HackIEEE (UPCOMING)
+- Type: Hackathon
+- Date: January 2-4, 2027
+- Duration: 2 days
+- Description: HackIEEE is the flagship hackathon by IEEE Computer Society Nirma University
+- URL: mailto:deep@computer.org
+
+### HackDays Ahmedabad (COMPLETED)
 - Type: Hackathon
 - Date: September 26, 2026
 - Duration: 1 day
