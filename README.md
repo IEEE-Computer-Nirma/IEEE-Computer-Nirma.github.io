@@ -4,7 +4,7 @@ Official web portal for the IEEE Computer Society Student Branch Chapter at Nirm
 
 ## 🌟 Highlights & Features
 
-- **Flagship Event:** **HackDays Ahmedabad** (September 26, 2026) — Featured hackathon registration and details.
+- **Flagship Event:** **HackIEEE** ([hack.ieeenirma.org](https://hack.ieeenirma.org/)) — Featured hackathon registration and details.
 - **Dynamic Content Engine:** Core page content, events, team roster, and gallery slides are loaded dynamically from JSON files (`data/events.json`, `data/team.json`, `data/gallery.json`).
 - **Interactive UI & Visuals:**
   - Dynamic abstract geometric & constellation HTML5 Canvas hero animation.

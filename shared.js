@@ -19,14 +19,14 @@ async function loadShared(root = '') {
       </a>
       <ul class="nav-links">
         <li><a href="{ROOT}#events">Events</a></li>
-        <li><a href="https://events.mlh.com/events/14703-hack-days-ahmedabad" target="_blank" rel="noopener">HackDays Ahmedabad</a></li>
+        <li><a href="https://hack.ieeenirma.org/" target="_blank" rel="noopener">HackIEEE</a></li>
         <li><a href="{ROOT}#gallery">Gallery</a></li>
         <li><a href="{ROOT}#team">Team</a></li>
         <li><a href="{ROOT}#about">About</a></li>
         <li><a href="{ROOT}#contact">Contact</a></li>
       </ul>
       <div class="nav-right-actions">
-        <a class="nav-cta" href="https://events.mlh.com/events/14703-hack-days-ahmedabad" target="_blank" rel="noopener">HackDays Ahmedabad →</a>
+        <a class="nav-cta" href="https://hack.ieeenirma.org/" target="_blank" rel="noopener">HackIEEE →</a>
       </div>
     </nav>
   `;
@@ -37,7 +37,7 @@ async function loadShared(root = '') {
         <span>© 2026 IEEE CS Nirma — Student Branch Chapter</span>
         <span>
           <a href="{ROOT}">Home</a> ·
-          <a href="https://events.mlh.com/events/14703-hack-days-ahmedabad" target="_blank" rel="noopener">HackDays Ahmedabad</a> ·
+          <a href="https://hack.ieeenirma.org/" target="_blank" rel="noopener">HackIEEE</a> ·
           <a href="mailto:deep@computer.org">deep@computer.org</a>
         </span>
       </footer>
