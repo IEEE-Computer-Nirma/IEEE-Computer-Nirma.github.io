@@ -21,23 +21,22 @@
 - LinkedIn: https://www.linkedin.com/company/ieee-computer-nirma-university
 - Instagram: https://www.instagram.com/ieee.cs.sbnu/
 
-## Flagship Event: NovaHack 2026
+## Flagship Event: HackIEEE
 
-- Date: August 22–23, 2026
-- Format: 24-Hour Hackathon + Pre-Event Jeopardy CTF
-- Location: Nirma University, Ahmedabad, Gujarat
+- Host: IEEE Computer Society Nirma University
+- Official Portal: https://hack.ieeenirma.org/
+- Summary: Premier regional student hackathon bringing developers, researchers, and engineers together to build impactful technical projects.
 
-### Problem Statements (Hackathon Tracks)
+## Key Platform Pages
 
-1. **Autonomous Contract Review Agent**
-   - Track: AI & LegalTech / Agentic AI
-   - Summary: Automated analysis of contracts (NDAs, vendor agreements) to identify potential legal risks, policy deviations, and missing clauses.
-   - Key Challenges: Lawyer hours, human oversights, policy comparison repetition, knowledge reuse, legal risk visibility.
-
-2. **AI Meeting Intelligence Platform**
-   - Track: AI & Enterprise Intelligence
-   - Summary: Intelligent conversation understanding that converts meeting discussions, decisions, and action items into automated workflows and project updates.
-   - Key Challenges: Information loss, action item tracking, manual project updates, blocker visibility, stakeholder alignment.
+- IEEE CS Nirma — Computer Society Student Branch Chapter at Nirma University: https://deeplumiere.github.io/IEEEComputerSociety
+- Events — IEEE CS Nirma University: https://deeplumiere.github.io/IEEEComputerSociety/events
+- Team & Board Members — IEEE CS Nirma University: https://deeplumiere.github.io/IEEEComputerSociety/team
+- Achievements — IEEE CS Nirma University: https://deeplumiere.github.io/IEEEComputerSociety/achievements
+- About Us — IEEE CS Nirma University: https://deeplumiere.github.io/IEEEComputerSociety/about
+- Contact Us — IEEE CS Nirma University: https://deeplumiere.github.io/IEEEComputerSociety/contact
+- Member Profile — IEEE CS Nirma University: https://deeplumiere.github.io/IEEEComputerSociety/member
+- Sitemap: https://deeplumiere.github.io/IEEEComputerSociety/sitemap.xml
 
 ## Events
 
@@ -67,39 +66,66 @@
 - Duration: 1 day
 - Description: IEEE Computer Society at Nirma University presented a masterclass on the AI revolution featuring Naren Kachroo, Head of Sales, AI at Google Cloud India, bridging the gap between cutting-edge technology and real-world impact.
 
-## Key Platform Pages
+## Achievements & Milestones
 
-- IEEE CS Nirma — Computer Society Student Branch Chapter at Nirma University: https://deeplumiere.github.io/IEEEComputerSociety/
-- NovaHack 2026 — Flagship 24-Hour Hackathon & Pre-Event CTF | IEEE CS Nirma: https://deeplumiere.github.io/IEEEComputerSociety/novahack-2026
-- NovaHack CTF — Capture The Flag Arena | IEEE CS Nirma: https://deeplumiere.github.io/IEEEComputerSociety/ctf/
-- CTF Challenges — NovaHack Arena | IEEE CS Nirma: https://deeplumiere.github.io/IEEEComputerSociety/ctf/challenges.html
-- Live Leaderboard — NovaHack CTF Arena: https://deeplumiere.github.io/IEEEComputerSociety/ctf/leaderboard.html
-- Sitemap: https://deeplumiere.github.io/IEEEComputerSociety/sitemap.xml
+### 1st Place — HackDays Ahmedabad 2025
+- Date: 2025-10-15
+- Description: Secured 1st place in the regional 24-hour hackathon by developing an automated agentic AI pipeline for legal document verification and smart risk analysis.
+- Contributors: Deep Joshi, Priyansh Patel, Aarav Mehta
 
-## Core Team
+### IEEE CS Outstanding Student Branch Chapter Award
+- Date: 2025-08-10
+- Description: Recognized by IEEE Computer Society India Council for exceptional technical programming, student engagement, and open-source contributions across Gujarat.
+- Contributors: Dr Umesh Bodhke, Deep Joshi, Vedanshi Bhatt, Divy Shah
+
+### Top 3 Finish — National Cybersecurity CTF 2025
+- Date: 2025-05-20
+- Description: Outperformed 120+ university teams in a 36-hour Jeopardy CTF competition covering Web Exploitation, Cryptography, Reverse Engineering, and Binary Forensics.
+- Contributors: Priyansh Patel, Ridham Shah, Rohan Sharma
+
+### Chapter Open Source Sprint — 50+ PRs Merged
+- Date: 2025-03-12
+- Description: Led a month-long community sprint guiding 80+ students to make high-impact open-source contributions to developer tools and security libraries.
+- Contributors: Deep Joshi, Ridham Shah, Meet Patel
+
+### Best Technical Workshop Series Award 2024
+- Date: 2024-11-05
+- Description: Conducted hands-on sessions on Agentic AI, LLM Fine-Tuning, and Distributed Systems, training over 350+ engineering students across 4 sessions.
+- Contributors: Franky Patel, Sakshi Chavda, Mahi Acharya
+
+### Published Research Paper at IEEE CONECCT 2024
+- Date: 2024-07-18
+- Description: Co-authored and presented research on lightweight cryptographic verification for decentralized edge nodes.
+- Contributors: Dr Umesh Bodhke, Deep Joshi, Palak Sinojia
+
+### Excellence in Digital Outreach & Design 2024
+- Date: 2024-04-14
+- Description: Awarded for designing high-impact visual identity and marketing campaigns for chapter tech events, reaching 10,000+ students across Gujarat.
+- Contributors: Vishwa Ghori, Keya Jeni, Pari Pancholi, Neha Siju
+
+## Core Team & Leadership
 
 ### Faculty Advisor
-- Dr Umesh Bodhke — Faculty Advisor
+- Dr Umesh Bodhke — Faculty Advisor (Profile: https://deeplumiere.github.io/IEEEComputerSociety/member?id=dr-umesh-bodhke)
 
 ### Core Team
-- Deep Joshi — Chair (GitHub: https://github.com/DeepLumiere) (LinkedIn: https://www.linkedin.com/in/deep-lumiere/)
-- Vedanshi Bhatt — Vice Chair
-- Divy Shah — Secretary (LinkedIn: https://www.linkedin.com/in/divy-shah17)
-- Franky Patel — Join Secretary (LinkedIn: https://www.linkedin.com/in/franky-patel-23038028b)
-- Sakshi Chavda — Treasurer (LinkedIn: https://www.linkedin.com/in/sakshi-chavda-1040aa346)
-- Mahi Acharya — Treasurer (LinkedIn: https://www.linkedin.com/in/mahi-acharya-085651377)
-- Palak Sinojia — Technical Head
-- Priyansh Patel — Technical Head (GitHub: https://github.com/Priyansh9506) (LinkedIn: https://www.linkedin.com/in/priyansh9506)
-- Ridham Shah — Web Master (GitHub: https://github.com/ridhamdev) (LinkedIn: https://www.linkedin.com/in/ridham-shah-5ba117377)
-- Meet Patel — Web Master
-- Vishwa Ghori — Creatives
-- Keya Jeni — Creatives
-- Pari Pancholi — Marketing (LinkedIn: https://www.linkedin.com/in/pari-pancholi-6732993a7)
-- Neha Siju — Marketing (LinkedIn: https://www.linkedin.com/in/neha-kananthanam-9a8711378)
+- Deep Joshi — Chair (Profile: https://deeplumiere.github.io/IEEEComputerSociety/member?id=deep-joshi) [GitHub: https://github.com/DeepLumiere] [LinkedIn: https://www.linkedin.com/in/deep-lumiere/]
+- Vedanshi Bhatt — Vice Chair (Profile: https://deeplumiere.github.io/IEEEComputerSociety/member?id=vedanshi-malay-bhatt)
+- Divy Shah — Secretary (Profile: https://deeplumiere.github.io/IEEEComputerSociety/member?id=divy-shah) [LinkedIn: https://www.linkedin.com/in/divy-shah17]
+- Franky Patel — Join Secretary (Profile: https://deeplumiere.github.io/IEEEComputerSociety/member?id=franky-kirtikumar-patel) [LinkedIn: https://www.linkedin.com/in/franky-patel-23038028b]
+- Sakshi Chavda — Treasurer (Profile: https://deeplumiere.github.io/IEEEComputerSociety/member?id=sakshi-chavda) [LinkedIn: https://www.linkedin.com/in/sakshi-chavda-1040aa346]
+- Mahi Acharya — Treasurer (Profile: https://deeplumiere.github.io/IEEEComputerSociety/member?id=mahi-sunil-acharya) [LinkedIn: https://www.linkedin.com/in/mahi-acharya-085651377]
+- Palak Sinojia — Technical Head (Profile: https://deeplumiere.github.io/IEEEComputerSociety/member?id=palak-sinojia)
+- Priyansh Patel — Technical Head (Profile: https://deeplumiere.github.io/IEEEComputerSociety/member?id=priyansh-patel) [GitHub: https://github.com/Priyansh9506] [LinkedIn: https://www.linkedin.com/in/priyansh9506]
+- Ridham Shah — Web Master (Profile: https://deeplumiere.github.io/IEEEComputerSociety/member?id=ridham-mayur-shah) [GitHub: https://github.com/ridhamdev] [LinkedIn: https://www.linkedin.com/in/ridham-shah-5ba117377]
+- Meet Patel — Web Master (Profile: https://deeplumiere.github.io/IEEEComputerSociety/member?id=patel-meet-rameshbhai)
+- Vishwa Ghori — Creatives (Profile: https://deeplumiere.github.io/IEEEComputerSociety/member?id=vishwa-ghori)
+- Keya Jeni — Creatives (Profile: https://deeplumiere.github.io/IEEEComputerSociety/member?id=keya-jeni)
+- Pari Pancholi — Marketing (Profile: https://deeplumiere.github.io/IEEEComputerSociety/member?id=pari-pancholi) [LinkedIn: https://www.linkedin.com/in/pari-pancholi-6732993a7]
+- Neha Siju — Marketing (Profile: https://deeplumiere.github.io/IEEEComputerSociety/member?id=neha-siju-kananthanam) [LinkedIn: https://www.linkedin.com/in/neha-kananthanam-9a8711378]
 
 ## Technology Stack
 
 - Static Site: HTML5, CSS3, Vanilla JavaScript
-- Dynamic Data Engine: Runtime JSON assets under `/data/` (`events.json`, `team.json`, `gallery.json`, `meta.json`)
-- CTF Flag Verification: SHA-256 hashed flags via Web Crypto API
+- Dynamic Data Engine: Runtime JSON assets under `/data/` (`events.json`, `team.json`, `gallery.json`, `achievements.json`, `meta.json`)
 - Hosted: GitHub Pages

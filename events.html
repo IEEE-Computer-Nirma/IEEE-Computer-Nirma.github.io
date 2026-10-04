@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- ── AUTO-GENERATED META TAGS & SEO ── -->
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2QKJX6PHT9"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-2QKJX6PHT9');
+  </script>
+  <title>Events — IEEE CS Nirma University</title>
+  <meta name="description" content="Technical workshops, hackathons, CTFs, and hands-on developer events hosted by IEEE Computer Society Nirma University." />
+  <meta name="keywords" content="IEEE CS Events, Nirma University Workshops, Hackathons Gujarat" />
+  <link rel="canonical" href="https://deeplumiere.github.io/IEEEComputerSociety/events" />
+  <!-- Open Graph / Facebook -->
+  <meta property="og:title" content="Events — IEEE CS Nirma University" />
+  <meta property="og:description" content="Explore upcoming and past technical workshops, hackathons, and competitions." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://deeplumiere.github.io/IEEEComputerSociety/events" />
+  <meta property="og:image" content="https://deeplumiere.github.io/IEEEComputerSociety/assets/gallery/hackdays_ahmedbad.png" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Events — IEEE CS Nirma University" />
+  <meta name="twitter:description" content="Explore upcoming and past technical workshops, hackathons, and competitions." />
+  <meta name="twitter:image" content="https://deeplumiere.github.io/IEEEComputerSociety/assets/gallery/hackdays_ahmedbad.png" />
+  <meta name="twitter:site" content="@ieee_cs_sbnu" />
+  <!-- ── END AUTO-GENERATED META TAGS ── -->
+  <link rel="icon" href="favicon.ico" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+  <link rel="stylesheet" href="shared.css" />
+  <style>
+    :root {
+      --bg: #ffffff;
+      --fg: #111111;
+      --muted: #666666;
+      --border: #dddddd;
+      --card-bg: #fafafa;
+      --hover-bg: #f4f4f4;
+      --green: #1a7f37;
+      --orange: #FFA300;
+      --blue: #00629B;
+      --mono: 'Space Mono', 'Courier New', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--mono); background: var(--bg); color: var(--fg); font-size: 13px; line-height: 1.65; }
+
+    .section { max-width: 1100px; margin: 0 auto; padding: 4rem 2rem 6rem; }
+    .section-header { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 2.5rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+    .section-label { font-size: 12px; letter-spacing: .15em; text-transform: uppercase; font-weight: 700; }
+    .section-sub { font-size: 12px; color: var(--muted); }
+
+    .events-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; }
+    .event-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 6px; padding: 2rem; transition: border-color .2s, transform .2s; }
+    .event-card:hover { border-color: var(--fg); transform: translateY(-2px); }
+
+    .event-type-badge { display: inline-block; padding: 2px 10px; border: 1px solid var(--border); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem; }
+    .event-type-badge.ctf { border-color: var(--orange); color: var(--orange); }
+    .event-type-badge.workshop { border-color: var(--blue); color: var(--blue); }
+    .event-type-badge.hackathon { border-color: var(--green); color: var(--green); }
+
+    .event-status { font-size: 10px; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 0.4rem; color: var(--muted); }
+    .event-status.upcoming { color: var(--green); font-weight: 700; }
+
+    .event-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 0.5rem; line-height: 1.25; }
+    .event-date { font-size: 11px; color: var(--muted); margin-bottom: 1rem; }
+    .event-desc { font-size: 12px; color: var(--muted); line-height: 1.8; margin-bottom: 1.5rem; }
+
+    .event-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 1.2rem; }
+    .tag { font-size: 10px; padding: 2px 8px; border: 1px solid var(--border); color: var(--muted); }
+
+    .event-link { display: inline-block; font-size: 12px; font-weight: 700; color: var(--fg); text-decoration: none; border-bottom: 1px solid var(--fg); padding-bottom: 1px; }
+    .event-link:hover { opacity: 0.7; }
+  </style>
+</head>
+
+<body>
+  <div id="site-header"></div>
+
+  <main class="section">
+    <div class="section-header">
+      <span class="section-label">Events & Workshops</span>
+      <span class="section-sub" id="events-count">Loading…</span>
+    </div>
+    <div class="events-grid" id="events-grid"></div>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script>
+    function esc(s) {
+      return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    async function loadEvents() {
+      try {
+        const res = await fetch('data/events.json');
+        const events = await res.json();
+        const grid = document.getElementById('events-grid');
+        const count = document.getElementById('events-count');
+
+        count.textContent = `${events.length} event${events.length !== 1 ? 's' : ''}`;
+        grid.innerHTML = events.map(ev => `
+          <div class="event-card">
+            <span class="event-type-badge ${(ev.type || '').toLowerCase()}">${esc(ev.type || 'Event')}</span>
+            <p class="event-status ${ev.status}">${ev.status === 'upcoming' ? '◎ UPCOMING' : '✓ COMPLETED'}</p>
+            <h3 class="event-title">${esc(ev.title)}</h3>
+            <p class="event-date">${esc(ev.date)} · ${esc(ev.duration || '')}</p>
+            <p class="event-desc">${esc(ev.description)}</p>
+            <div class="event-tags">${(ev.tags || []).map(t => `<span class="tag">${esc(t)}</span>`).join('')}</div>
+            ${ev.link ? `<a class="event-link" href="${esc(ev.link)}" target="_blank" rel="noopener">${esc(ev.linkLabel || 'Learn More →')}</a>` : ''}
+          </div>
+        `).join('');
+      } catch (err) {
+        document.getElementById('events-grid').innerHTML = '<p style="color:var(--muted)">Failed to load events.</p>';
+      }
+    }
+
+    loadEvents();
+  </script>
+  <script src="shared.js"></script>
+  <script>loadShared('');</script>
+</body>
+
+</html>

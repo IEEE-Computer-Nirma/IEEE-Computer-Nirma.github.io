@@ -40,7 +40,7 @@ function updateHTMLMetadata(metaConfig) {
 
     let html = fs.readFileSync(fullPagePath, 'utf8');
 
-    const canonicalUrl = `${site.baseUrl}${pageMeta.path.startsWith('/') ? '' : '/'}${pageMeta.path}`;
+    const canonicalUrl = `${site.baseUrl}${pageMeta.path === '/' ? '' : pageMeta.path}`;
     const ogImage = pageMeta.ogImage || site.ogImage;
     const title = pageMeta.title || site.name;
     const description = pageMeta.description || '';
@@ -125,11 +125,9 @@ function generateSitemap(metaConfig) {
     if (pageRelPath === 'index.html' || pageMeta.path === '/') {
       priority = '1.0';
       changefreq = 'monthly';
-    } else if (pageRelPath.includes('novahack') || pageRelPath === 'ctf/index.html') {
-      priority = '0.9';
     }
 
-    const fullUrl = `${site.baseUrl}${pageMeta.path.startsWith('/') ? '' : '/'}${pageMeta.path}`;
+    const fullUrl = `${site.baseUrl}${pageMeta.path === '/' ? '' : pageMeta.path}`;
 
     return `  <url>
     <loc>${esc(fullUrl)}</loc>
@@ -155,6 +153,7 @@ function generateLLMSTxt(metaConfig) {
   const site = metaConfig.site || {};
   const events = readJSON('data/events.json') || [];
   const team = readJSON('data/team.json') || [];
+  const achievements = readJSON('data/achievements.json') || [];
 
   let llmsContent = `# IEEE Computer Society — Nirma University Student Branch Chapter
 # llms.txt — Machine-readable context for AI agents and large language models
@@ -179,29 +178,25 @@ function generateLLMSTxt(metaConfig) {
 - LinkedIn: https://www.linkedin.com/company/ieee-computer-nirma-university
 - Instagram: https://www.instagram.com/ieee.cs.sbnu/
 
-## Flagship Event: NovaHack 2026
+## Flagship Event: HackIEEE
 
-- Date: August 22–23, 2026
-- Format: 24-Hour Hackathon + Pre-Event Jeopardy CTF
-- Location: Nirma University, Ahmedabad, Gujarat
+- Host: IEEE Computer Society Nirma University
+- Official Portal: https://hack.ieeenirma.org/
+- Summary: Premier regional student hackathon bringing developers, researchers, and engineers together to build impactful technical projects.
 
-### Problem Statements (Hackathon Tracks)
-
-1. **Autonomous Contract Review Agent**
-   - Track: AI & LegalTech / Agentic AI
-   - Summary: Automated analysis of contracts (NDAs, vendor agreements) to identify potential legal risks, policy deviations, and missing clauses.
-   - Key Challenges: Lawyer hours, human oversights, policy comparison repetition, knowledge reuse, legal risk visibility.
-
-2. **AI Meeting Intelligence Platform**
-   - Track: AI & Enterprise Intelligence
-   - Summary: Intelligent conversation understanding that converts meeting discussions, decisions, and action items into automated workflows and project updates.
-   - Key Challenges: Information loss, action item tracking, manual project updates, blocker visibility, stakeholder alignment.
-
-## Events
+## Key Platform Pages
 
 `;
 
-  // Dynamically include events from data/events.json
+  if (metaConfig.pages) {
+    for (const [pageFile, pageMeta] of Object.entries(metaConfig.pages)) {
+      const pageUrl = `${site.baseUrl}${pageMeta.path === '/' ? '' : pageMeta.path}`;
+      llmsContent += `- ${pageMeta.title}: ${pageUrl}\n`;
+    }
+  }
+  llmsContent += `- Sitemap: ${site.baseUrl}/sitemap.xml\n`;
+
+  llmsContent += `\n## Events\n\n`;
   if (Array.isArray(events) && events.length > 0) {
     events.forEach(ev => {
       llmsContent += `### ${ev.title} (${ev.status ? ev.status.toUpperCase() : 'EVENT'})\n`;
@@ -214,25 +209,28 @@ function generateLLMSTxt(metaConfig) {
     });
   }
 
-  llmsContent += `## Key Platform Pages\n\n`;
-  if (metaConfig.pages) {
-    for (const [pageFile, pageMeta] of Object.entries(metaConfig.pages)) {
-      const pageUrl = `${site.baseUrl}${pageMeta.path.startsWith('/') ? '' : '/'}${pageMeta.path}`;
-      llmsContent += `- ${pageMeta.title}: ${pageUrl}\n`;
-    }
+  llmsContent += `## Achievements & Milestones\n\n`;
+  if (Array.isArray(achievements) && achievements.length > 0) {
+    achievements.forEach(ach => {
+      llmsContent += `### ${ach.title}\n`;
+      llmsContent += `- Date: ${ach.date}\n`;
+      llmsContent += `- Description: ${ach.description}\n`;
+      if (ach.contributors && ach.contributors.length) {
+        llmsContent += `- Contributors: ${ach.contributors.map(c => c.name).join(', ')}\n`;
+      }
+      llmsContent += '\n';
+    });
   }
-  llmsContent += `- Sitemap: ${site.baseUrl}/sitemap.xml\n`;
 
-  llmsContent += `\n## Core Team\n\n`;
-  // Extract key members from team.json
+  llmsContent += `## Core Team & Leadership\n\n`;
   if (Array.isArray(team)) {
     team.forEach(cat => {
       if (cat.category && Array.isArray(cat.members)) {
         llmsContent += `### ${cat.category}\n`;
         cat.members.forEach(m => {
-          llmsContent += `- ${m.name} — ${m.role}`;
-          if (m.github) llmsContent += ` (GitHub: ${m.github})`;
-          if (m.linkedin) llmsContent += ` (LinkedIn: ${m.linkedin})`;
+          llmsContent += `- ${m.name} — ${m.role} (Profile: ${site.baseUrl}/member?id=${encodeURIComponent(m.id)})`;
+          if (m.github) llmsContent += ` [GitHub: ${m.github}]`;
+          if (m.linkedin) llmsContent += ` [LinkedIn: ${m.linkedin}]`;
           llmsContent += '\n';
         });
         llmsContent += '\n';
@@ -243,8 +241,7 @@ function generateLLMSTxt(metaConfig) {
   llmsContent += `## Technology Stack
 
 - Static Site: HTML5, CSS3, Vanilla JavaScript
-- Dynamic Data Engine: Runtime JSON assets under \`/data/\` (\`events.json\`, \`team.json\`, \`gallery.json\`, \`meta.json\`)
-- CTF Flag Verification: SHA-256 hashed flags via Web Crypto API
+- Dynamic Data Engine: Runtime JSON assets under \`/data/\` (\`events.json\`, \`team.json\`, \`gallery.json\`, \`achievements.json\`, \`meta.json\`)
 - Hosted: GitHub Pages
 `;
 
