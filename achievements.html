@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- ── AUTO-GENERATED META TAGS & SEO ── -->
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2QKJX6PHT9"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-2QKJX6PHT9');
+  </script>
+  <title>Achievements — IEEE CS Nirma University</title>
+  <meta name="description" content="Chapter awards, hackathon victories, open-source milestones, and research publications achieved by IEEE CS Nirma members." />
+  <meta name="keywords" content="IEEE CS Achievements, Nirma University Awards, Hackathon Winners" />
+  <link rel="canonical" href="https://deeplumiere.github.io/IEEEComputerSociety/achievements" />
+  <!-- Open Graph / Facebook -->
+  <meta property="og:title" content="Achievements — IEEE CS Nirma University" />
+  <meta property="og:description" content="Celebrating chapter awards, hackathon wins, and open-source contributions." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://deeplumiere.github.io/IEEEComputerSociety/achievements" />
+  <meta property="og:image" content="https://deeplumiere.github.io/IEEEComputerSociety/assets/gallery/hackdays_ahmedbad.png" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Achievements — IEEE CS Nirma University" />
+  <meta name="twitter:description" content="Celebrating chapter awards, hackathon wins, and open-source contributions." />
+  <meta name="twitter:image" content="https://deeplumiere.github.io/IEEEComputerSociety/assets/gallery/hackdays_ahmedbad.png" />
+  <meta name="twitter:site" content="@ieee_cs_sbnu" />
+  <!-- ── END AUTO-GENERATED META TAGS ── -->
+  <link rel="icon" href="favicon.ico" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="shared.css" />
+  <style>
+    :root {
+      --bg: #ffffff;
+      --fg: #111111;
+      --muted: #666666;
+      --border: #dddddd;
+      --card-bg: #fafafa;
+      --orange: #FFA300;
+      --gold: #D4AF37;
+      --gold-bg: #fffdf5;
+      --mono: 'Space Mono', 'Courier New', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--mono); background: var(--bg); color: var(--fg); font-size: 13px; line-height: 1.65; }
+
+    .section { max-width: 1100px; margin: 0 auto; padding: 4rem 2rem 6rem; }
+
+    .toolbar { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap; }
+    .section-header { display: flex; align-items: baseline; gap: 1rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; width: 100%; margin-bottom: 1.5rem; }
+    .section-label { font-size: 12px; letter-spacing: .15em; text-transform: uppercase; font-weight: 700; }
+    .section-sub { font-size: 12px; color: var(--muted); }
+
+    .controls { display: flex; align-items: center; gap: 1rem; margin-left: auto; }
+    .sort-btn { font-family: var(--mono); font-size: 11px; padding: 6px 14px; border: 1px solid var(--border); background: var(--card-bg); color: var(--fg); cursor: pointer; transition: all .2s; }
+    .sort-btn.active { background: var(--fg); color: var(--bg); border-color: var(--fg); font-weight: 700; }
+
+    .achievements-list { display: flex; flex-direction: column; gap: 2rem; }
+    .achievement-card {
+      display: grid; grid-template-columns: 280px 1fr; gap: 2rem; background: var(--card-bg); border: 1px solid var(--border);
+      border-radius: 6px; overflow: hidden; padding: 1.5rem; transition: border-color .2s, box-shadow .2s;
+    }
+    .achievement-card:hover { border-color: var(--fg); box-shadow: 0 4px 16px rgba(0,0,0,0.05); }
+
+    @media (max-width: 768px) { .achievement-card { grid-template-columns: 1fr; } }
+
+    .achievement-img { width: 100%; height: 180px; object-fit: cover; border-radius: 4px; border: 1px solid var(--border); background: #eee; }
+    .achievement-info { display: flex; flex-direction: column; justify-content: space-between; }
+
+    .achievement-date { font-size: 11px; color: var(--orange); font-weight: 700; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 0.4rem; }
+    .achievement-title { font-size: 1.4rem; font-weight: 700; line-height: 1.25; margin-bottom: 0.8rem; letter-spacing: -.01em; }
+    .achievement-desc { font-size: 12px; color: var(--muted); line-height: 1.8; margin-bottom: 1.2rem; }
+
+    .links-group { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 1.2rem; }
+    .link-btn { font-size: 11px; font-weight: 700; color: var(--fg); text-decoration: none; border: 1px solid var(--border); padding: 4px 10px; border-radius: 3px; background: var(--bg); transition: all .2s; }
+    .link-btn:hover { border-color: var(--fg); background: var(--fg); color: var(--bg); }
+
+    .contributors-wrap { border-top: 1px solid var(--border); padding-top: 1rem; }
+    .contributors-label { font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.6rem; font-weight: 700; }
+    .contributors-badges { display: flex; flex-wrap: wrap; gap: 8px; }
+
+    .badge-board {
+      display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 700; padding: 3px 10px;
+      border: 1px solid var(--gold); background: var(--gold-bg); color: #8a6d0b; text-decoration: none; border-radius: 3px; transition: all .2s;
+    }
+    .badge-board:hover { background: var(--gold); color: #000; }
+    .badge-board::before { content: '★'; color: var(--gold); }
+
+    .badge-nonboard { display: inline-flex; align-items: center; font-size: 11px; padding: 3px 10px; border: 1px solid var(--border); background: var(--bg); color: var(--muted); border-radius: 3px; }
+
+    /* Pagination */
+    .pagination { display: flex; justify-content: center; align-items: center; gap: 12px; margin-top: 3rem; }
+    .page-btn { font-family: var(--mono); font-size: 12px; font-weight: 700; padding: 8px 16px; border: 1px solid var(--border); background: var(--card-bg); color: var(--fg); cursor: pointer; transition: all .2s; }
+    .page-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    .page-btn:not(:disabled):hover { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+    .page-indicator { font-size: 12px; font-weight: 700; color: var(--muted); }
+  </style>
+</head>
+
+<body>
+  <div id="site-header"></div>
+
+  <main class="section">
+    <div class="toolbar">
+      <div class="section-header">
+        <span class="section-label">Achievements & Milestones</span>
+        <span class="section-sub" id="achievements-count">Loading…</span>
+      </div>
+      <div class="controls">
+        <button class="sort-btn active" id="sort-time" onclick="setSort('time')">Date Ordered</button>
+        <button class="sort-btn" id="sort-random" onclick="setSort('random')">Random Ordered</button>
+      </div>
+    </div>
+
+    <div class="achievements-list" id="achievements-list"></div>
+
+    <div class="pagination" id="pagination">
+      <button class="page-btn" id="prev-page" onclick="changePage(-1)">← Previous</button>
+      <span class="page-indicator" id="page-indicator">Page 1</span>
+      <button class="page-btn" id="next-page" onclick="changePage(1)">Next →</button>
+    </div>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script>
+    function esc(s) {
+      return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    let rawAchievements = [];
+    let boardMemberIds = new Set();
+    let currentSort = 'time';
+    let currentPage = 1;
+    const itemsPerPage = 5;
+
+    async function init() {
+      try {
+        const [achRes, teamRes] = await Promise.all([
+          fetch('data/achievements.json'),
+          fetch('data/team.json')
+        ]);
+        rawAchievements = await achRes.json();
+        const teamData = await teamRes.json();
+
+        // Extract all board member IDs
+        (teamData || []).forEach(cat => {
+          (cat.members || []).forEach(m => {
+            if (m.id) boardMemberIds.add(m.id);
+          });
+        });
+
+        render();
+      } catch (e) {
+        document.getElementById('achievements-list').innerHTML = '<p style="color:var(--muted)">Failed to load achievements.</p>';
+      }
+    }
+
+    function setSort(mode) {
+      currentSort = mode;
+      currentPage = 1;
+      document.getElementById('sort-time').classList.toggle('active', mode === 'time');
+      document.getElementById('sort-random').classList.toggle('active', mode === 'random');
+      render();
+    }
+
+    function getSortedData() {
+      const data = [...rawAchievements];
+      if (currentSort === 'time') {
+        data.sort((a, b) => new Date(b.date) - new Date(a.date));
+      } else if (currentSort === 'random') {
+        // Deterministic pseudorandom shuffle based on page load or fixed seed for clean pagination
+        for (let i = data.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.sin(i + 1) * 10000) % (i + 1);
+          const idx = Math.abs(j);
+          [data[i], data[idx]] = [data[idx], data[i]];
+        }
+      }
+      return data;
+    }
+
+    function render() {
+      const listEl = document.getElementById('achievements-list');
+      const countEl = document.getElementById('achievements-count');
+      const data = getSortedData();
+
+      countEl.textContent = `${data.length} total achievement${data.length !== 1 ? 's' : ''}`;
+
+      const totalPages = Math.ceil(data.length / itemsPerPage) || 1;
+      if (currentPage > totalPages) currentPage = totalPages;
+      if (currentPage < 1) currentPage = 1;
+
+      const start = (currentPage - 1) * itemsPerPage;
+      const pageItems = data.slice(start, start + itemsPerPage);
+
+      listEl.innerHTML = pageItems.map(item => `
+        <article class="achievement-card">
+          <img class="achievement-img" src="${esc(item.image)}" alt="${esc(item.title)}" onerror="this.src='assets/gallery/hackdays_ahmedbad.png'" />
+          <div class="achievement-info">
+            <div>
+              <p class="achievement-date">✦ ${esc(item.date)}</p>
+              <h2 class="achievement-title">${esc(item.title)}</h2>
+              <p class="achievement-desc">${esc(item.description)}</p>
+              ${(item.links && item.links.length) ? `
+                <div class="links-group">
+                  ${item.links.map(l => `<a class="link-btn" href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.name)} ↗</a>`).join('')}
+                </div>
+              ` : ''}
+            </div>
+            ${(item.contributors && item.contributors.length) ? `
+              <div class="contributors-wrap">
+                <p class="contributors-label">Contributors</p>
+                <div class="contributors-badges">
+                  ${item.contributors.map(c => {
+                    const isBoard = c.id && boardMemberIds.has(c.id);
+                    if (isBoard) {
+                      return `<a class="badge-board" href="/member?id=${encodeURIComponent(c.id)}">${esc(c.name)}</a>`;
+                    }
+                    return `<span class="badge-nonboard">${esc(c.name)}</span>`;
+                  }).join('')}
+                </div>
+              </div>
+            ` : ''}
+          </div>
+        </article>
+      `).join('');
+
+      // Pagination controls
+      document.getElementById('page-indicator').textContent = `Page ${currentPage} of ${totalPages}`;
+      document.getElementById('prev-page').disabled = currentPage === 1;
+      document.getElementById('next-page').disabled = currentPage === totalPages;
+    }
+
+    function changePage(delta) {
+      currentPage += delta;
+      render();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    init();
+  </script>
+  <script src="shared.js"></script>
+  <script>loadShared('');</script>
+</body>
+
+</html>

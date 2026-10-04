@@ -1,16 +1,20 @@
 /**
- * shared.js — Centralized Header & Footer Loader with fallback for local prototyping.
+ * shared.js — Centralized Header & Footer Loader with clean URL handling.
  *
- * Usage: call loadShared(root) where root is the relative path to the
- * project root from the current page, e.g. '' for root pages, '../' for nextwave-2026/.
- *
- * The page must have:
- *   <div id="site-header"></div>   — where the nav will be injected
- *   <div id="site-footer"></div>   — where the footer will be injected
+ * Usage: call loadShared(root) where root is relative path to root (default '').
  */
 async function loadShared(root = '') {
   root = root.replace(/\/?$/, '/').replace(/^\//, '');
   if (root === '/') root = '';
+
+  // Clean extensionless URL handling: Strip .html from location bar if served directly
+  if (window.location.protocol !== 'file:' && window.location.pathname.endsWith('.html')) {
+    let cleanPath = window.location.pathname.replace(/\.html$/, '');
+    if (cleanPath.endsWith('/index')) {
+      cleanPath = cleanPath.replace(/\/index$/, '/');
+    }
+    window.history.replaceState(null, '', cleanPath + window.location.search + window.location.hash);
+  }
 
   const fallbackHeader = `
     <nav class="nav" id="main-nav">
@@ -18,12 +22,11 @@ async function loadShared(root = '') {
         <img src="{ROOT}assets/IEEE_CS_Nirma_logo.svg" alt="IEEE CS Nirma" />
       </a>
       <ul class="nav-links">
-        <li><a href="{ROOT}#events">Events</a></li>
-        <li><a href="https://hack.ieeenirma.org/" target="_blank" rel="noopener">HackIEEE</a></li>
-        <li><a href="{ROOT}#gallery">Gallery</a></li>
-        <li><a href="{ROOT}#team">Team</a></li>
-        <li><a href="{ROOT}#about">About</a></li>
-        <li><a href="{ROOT}#contact">Contact</a></li>
+        <li><a href="{ROOT}events">Events</a></li>
+        <li><a href="{ROOT}achievements">Achievements</a></li>
+        <li><a href="{ROOT}team">Team</a></li>
+        <li><a href="{ROOT}about">About</a></li>
+        <li><a href="{ROOT}contact">Contact</a></li>
       </ul>
       <div class="nav-right-actions">
         <a class="nav-cta" href="https://hack.ieeenirma.org/" target="_blank" rel="noopener">HackIEEE →</a>
@@ -37,7 +40,11 @@ async function loadShared(root = '') {
         <span>© 2026 IEEE CS Nirma — Student Branch Chapter</span>
         <span>
           <a href="{ROOT}">Home</a> ·
-          <a href="https://hack.ieeenirma.org/" target="_blank" rel="noopener">HackIEEE</a> ·
+          <a href="{ROOT}events">Events</a> ·
+          <a href="{ROOT}achievements">Achievements</a> ·
+          <a href="{ROOT}team">Team</a> ·
+          <a href="{ROOT}about">About</a> ·
+          <a href="{ROOT}contact">Contact</a> ·
           <a href="mailto:deep@computer.org">deep@computer.org</a>
         </span>
       </footer>
@@ -71,16 +78,18 @@ async function loadShared(root = '') {
   const currentPath = window.location.pathname;
   const normalize = (p) => {
     const clean = p.split(/[?#]/)[0];
-    return clean.replace(/\/.+$/, '/').replace(/\.html$/,'').replace(/\/$/, '')
+    const segment = clean.replace(/\/.+$/, '/').replace(/\.html$/,'').replace(/\/$/, '')
       .split('/')
       .filter(Boolean)
       .pop() || 'index';
+    return segment === '' ? 'index' : segment;
   };
+
   const page = normalize(currentPath);
   document.querySelectorAll('.nav-links a').forEach(link => {
     const href = link.getAttribute('href') || '';
     const linkPath = normalize(href);
-    if (page === linkPath) {
+    if (page === linkPath && linkPath !== 'index') {
       link.classList.add('active');
     }
   });

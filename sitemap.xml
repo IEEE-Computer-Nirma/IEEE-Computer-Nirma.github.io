@@ -1,32 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://deeplumiere.github.io/IEEEComputerSociety/</loc>
-    <lastmod>2026-10-02</lastmod>
+    <loc>https://deeplumiere.github.io/IEEEComputerSociety</loc>
+    <lastmod>2026-10-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://deeplumiere.github.io/IEEEComputerSociety/novahack-2026</loc>
-    <lastmod>2026-10-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://deeplumiere.github.io/IEEEComputerSociety/ctf/</loc>
-    <lastmod>2026-10-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://deeplumiere.github.io/IEEEComputerSociety/ctf/challenges.html</loc>
-    <lastmod>2026-10-02</lastmod>
+    <loc>https://deeplumiere.github.io/IEEEComputerSociety/events</loc>
+    <lastmod>2026-10-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://deeplumiere.github.io/IEEEComputerSociety/ctf/leaderboard.html</loc>
-    <lastmod>2026-10-02</lastmod>
+    <loc>https://deeplumiere.github.io/IEEEComputerSociety/team</loc>
+    <lastmod>2026-10-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://deeplumiere.github.io/IEEEComputerSociety/achievements</loc>
+    <lastmod>2026-10-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://deeplumiere.github.io/IEEEComputerSociety/about</loc>
+    <lastmod>2026-10-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://deeplumiere.github.io/IEEEComputerSociety/contact</loc>
+    <lastmod>2026-10-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://deeplumiere.github.io/IEEEComputerSociety/member</loc>
+    <lastmod>2026-10-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
