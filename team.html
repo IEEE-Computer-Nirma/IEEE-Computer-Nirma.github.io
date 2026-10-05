@@ -13,19 +13,19 @@
     gtag('js', new Date());
     gtag('config', 'G-2QKJX6PHT9');
   </script>
-  <title>Team & Board Members — IEEE CS Nirma University</title>
+  <title>Team &amp; Board Members — IEEE CS Nirma University</title>
   <meta name="description" content="Meet the faculty advisor and core board members leading IEEE Computer Society Nirma University." />
   <meta name="keywords" content="IEEE CS Team, Nirma University Board Members, IEEE Leadership" />
   <link rel="canonical" href="https://deeplumiere.github.io/IEEEComputerSociety/team" />
   <!-- Open Graph / Facebook -->
-  <meta property="og:title" content="Team & Board Members — IEEE CS Nirma" />
+  <meta property="og:title" content="Team &amp; Board Members — IEEE CS Nirma" />
   <meta property="og:description" content="Meet the students and faculty leading our chapter initiatives." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://deeplumiere.github.io/IEEEComputerSociety/team" />
   <meta property="og:image" content="https://deeplumiere.github.io/IEEEComputerSociety/assets/gallery/hackdays_ahmedbad.png" />
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Team & Board Members — IEEE CS Nirma" />
+  <meta name="twitter:title" content="Team &amp; Board Members — IEEE CS Nirma" />
   <meta name="twitter:description" content="Meet the students and faculty leading our chapter initiatives." />
   <meta name="twitter:image" content="https://deeplumiere.github.io/IEEEComputerSociety/assets/gallery/hackdays_ahmedbad.png" />
   <meta name="twitter:site" content="@ieee_cs_sbnu" />
@@ -49,7 +49,18 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: var(--mono); background: var(--bg); color: var(--fg); font-size: 13px; line-height: 1.65; }
 
-    .section { max-width: 1100px; margin: 0 auto; padding: 4rem 2rem 6rem; }
+    /* ── PAGE HERO ─────────────────────── */
+    .page-hero {
+      position: relative; max-width: 1100px; margin: 0 auto; padding: 5rem 2rem 3rem; overflow: hidden;
+      border-bottom: 1px solid var(--border);
+    }
+    #hero-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; opacity: 0.75; }
+    .page-hero > * { position: relative; z-index: 1; }
+    .hero-eyebrow { font-size: 11px; letter-spacing: .15em; text-transform: uppercase; color: var(--orange); font-weight: 700; margin-bottom: 0.8rem; }
+    .page-hero h1 { font-size: clamp(2rem, 3.5vw, 2.8rem); font-weight: 700; line-height: 1.2; letter-spacing: -.02em; margin-bottom: 1rem; }
+    .page-hero p { font-size: 13px; color: var(--muted); max-width: 55ch; line-height: 1.85; }
+
+    .section { max-width: 1100px; margin: 0 auto; padding: 3rem 2rem 6rem; }
     .section-header { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 2.5rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
     .section-label { font-size: 12px; letter-spacing: .15em; text-transform: uppercase; font-weight: 700; }
     .section-sub { font-size: 12px; color: var(--muted); }
@@ -93,9 +104,18 @@
 <body>
   <div id="site-header"></div>
 
+  <header class="page-hero">
+    <canvas id="hero-canvas"></canvas>
+    <div>
+      <p class="hero-eyebrow">IEEE CS Nirma · Chapter Leadership</p>
+      <h1>Board & Team Members</h1>
+      <p>Meet the faculty advisors, student chairs, technical leads, and creative organizers driving our chapter initiatives forward.</p>
+    </div>
+  </header>
+
   <main class="section">
     <div class="section-header">
-      <span class="section-label">Board & Team Members</span>
+      <span class="section-label">All Board Members</span>
       <span class="section-sub" id="team-count">Loading…</span>
     </div>
     <div id="team-container"></div>
@@ -153,7 +173,6 @@
 
         container.innerHTML = team.map(cat => {
           if (!cat.members || !cat.members.length) return '';
-          // Randomize ordering within categories with multiple members (e.g. Core Team) so all members are highlighted equally
           const displayMembers = cat.members.length > 1 ? shuffleArray(cat.members) : cat.members;
           return `
             <div class="team-category">
