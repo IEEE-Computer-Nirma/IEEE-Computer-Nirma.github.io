@@ -1,13 +1,11 @@
 /**
- * shared.js — Centralized Header & Footer Loader with clean URL handling.
- *
- * Usage: call loadShared(root) where root is relative path to root (default '').
+ * shared.js — Centralized Header & Footer Loader with clean URL handling and Canvas Hero support.
  */
 async function loadShared(root = '') {
   root = root.replace(/\/?$/, '/').replace(/^\//, '');
   if (root === '/') root = '';
 
-  // Clean extensionless URL handling: Strip .html from location bar if served directly
+  // Clean extensionless URL handling
   if (window.location.protocol !== 'file:' && window.location.pathname.endsWith('.html')) {
     let cleanPath = window.location.pathname.replace(/\.html$/, '');
     if (cleanPath.endsWith('/index')) {
@@ -94,20 +92,7 @@ async function loadShared(root = '') {
     }
   });
 
-  // Set up mobile nav toggle behavior globally
-  const toggle = document.querySelector('.nav-toggle');
-  const links = document.querySelector('.nav-links');
-  if (toggle && links) {
-    toggle.addEventListener('click', () => {
-      const open = links.classList.toggle('open');
-      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-    });
-    links.querySelectorAll('a').forEach((a) =>
-      a.addEventListener('click', () => links.classList.remove('open'))
-    );
-  }
-
-  // Create and inject Back to Top button
+  // Back to top button
   if (!document.querySelector('.back-to-top')) {
     const btn = document.createElement('button');
     btn.className = 'back-to-top';
@@ -117,15 +102,146 @@ async function loadShared(root = '') {
     document.body.appendChild(btn);
 
     window.addEventListener('scroll', () => {
-      if (window.scrollY > 300) {
-        btn.classList.add('visible');
-      } else {
-        btn.classList.remove('visible');
-      }
+      if (window.scrollY > 300) btn.classList.add('visible');
+      else btn.classList.remove('visible');
     });
 
     btn.addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
+
+  // Initialize Canvas background if canvas element exists on the page
+  initPageCanvas();
+}
+
+// Global Canvas Hero background initializer
+function initPageCanvas() {
+  const canvas = document.getElementById('hero-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  let width = 0, height = 0, nodes = [], time = 0, mouse = { x: -1000, y: -1000 };
+
+  function resize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    width = rect.width;
+    height = rect.height;
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = width * dpr;
+    canvas.height = height * dpr;
+    ctx.scale(dpr, dpr);
+    initNodes();
+  }
+
+  function initNodes() {
+    nodes = [];
+    const count = Math.min(Math.floor((width * height) / 10000), 35);
+    for (let i = 0; i < count; i++) {
+      nodes.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: (Math.random() - 0.5) * 0.35,
+        vy: (Math.random() - 0.5) * 0.35,
+        radius: Math.random() * 2 + 1,
+        isAccent: Math.random() < 0.25
+      });
+    }
+  }
+
+  window.addEventListener('mousemove', e => {
+    const rect = canvas.getBoundingClientRect();
+    mouse.x = e.clientX - rect.left;
+    mouse.y = e.clientY - rect.top;
+  });
+
+  function drawAbstractShapes() {
+    time += 0.005;
+    const centerX = width * 0.8;
+    const centerY = height * 0.5;
+    const polyRadius = Math.min(width, height) * 0.3;
+
+    ctx.save();
+    ctx.translate(centerX, centerY);
+    ctx.rotate(time * 0.4);
+
+    ctx.strokeStyle = 'rgba(230, 230, 230, 0.5)';
+    ctx.lineWidth = 1;
+    const sides = 6;
+    ctx.beginPath();
+    for (let i = 0; i <= sides; i++) {
+      const angle = (i * 2 * Math.PI) / sides;
+      const px = Math.cos(angle) * polyRadius;
+      const py = Math.sin(angle) * polyRadius;
+      if (i === 0) ctx.moveTo(px, py);
+      else ctx.lineTo(px, py);
+    }
+    ctx.stroke();
+
+    ctx.rotate(-time * 0.7);
+    ctx.strokeStyle = 'rgba(255, 163, 0, 0.18)';
+    ctx.beginPath();
+    for (let i = 0; i <= 3; i++) {
+      const angle = (i * 2 * Math.PI) / 3;
+      const px = Math.cos(angle) * (polyRadius * 0.65);
+      const py = Math.sin(angle) * (polyRadius * 0.65);
+      if (i === 0) ctx.moveTo(px, py);
+      else ctx.lineTo(px, py);
+    }
+    ctx.stroke();
+
+    ctx.restore();
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, width, height);
+
+    ctx.fillStyle = '#f0f0f0';
+    const gridStep = 45;
+    for (let x = 22; x < width; x += gridStep) {
+      for (let y = 22; y < height; y += gridStep) {
+        ctx.fillRect(x, y, 1.2, 1.2);
+      }
+    }
+
+    drawAbstractShapes();
+
+    for (let i = 0; i < nodes.length; i++) {
+      for (let j = i + 1; j < nodes.length; j++) {
+        const dx = nodes[i].x - nodes[j].x;
+        const dy = nodes[i].y - nodes[j].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 130) {
+          const alpha = (1 - dist / 130) * 0.2;
+          ctx.strokeStyle = `rgba(180, 180, 180, ${alpha})`;
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(nodes[i].x, nodes[i].y);
+          ctx.lineTo(nodes[j].x, nodes[j].y);
+          ctx.stroke();
+        }
+      }
+    }
+
+    nodes.forEach(n => {
+      n.x += n.vx;
+      n.y += n.vy;
+
+      if (n.x < 0) n.x = width;
+      if (n.x > width) n.x = 0;
+      if (n.y < 0) n.y = height;
+      if (n.y > height) n.y = 0;
+
+      ctx.fillStyle = n.isAccent ? '#FFA300' : '#222222';
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.radius, 0, Math.PI * 2);
+      ctx.fill();
+    });
+
+    requestAnimationFrame(animate);
+  }
+
+  window.addEventListener('resize', resize);
+  resize();
+  animate();
 }
