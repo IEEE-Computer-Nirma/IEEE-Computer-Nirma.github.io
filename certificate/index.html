@@ -448,7 +448,7 @@
     }
 
     async function renderPreviewCanvas(pdfBytes) {
-      const loadingTask = pdfjsLib.getDocument({ data: pdfBytes });
+      const loadingTask = pdfjsLib.getDocument({ data: pdfBytes.slice() });
       const pdf = await loadingTask.promise;
       const page = await pdf.getPage(1);
 
