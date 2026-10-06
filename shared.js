@@ -31,7 +31,7 @@ async function loadShared(root = '') {
 
   const fallbackHeader = `
     <nav class="nav" id="main-nav">
-      <a class="nav-brand" href="{ROOT}">
+      <a class="nav-brand" href="{ROOT}./">
         <img src="{ROOT}assets/IEEE_CS_Nirma_logo.svg" alt="IEEE CS Nirma" />
       </a>
       <button class="nav-toggle" id="nav-toggle" aria-label="Toggle Navigation" aria-expanded="false">
@@ -40,6 +40,7 @@ async function loadShared(root = '') {
         <span class="hamburger-bar"></span>
       </button>
       <ul class="nav-links" id="nav-links">
+        <li><a href="{ROOT}./">Home</a></li>
         <li><a href="{ROOT}events">Events</a></li>
         <li><a href="{ROOT}achievements">Achievements</a></li>
         <li><a href="{ROOT}team">Team</a></li>
@@ -99,18 +100,16 @@ async function loadShared(root = '') {
   const currentPath = window.location.pathname;
   const normalize = (p) => {
     const clean = p.split(/[?#]/)[0];
-    const segment = clean.replace(/\/.+$/, '/').replace(/\.html$/,'').replace(/\/$/, '')
-      .split('/')
-      .filter(Boolean)
-      .pop() || 'index';
-    return segment === '' ? 'index' : segment;
+    const parts = clean.replace(/\.html$/,'').split('/').filter(Boolean);
+    const last = parts.pop() || 'index';
+    return last === 'IEEEComputerSociety' || last === '.' || last === '' ? 'index' : last;
   };
 
   const page = normalize(currentPath);
   document.querySelectorAll('.nav-links a').forEach(link => {
     const href = link.getAttribute('href') || '';
     const linkPath = normalize(href);
-    if (page === linkPath && linkPath !== 'index') {
+    if (page === linkPath) {
       link.classList.add('active');
     }
   });
