@@ -334,6 +334,7 @@
 
   <!-- CDN Dependencies for PDF manipulation and rendering -->
   <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+  <script src="https://unpkg.com/@pdf-lib/fontkit/dist/fontkit.umd.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 
   <script src="../shared.js"></script>
@@ -372,13 +373,31 @@
     }
 
     let pdfBytesOriginal = null;
+    let nameFontBytes = null;
     let currentPdfBytes = null;
+
+    // Same typeface as the "Proudly Presented to" text (Crimson Pro Italic)
+    const NAME_FONT_URLS = [
+      'https://cdn.jsdelivr.net/gh/google/fonts@main/ofl/crimsonpro/CrimsonPro-Italic%5Bwght%5D.ttf',
+      'https://cdn.jsdelivr.net/fontsource/fonts/crimson-pro@latest/latin-400-italic.ttf'
+    ];
+
+    async function loadNameFont() {
+      for (const url of NAME_FONT_URLS) {
+        try {
+          const r = await fetch(url);
+          if (r.ok) return await r.arrayBuffer();
+        } catch (e) { /* try next */ }
+      }
+      return null;
+    }
 
     async function loadTemplate() {
       try {
         const res = await fetch('../assets/Certificate.pdf');
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         pdfBytesOriginal = await res.arrayBuffer();
+        nameFontBytes = await loadNameFont();
         document.getElementById('canvas-loading').style.display = 'none';
         document.getElementById('download-btn').disabled = false;
         await updateCertificate();
@@ -392,35 +411,37 @@
     async function generatePdfWithText(name) {
       if (!pdfBytesOriginal) return null;
       const pdfDoc = await PDFLib.PDFDocument.load(pdfBytesOriginal);
-      const pages = pdfDoc.getPages();
-      const page = pages[0];
-      const { width, height } = page.getSize();
+      const page = pdfDoc.getPages()[0];
+      const { width } = page.getSize();
 
       const text = (name || '').trim() || 'Your Name';
-      const font = await pdfDoc.embedFont(PDFLib.StandardFonts.HelveticaBold);
+      let font;
+      if (nameFontBytes && window.fontkit) {
+        pdfDoc.registerFontkit(window.fontkit);
+        font = await pdfDoc.embedFont(nameFontBytes);
+      } else {
+        font = await pdfDoc.embedFont(PDFLib.StandardFonts.HelveticaOblique);
+      }
 
-      // Calculate responsive font size depending on length
-      let fontSize = 24;
+      // Larger name; shrink only if it would overflow the name line (~457pt wide)
+      let fontSize = 44;
       let textWidth = font.widthOfTextAtSize(text, fontSize);
-
-      // If name is long, scale down font size so it fits neatly
-      const maxAllowedWidth = width * 0.65;
+      const maxAllowedWidth = 440;
       if (textWidth > maxAllowedWidth) {
-        fontSize = Math.floor(fontSize * (maxAllowedWidth / textWidth));
+        fontSize = fontSize * (maxAllowedWidth / textWidth);
         textWidth = font.widthOfTextAtSize(text, fontSize);
       }
 
-      // Center horizontally on page
-      const x = (width - textWidth) / 2;
-      // Position vertically centered over the name line (y = height * 0.422)
-      const y = height * 0.422;
+      // Centered on the name line (line spans x≈186–643, baseline y≈350)
+      const x = 186.25 + (456.8 - textWidth) / 2;
+      const y = 350 + 6;
 
       page.drawText(text, {
         x,
         y,
         size: fontSize,
         font,
-        color: PDFLib.rgb(0, 0, 0),
+        color: PDFLib.rgb(1, 1, 1),
       });
 
       return await pdfDoc.save();
