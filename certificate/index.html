@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Certificate Generator — IEEE CS Nirma University</title>
+  <meta name="description" content="Generate and download your official IEEE CS Nirma University event participation certificate." />
+  <link rel="icon" href="../favicon.ico" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+  <link rel="stylesheet" href="../shared.css" />
+  <style>
+    :root {
+      --bg: #ffffff;
+      --fg: #111111;
+      --muted: #666666;
+      --border: #dddddd;
+      --card-bg: #fafafa;
+      --hover-bg: #f4f4f4;
+      --orange: #FFA300;
+      --mono: 'Space Mono', 'Courier New', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--mono);
+      background: var(--bg);
+      color: var(--fg);
+      font-size: 13px;
+      line-height: 1.65;
+      position: relative;
+    }
+
+    .hero {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 6rem 2rem 3rem;
+      position: relative;
+    }
+
+    #hero-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.75;
+    }
+
+    .hero > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.8rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -.02em;
+      margin-bottom: 1rem;
+    }
+
+    .hero h1 span {
+      color: var(--orange);
+    }
+
+    .hero-desc {
+      font-size: 13px;
+      color: var(--muted);
+      max-width: 58ch;
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border: 1px solid var(--border);
+      font-size: 11px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      background: var(--card-bg);
+      border-radius: 4px;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #1a7f37;
+    }
+
+    .status-badge.expired .status-dot {
+      background: #cf222e;
+    }
+
+    .section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1rem 2rem 5rem;
+    }
+
+    .generator-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 2.5rem;
+      border-radius: 6px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    }
+
+    .input-group {
+      margin-bottom: 2rem;
+    }
+
+    .input-label {
+      display: block;
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+      color: var(--fg);
+    }
+
+    .input-field {
+      width: 100%;
+      max-width: 540px;
+      padding: 12px 16px;
+      font-family: var(--mono);
+      font-size: 14px;
+      border: 2px solid var(--border);
+      background: var(--card-bg);
+      color: var(--fg);
+      outline: none;
+      transition: border-color .2s, box-shadow .2s;
+    }
+
+    .input-field:focus {
+      border-color: var(--fg);
+      background: #ffffff;
+      box-shadow: 0 0 0 3px rgba(0,0,0,0.05);
+    }
+
+    .preview-container {
+      margin-top: 2rem;
+      border: 1px solid var(--border);
+      background: #f8f8f8;
+      border-radius: 4px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+
+    .preview-title {
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1rem;
+      align-self: flex-start;
+      font-weight: 700;
+    }
+
+    #preview-canvas {
+      max-width: 100%;
+      height: auto;
+      border: 1px solid var(--border);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+      background: #ffffff;
+    }
+
+    .actions-row {
+      margin-top: 2rem;
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 26px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+      text-decoration: none;
+      border: 2px solid var(--fg);
+      background: var(--fg);
+      color: var(--bg);
+      cursor: pointer;
+      transition: all .2s;
+      letter-spacing: .04em;
+    }
+
+    .btn:hover:not(:disabled) {
+      background: transparent;
+      color: var(--fg);
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      border-color: var(--border);
+      background: var(--border);
+      color: var(--muted);
+    }
+
+    .expired-banner {
+      background: #fff5f5;
+      border: 1px solid #ffcdd2;
+      color: #b71c1c;
+      padding: 2rem;
+      border-radius: 6px;
+      text-align: center;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .expired-banner h2 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .loading-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(2px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      gap: 12px;
+      z-index: 10;
+    }
+
+    .spinner {
+      width: 28px;
+      height: 28px;
+      border: 3px solid var(--border);
+      border-top-color: var(--orange);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header (shared) -->
+  <div id="site-header"></div>
+
+  <!-- Hero -->
+  <section class="hero">
+    <canvas id="hero-canvas"></canvas>
+    <div>
+      <p class="hero-eyebrow">IEEE CS Nirma University · Standalone Portal</p>
+      <h1>Certificate <span>Generator</span></h1>
+      <p class="hero-desc">
+        Enter your full legal or preferred name below to generate your official, high-resolution personalized IEEE CS event certificate.
+      </p>
+      <div id="expiration-status-wrap">
+        <!-- Populated dynamically -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Section Generator -->
+  <section class="section">
+    <div id="portal-content" class="generator-card">
+      <div class="input-group">
+        <label for="participant-name" class="input-label">Participant Full Name</label>
+        <input
+          type="text"
+          id="participant-name"
+          class="input-field"
+          placeholder="e.g. John Doe"
+          value="John Doe"
+          maxlength="50"
+          autocomplete="off"
+        />
+      </div>
+
+      <div class="preview-container" id="preview-wrapper">
+        <div id="canvas-loading" class="loading-overlay">
+          <div class="spinner"></div>
+          <span>Loading Certificate Template...</span>
+        </div>
+        <span class="preview-title">Live Preview</span>
+        <canvas id="preview-canvas"></canvas>
+      </div>
+
+      <div class="actions-row">
+        <button id="download-btn" class="btn" disabled>
+          <span class="material-symbols-outlined" style="font-size:18px;">download</span>
+          Download Certificate PDF
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer (shared) -->
+  <div id="site-footer"></div>
+
+  <!-- CDN Dependencies for PDF manipulation and rendering -->
+  <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+  <script src="../shared.js"></script>
+  <script>
+    // Initialize PDF.js worker
+    if (window.pdfjsLib) {
+      pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    }
+
+    // Expiration Logic: Dec 6, 2026 23:59:59 UTC/Local
+    const EXPIRATION_DATE = new Date('2026-12-06T23:59:59');
+
+    function checkExpiration() {
+      const now = new Date();
+      return now > EXPIRATION_DATE;
+    }
+
+    function renderStatusBadge(isExpired) {
+      const wrap = document.getElementById('expiration-status-wrap');
+      if (isExpired) {
+        wrap.innerHTML = `
+          <div class="status-badge expired">
+            <span class="status-dot"></span>
+            Portal Expired on Dec 6, 2026
+          </div>
+        `;
+      } else {
+        const daysLeft = Math.ceil((EXPIRATION_DATE - new Date()) / (1000 * 60 * 60 * 24));
+        wrap.innerHTML = `
+          <div class="status-badge">
+            <span class="status-dot"></span>
+            Active · Expires Dec 6, 2026 (${daysLeft} days remaining)
+          </div>
+        `;
+      }
+    }
+
+    let pdfBytesOriginal = null;
+    let currentPdfBytes = null;
+
+    async function loadTemplate() {
+      try {
+        const res = await fetch('../assets/Certificate.pdf');
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        pdfBytesOriginal = await res.arrayBuffer();
+        document.getElementById('canvas-loading').style.display = 'none';
+        document.getElementById('download-btn').disabled = false;
+        await updateCertificate();
+      } catch (err) {
+        console.error('Failed to load PDF template:', err);
+        const loadingEl = document.getElementById('canvas-loading');
+        loadingEl.innerHTML = `<span style="color:#cf222e;">Failed to load certificate template. Please refresh the page.</span>`;
+      }
+    }
+
+    async function generatePdfWithText(name) {
+      if (!pdfBytesOriginal) return null;
+      const pdfDoc = await PDFLib.PDFDocument.load(pdfBytesOriginal);
+      const pages = pdfDoc.getPages();
+      const page = pages[0];
+      const { width, height } = page.getSize();
+
+      const text = (name || '').trim() || 'Your Name';
+      const font = await pdfDoc.embedFont(PDFLib.StandardFonts.HelveticaBold);
+
+      // Calculate responsive font size depending on length
+      let fontSize = 24;
+      let textWidth = font.widthOfTextAtSize(text, fontSize);
+
+      // If name is long, scale down font size so it fits neatly
+      const maxAllowedWidth = width * 0.65;
+      if (textWidth > maxAllowedWidth) {
+        fontSize = Math.floor(fontSize * (maxAllowedWidth / textWidth));
+        textWidth = font.widthOfTextAtSize(text, fontSize);
+      }
+
+      // Center horizontally on page
+      const x = (width - textWidth) / 2;
+      // Position vertically centered over the name line (y = height * 0.422)
+      const y = height * 0.422;
+
+      page.drawText(text, {
+        x,
+        y,
+        size: fontSize,
+        font,
+        color: PDFLib.rgb(0, 0, 0),
+      });
+
+      return await pdfDoc.save();
+    }
+
+    async function renderPreviewCanvas(pdfBytes) {
+      const loadingTask = pdfjsLib.getDocument({ data: pdfBytes });
+      const pdf = await loadingTask.promise;
+      const page = await pdf.getPage(1);
+
+      const canvas = document.getElementById('preview-canvas');
+      const ctx = canvas.getContext('2d');
+
+      const viewport = page.getViewport({ scale: 1.5 });
+      canvas.width = viewport.width;
+      canvas.height = viewport.height;
+
+      const renderContext = {
+        canvasContext: ctx,
+        viewport: viewport
+      };
+
+      await page.render(renderContext).promise;
+    }
+
+    let debounceTimer = null;
+    async function updateCertificate() {
+      const nameInput = document.getElementById('participant-name').value;
+      currentPdfBytes = await generatePdfWithText(nameInput);
+      if (currentPdfBytes) {
+        await renderPreviewCanvas(currentPdfBytes);
+      }
+    }
+
+    function setupEventListeners() {
+      const nameInput = document.getElementById('participant-name');
+      const downloadBtn = document.getElementById('download-btn');
+
+      nameInput.addEventListener('input', () => {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
+          updateCertificate();
+        }, 150);
+      });
+
+      downloadBtn.addEventListener('click', () => {
+        if (!currentPdfBytes) return;
+        const nameVal = nameInput.value.trim() || 'Certificate';
+        const sanitized = nameVal.replace(/[^a-zA-Z0-9_\- ]/g, '').replace(/\s+/g, '_');
+        const fileName = `Certificate_${sanitized}.pdf`;
+
+        const blob = new Blob([currentPdfBytes], { type: 'application/pdf' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      });
+    }
+
+    // Init page logic
+    (async () => {
+      loadShared('../');
+
+      const isExpired = checkExpiration();
+      renderStatusBadge(isExpired);
+
+      if (isExpired) {
+        const portalContent = document.getElementById('portal-content');
+        portalContent.innerHTML = `
+          <div class="expired-banner">
+            <h2>Certificate Portal Expired</h2>
+            <p>The downloading period for this event certificate ended on <strong>December 6, 2026</strong>.</p>
+            <p>If you require access or have any questions, please contact <a href="mailto:deep@computer.org" style="color:#b71c1c;font-weight:bold;">deep@computer.org</a>.</p>
+          </div>
+        `;
+      } else {
+        setupEventListeners();
+        await loadTemplate();
+      }
+    })();
+  </script>
+</body>
+
+</html>
