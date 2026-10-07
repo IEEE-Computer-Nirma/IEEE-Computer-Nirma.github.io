@@ -27,7 +27,7 @@
   var CSS_URL = BASE_URL + 'embed.css';
   var CONTENT_URL = BASE_URL + 'content.json';
 
-  // Inject CSS stylesheet into head if not already injected
+  // Inject minimal CSS stylesheet into head if not already injected
   function injectStylesheet() {
     if (document.querySelector('link[data-ieee-cs-widget-css]')) {
       return;
@@ -47,7 +47,6 @@
       return container;
     }
 
-    // Fallback to inserting container directly before/after current script
     container = document.createElement('div');
     container.id = 'ieee-cs-nirma-widget';
     container.className = 'ieee-cs-nirma-widget';
@@ -65,63 +64,32 @@
   function renderLoading(container) {
     container.className = 'ieee-cs-nirma-widget';
     container.innerHTML = '';
-
-    var loadingDiv = document.createElement('div');
-    loadingDiv.className = 'ieee-cs-nirma-widget__loading';
-
-    var spinner = document.createElement('div');
-    spinner.className = 'ieee-cs-nirma-widget__spinner';
-
-    var text = document.createElement('span');
-    text.textContent = 'Loading IEEE Computer Society Chapter Content...';
-
-    loadingDiv.appendChild(spinner);
-    loadingDiv.appendChild(text);
-    container.appendChild(loadingDiv);
+    var loadingP = document.createElement('p');
+    loadingP.className = 'ieee-cs-nirma-widget__loading';
+    loadingP.textContent = 'Loading IEEE Computer Society Chapter content...';
+    container.appendChild(loadingP);
   }
 
   // Render Fallback / Error State
   function renderFallback(container, message) {
     container.innerHTML = '';
-    var fallbackDiv = document.createElement('div');
-    fallbackDiv.className = 'ieee-cs-nirma-widget__fallback';
-
-    var title = document.createElement('strong');
-    title.textContent = 'IEEE Computer Society Chapter — Nirma University';
-    title.style.display = 'block';
-    title.style.marginBottom = '4px';
-
-    var desc = document.createElement('p');
-    desc.textContent = message || 'Unable to load content at this time. Please visit https://ieee-computer-nirma.github.io for details.';
-
-    var link = document.createElement('a');
-    link.href = 'https://ieee-computer-nirma.github.io';
-    link.textContent = 'Visit Chapter Website →';
-    link.target = '_blank';
-    link.rel = 'noopener noreferrer';
-    link.className = 'ieee-cs-nirma-widget__link-inline';
-    link.style.marginTop = '8px';
-    link.style.display = 'inline-block';
-
-    fallbackDiv.appendChild(title);
-    fallbackDiv.appendChild(desc);
-    fallbackDiv.appendChild(link);
-    container.appendChild(fallbackDiv);
+    var fallbackP = document.createElement('p');
+    fallbackP.className = 'ieee-cs-nirma-widget__fallback';
+    fallbackP.textContent = message || 'IEEE Computer Society Chapter — Nirma University. Please visit https://ieee-computer-nirma.github.io for details.';
+    container.appendChild(fallbackP);
   }
 
   // Safe DOM Helper functions
-  function el(tag, className, textContent) {
+  function el(tag, textContent) {
     var elem = document.createElement(tag);
-    if (className) elem.className = className;
     if (textContent) elem.textContent = textContent;
     return elem;
   }
 
-  function createLink(href, text, isExternal, className) {
+  function createLink(href, text, isExternal) {
     var a = document.createElement('a');
     a.href = href;
     a.textContent = text;
-    a.className = className || 'ieee-cs-nirma-widget__link';
     if (isExternal) {
       a.target = '_blank';
       a.rel = 'noopener noreferrer';
@@ -129,181 +97,138 @@
     return a;
   }
 
-  // Main Render Function
+  // Main Simple Text Render Function
   function renderWidget(container, data) {
     container.innerHTML = '';
 
-    // 1. Header Section
+    // 1. Chapter Title & Intro
     if (data.chapter) {
-      var header = el('header', 'ieee-cs-nirma-widget__header');
-
-      var badge = el('span', 'ieee-cs-nirma-widget__badge', data.chapter.institution || 'Nirma University');
-      header.appendChild(badge);
-
-      var title = el('h2', 'ieee-cs-nirma-widget__title', data.chapter.name);
-      header.appendChild(title);
+      var title = el('h2', data.chapter.name + (data.chapter.institution ? ' — ' + data.chapter.institution : ''));
+      container.appendChild(title);
 
       if (data.chapter.tagline) {
-        var subtitle = el('p', 'ieee-cs-nirma-widget__subtitle', data.chapter.tagline);
-        header.appendChild(subtitle);
+        var subtitle = el('p');
+        var em = el('em', data.chapter.tagline);
+        subtitle.appendChild(em);
+        container.appendChild(subtitle);
       }
 
       if (data.chapter.description) {
-        var desc = el('p', 'ieee-cs-nirma-widget__description', data.chapter.description);
-        header.appendChild(desc);
+        var desc = el('p', data.chapter.description);
+        container.appendChild(desc);
       }
-
-      container.appendChild(header);
     }
 
-    // 2. IEEE Computer Society Section
+    // 2. IEEE Computer Society
     if (data.ieee_cs) {
-      var section = el('section', 'ieee-cs-nirma-widget__section');
-
-      var secHeader = el('div', 'ieee-cs-nirma-widget__section-header');
-      secHeader.appendChild(el('h3', 'ieee-cs-nirma-widget__section-title', data.ieee_cs.title || 'IEEE Computer Society'));
-
-      if (data.ieee_cs.anniversary) {
-        secHeader.appendChild(el('span', 'ieee-cs-nirma-widget__anniversary', data.ieee_cs.anniversary));
-      }
-      section.appendChild(secHeader);
+      var csTitle = el('h3', (data.ieee_cs.title || 'IEEE Computer Society') + (data.ieee_cs.anniversary ? ' (' + data.ieee_cs.anniversary + ')' : ''));
+      container.appendChild(csTitle);
 
       if (data.ieee_cs.description) {
-        section.appendChild(el('p', 'ieee-cs-nirma-widget__description', data.ieee_cs.description));
+        var csDesc = el('p', data.ieee_cs.description);
+        container.appendChild(csDesc);
       }
 
-      // Highlights Cards
       if (Array.isArray(data.ieee_cs.highlights) && data.ieee_cs.highlights.length > 0) {
-        var grid = el('div', 'ieee-cs-nirma-widget__grid');
+        var hlList = el('ul');
         data.ieee_cs.highlights.forEach(function (hl) {
-          var card = el('div', 'ieee-cs-nirma-widget__card');
-          card.appendChild(el('h4', 'ieee-cs-nirma-widget__card-title', hl.title));
-          card.appendChild(el('p', 'ieee-cs-nirma-widget__card-text', hl.description));
-          grid.appendChild(card);
+          var li = el('li');
+          var strong = el('strong', hl.title + ': ');
+          li.appendChild(strong);
+          li.appendChild(document.createTextNode(hl.description));
+          hlList.appendChild(li);
         });
-        section.appendChild(grid);
+        container.appendChild(hlList);
       }
-
-      container.appendChild(section);
     }
 
-    // 3. Nirma University Chapter Section
+    // 3. Nirma University Chapter
     if (data.nirma_chapter) {
-      var nirmaSec = el('section', 'ieee-cs-nirma-widget__section');
-
-      var nirmaHeader = el('div', 'ieee-cs-nirma-widget__section-header');
-      nirmaHeader.appendChild(el('h3', 'ieee-cs-nirma-widget__section-title', data.nirma_chapter.title || 'Nirma University Chapter'));
-      nirmaSec.appendChild(nirmaHeader);
+      var nirmaTitle = el('h3', data.nirma_chapter.title || 'Nirma University Chapter');
+      container.appendChild(nirmaTitle);
 
       if (data.nirma_chapter.description) {
-        nirmaSec.appendChild(el('p', 'ieee-cs-nirma-widget__description', data.nirma_chapter.description));
+        var nirmaDesc = el('p', data.nirma_chapter.description);
+        container.appendChild(nirmaDesc);
       }
 
       if (data.nirma_chapter.featured_guest) {
         var guest = data.nirma_chapter.featured_guest;
-        var guestBox = el('div', 'ieee-cs-nirma-widget__info-box');
-        var guestP = el('p', 'ieee-cs-nirma-widget__card-text');
-        guestP.appendChild(document.createTextNode('Prominent guest welcomed: '));
-
+        var guestP = el('p');
+        guestP.appendChild(document.createTextNode('Featured Guest: '));
         if (guest.linkedin) {
-          var guestLink = createLink(guest.linkedin, guest.name, true, 'ieee-cs-nirma-widget__link-inline');
-          guestP.appendChild(guestLink);
+          guestP.appendChild(createLink(guest.linkedin, guest.name, true));
         } else {
           guestP.appendChild(document.createTextNode(guest.name));
         }
-
         if (guest.role) {
           guestP.appendChild(document.createTextNode(' (' + guest.role + ')'));
         }
-
-        guestBox.appendChild(guestP);
-        nirmaSec.appendChild(guestBox);
+        container.appendChild(guestP);
       }
-
-      container.appendChild(nirmaSec);
     }
 
-    // 4. Goals Section
+    // 4. Goals
     if (Array.isArray(data.goals) && data.goals.length > 0) {
-      var goalsSec = el('section', 'ieee-cs-nirma-widget__section');
+      var goalsTitle = el('h3', 'Goals');
+      container.appendChild(goalsTitle);
 
-      var goalsHeader = el('div', 'ieee-cs-nirma-widget__section-header');
-      goalsHeader.appendChild(el('h3', 'ieee-cs-nirma-widget__section-title', 'Chapter Goals'));
-      goalsSec.appendChild(goalsHeader);
-
-      var goalsGrid = el('div', 'ieee-cs-nirma-widget__grid');
+      var goalsList = el('ul');
       data.goals.forEach(function (goal, idx) {
-        var goalCard = el('div', 'ieee-cs-nirma-widget__goal-card');
-        goalCard.appendChild(el('div', 'ieee-cs-nirma-widget__goal-num', 'Goal ' + (goal.id || idx + 1)));
-        goalCard.appendChild(el('h4', 'ieee-cs-nirma-widget__card-title', goal.title));
-        goalCard.appendChild(el('p', 'ieee-cs-nirma-widget__card-text', goal.description));
-        goalsGrid.appendChild(goalCard);
+        var li = el('li');
+        var strong = el('strong', (goal.id || (idx + 1)) + '. ' + goal.title + ': ');
+        li.appendChild(strong);
+        li.appendChild(document.createTextNode(goal.description));
+        goalsList.appendChild(li);
       });
-
-      goalsSec.appendChild(goalsGrid);
-      container.appendChild(goalsSec);
+      container.appendChild(goalsList);
     }
 
-    // 5. Faculty Advisor Section
+    // 5. Faculty Advisor
     if (data.faculty_advisor) {
-      var facSec = el('section', 'ieee-cs-nirma-widget__section');
+      var facTitle = el('h3', 'Faculty Advisor');
+      container.appendChild(facTitle);
 
-      var facHeader = el('div', 'ieee-cs-nirma-widget__section-header');
-      facHeader.appendChild(el('h3', 'ieee-cs-nirma-widget__section-title', 'Faculty Leadership'));
-      facSec.appendChild(facHeader);
-
-      var facCard = el('div', 'ieee-cs-nirma-widget__faculty-card');
-
-      var icon = el('div', 'ieee-cs-nirma-widget__faculty-icon', 'FA');
-      facCard.appendChild(icon);
-
-      var details = el('div');
-      details.appendChild(el('div', 'ieee-cs-nirma-widget__faculty-name', data.faculty_advisor.name));
-      if (data.faculty_advisor.role) {
-        details.appendChild(el('div', 'ieee-cs-nirma-widget__faculty-role', data.faculty_advisor.role));
+      var facP = el('p');
+      var facStrong = el('strong', data.faculty_advisor.name);
+      facP.appendChild(facStrong);
+      if (data.faculty_advisor.role || data.faculty_advisor.affiliation) {
+        var info = [];
+        if (data.faculty_advisor.role) info.push(data.faculty_advisor.role);
+        if (data.faculty_advisor.affiliation) info.push(data.faculty_advisor.affiliation);
+        facP.appendChild(document.createTextNode(' — ' + info.join(', ')));
       }
-      if (data.faculty_advisor.affiliation) {
-        details.appendChild(el('div', 'ieee-cs-nirma-widget__faculty-affil', data.faculty_advisor.affiliation));
-      }
-
-      facCard.appendChild(details);
-      facSec.appendChild(facCard);
-      container.appendChild(facSec);
+      container.appendChild(facP);
     }
 
-    // 6. Extensible sections: Events / Achievements / Announcements (if present)
+    // 6. Extensible events
     if (Array.isArray(data.events) && data.events.length > 0) {
-      var eventsSec = el('section', 'ieee-cs-nirma-widget__section');
-      var evHeader = el('div', 'ieee-cs-nirma-widget__section-header');
-      evHeader.appendChild(el('h3', 'ieee-cs-nirma-widget__section-title', 'Recent Events'));
-      eventsSec.appendChild(evHeader);
-      var evGrid = el('div', 'ieee-cs-nirma-widget__grid');
+      var evTitle = el('h3', 'Events');
+      container.appendChild(evTitle);
+      var evList = el('ul');
       data.events.forEach(function (ev) {
-        var evCard = el('div', 'ieee-cs-nirma-widget__card');
-        evCard.appendChild(el('h4', 'ieee-cs-nirma-widget__card-title', ev.title));
-        if (ev.description) evCard.appendChild(el('p', 'ieee-cs-nirma-widget__card-text', ev.description));
-        evGrid.appendChild(evCard);
+        var li = el('li');
+        var strong = el('strong', ev.title + ': ');
+        li.appendChild(strong);
+        if (ev.description) li.appendChild(document.createTextNode(ev.description));
+        evList.appendChild(li);
       });
-      eventsSec.appendChild(evGrid);
-      container.appendChild(eventsSec);
+      container.appendChild(evList);
     }
 
-    // 7. Links Section
+    // 7. Links
     if (Array.isArray(data.links) && data.links.length > 0) {
-      var linksSec = el('section', 'ieee-cs-nirma-widget__section');
+      var linksTitle = el('h3', 'Useful Links');
+      container.appendChild(linksTitle);
 
-      var linksHeader = el('div', 'ieee-cs-nirma-widget__section-header');
-      linksHeader.appendChild(el('h3', 'ieee-cs-nirma-widget__section-title', 'Useful Links & Portals'));
-      linksSec.appendChild(linksHeader);
-
-      var linksDiv = el('div', 'ieee-cs-nirma-widget__links');
+      var linksList = el('ul');
       data.links.forEach(function (lk) {
-        var btn = createLink(lk.url, lk.label + (lk.external ? ' ↗' : ' →'), lk.external);
-        linksDiv.appendChild(btn);
+        var li = el('li');
+        var a = createLink(lk.url, lk.label, lk.external);
+        li.appendChild(a);
+        linksList.appendChild(li);
       });
-
-      linksSec.appendChild(linksDiv);
-      container.appendChild(linksSec);
+      container.appendChild(linksList);
     }
   }
 
@@ -313,7 +238,6 @@
     var container = getWidgetContainer();
     renderLoading(container);
 
-    // Fetch JSON with cache-busting timestamp param
     var cacheBustUrl = CONTENT_URL + '?_t=' + new Date().getTime();
 
     fetch(cacheBustUrl)
@@ -327,7 +251,6 @@
         renderWidget(container, data);
       })
       .catch(function (err) {
-        // Retry without query param in case server disallows query params
         fetch(CONTENT_URL)
           .then(function (res) {
             if (!res.ok) throw new Error('HTTP error ' + res.status);
@@ -337,12 +260,11 @@
             renderWidget(container, data);
           })
           .catch(function (error) {
-            renderFallback(container, 'Failed to retrieve chapter content. Please visit official chapter site.');
+            renderFallback(container, 'Failed to retrieve chapter content.');
           });
       });
   }
 
-  // Execute initialization when DOM is ready
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {
