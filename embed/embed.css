@@ -1,300 +1,62 @@
-/* IEEE CS Nirma University — Scoped Embed Widget CSS */
+/* Minimal simple text styling for IEEE CS Nirma embed widget */
 .ieee-cs-nirma-widget {
-  all: initial;
-  display: block;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
-  font-size: 16px;
-  line-height: 1.6;
-  color: #1a202c;
-  background-color: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  padding: 24px;
-  max-width: 1000px;
-  margin: 20px auto;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-  box-sizing: border-box !important;
-}
-
-.ieee-cs-nirma-widget *,
-.ieee-cs-nirma-widget *::before,
-.ieee-cs-nirma-widget *::after {
-  box-sizing: border-box !important;
-  margin: 0;
-  padding: 0;
-}
-
-/* Loading & Fallback States */
-.ieee-cs-nirma-widget__loading {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  padding: 32px 16px;
-  color: #4a5568;
-  font-size: 0.95rem;
-}
-
-.ieee-cs-nirma-widget__spinner {
-  width: 20px;
-  height: 20px;
-  border: 2px solid #e2e8f0;
-  border-top-color: #006699;
-  border-radius: 50%;
-  animation: ieee-cs-spin 0.8s linear infinite;
-}
-
-@keyframes ieee-cs-spin {
-  to { transform: rotate(360deg); }
-}
-
-.ieee-cs-nirma-widget__fallback {
-  padding: 20px;
-  background-color: #fff5f5;
-  border: 1px solid #fed7d7;
-  border-radius: 6px;
-  color: #c53030;
-  font-size: 0.9rem;
-}
-
-/* Header Section */
-.ieee-cs-nirma-widget__header {
-  border-bottom: 2px solid #edf2f7;
-  padding-bottom: 20px;
-  margin-bottom: 24px;
-}
-
-.ieee-cs-nirma-widget__badge {
-  display: inline-block;
-  background-color: #ebf8ff;
-  color: #006699;
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  padding: 4px 10px;
-  border-radius: 4px;
-  margin-bottom: 10px;
-  border: 1px solid #bee3f8;
-}
-
-.ieee-cs-nirma-widget__title {
-  font-size: 1.65rem;
-  font-weight: 700;
-  color: #002855;
-  line-height: 1.25;
-  margin-bottom: 4px;
-}
-
-.ieee-cs-nirma-widget__subtitle {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #006699;
-  margin-bottom: 12px;
-}
-
-.ieee-cs-nirma-widget__description {
+  font-family: inherit;
   font-size: 1rem;
-  color: #4a5568;
   line-height: 1.6;
+  color: inherit;
+  background: transparent;
+  padding: 0;
+  margin: 16px 0;
+  border: none;
+  box-shadow: none;
 }
 
-/* Sections */
-.ieee-cs-nirma-widget__section {
-  margin-bottom: 28px;
-}
-
-.ieee-cs-nirma-widget__section:last-child {
-  margin-bottom: 0;
-}
-
-.ieee-cs-nirma-widget__section-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 14px;
-  border-left: 4px solid #006699;
-  padding-left: 10px;
-}
-
-.ieee-cs-nirma-widget__section-title {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: #1a202c;
-}
-
-.ieee-cs-nirma-widget__anniversary {
-  font-size: 0.8rem;
-  font-weight: 600;
-  background-color: #feefc3;
-  color: #744210;
-  padding: 3px 8px;
-  border-radius: 4px;
-}
-
-/* Grid Layouts for Cards */
-.ieee-cs-nirma-widget__grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 16px;
-  margin-top: 14px;
-}
-
-.ieee-cs-nirma-widget__card {
-  background-color: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 6px;
-  padding: 16px;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.ieee-cs-nirma-widget__card:hover {
-  border-color: #cbd5e1;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-}
-
-.ieee-cs-nirma-widget__card-title {
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: #006699;
-  margin-bottom: 8px;
-}
-
-.ieee-cs-nirma-widget__card-text {
-  font-size: 0.92rem;
-  color: #4a5568;
-  line-height: 1.55;
-}
-
-/* Goals Cards */
-.ieee-cs-nirma-widget__goal-card {
-  background-color: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-left: 4px solid #006699;
-  border-radius: 4px;
-  padding: 16px;
-}
-
-.ieee-cs-nirma-widget__goal-num {
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: #006699;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: 4px;
-}
-
-/* Nirma & Faculty Info Boxes */
-.ieee-cs-nirma-widget__info-box {
-  background-color: #f7fafc;
-  border: 1px solid #edf2f7;
-  border-radius: 6px;
-  padding: 18px;
-  margin-top: 10px;
-}
-
-.ieee-cs-nirma-widget__faculty-card {
-  display: flex;
-  align-items: flex-start;
-  gap: 14px;
-  background-color: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 6px;
-  padding: 16px;
-}
-
-.ieee-cs-nirma-widget__faculty-icon {
-  width: 42px;
-  height: 42px;
-  background-color: #ebf8ff;
-  color: #006699;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.ieee-cs-nirma-widget h2,
+.ieee-cs-nirma-widget h3,
+.ieee-cs-nirma-widget h4 {
+  font-family: inherit;
+  color: inherit;
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
   font-weight: bold;
-  font-size: 1.1rem;
-  flex-shrink: 0;
 }
 
-.ieee-cs-nirma-widget__faculty-name {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: #1a202c;
-  margin-bottom: 2px;
+.ieee-cs-nirma-widget h2 {
+  font-size: 1.5rem;
 }
 
-.ieee-cs-nirma-widget__faculty-role {
-  font-size: 0.88rem;
-  font-weight: 600;
+.ieee-cs-nirma-widget h3 {
+  font-size: 1.2rem;
+}
+
+.ieee-cs-nirma-widget h4 {
+  font-size: 1rem;
+}
+
+.ieee-cs-nirma-widget p {
+  margin-bottom: 1em;
+}
+
+.ieee-cs-nirma-widget ul {
+  margin-left: 20px;
+  margin-bottom: 1em;
+}
+
+.ieee-cs-nirma-widget li {
+  margin-bottom: 0.5em;
+}
+
+.ieee-cs-nirma-widget a {
   color: #006699;
-  margin-bottom: 2px;
-}
-
-.ieee-cs-nirma-widget__faculty-affil {
-  font-size: 0.85rem;
-  color: #718096;
-}
-
-/* Links & Buttons */
-.ieee-cs-nirma-widget__links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 12px;
-}
-
-.ieee-cs-nirma-widget__link {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 14px;
-  background-color: #f1f5f9;
-  color: #006699;
-  text-decoration: none;
-  font-size: 0.9rem;
-  font-weight: 600;
-  border-radius: 4px;
-  border: 1px solid #cbd5e1;
-  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
-}
-
-.ieee-cs-nirma-widget__link:hover {
-  background-color: #006699;
-  color: #ffffff;
-  border-color: #006699;
-}
-
-.ieee-cs-nirma-widget__link-inline {
-  color: #006699;
-  font-weight: 600;
   text-decoration: underline;
-  transition: color 0.2s ease;
 }
 
-.ieee-cs-nirma-widget__link-inline:hover {
-  color: #004466;
+.ieee-cs-nirma-widget a:hover {
+  text-decoration: none;
 }
 
-/* Responsiveness */
-@media (max-width: 640px) {
-  .ieee-cs-nirma-widget {
-    padding: 16px;
-  }
-  .ieee-cs-nirma-widget__title {
-    font-size: 1.35rem;
-  }
-  .ieee-cs-nirma-widget__subtitle {
-    font-size: 1rem;
-  }
-  .ieee-cs-nirma-widget__grid {
-    grid-template-columns: 1fr;
-  }
-  .ieee-cs-nirma-widget__links {
-    flex-direction: column;
-  }
-  .ieee-cs-nirma-widget__link {
-    width: 100%;
-    justify-content: center;
-  }
+.ieee-cs-nirma-widget__loading,
+.ieee-cs-nirma-widget__fallback {
+  padding: 8px 0;
+  font-style: italic;
 }
