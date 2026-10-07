@@ -12,6 +12,7 @@ Official web portal for the IEEE Computer Society Student Branch Chapter at Nirm
   - Image carousel for event moments and highlights.
   - Responsive, randomized Core Team grid display for peer equity.
 - **Shared Components:** Header and footer navigation partials dynamically injected via `shared.js`.
+- **Embeddable Content Widget:** Lightweight, single-script content syndication widget (`embed.js`, `embed.css`, `content.json`) for seamless embedding into external sites like Nirma University. See [README_WIDGET.md](README_WIDGET.md) for details.
 
 ---
 
@@ -27,8 +28,13 @@ Official web portal for the IEEE Computer Society Student Branch Chapter at Nirm
 ├── header.html             # Shared site navigation header
 ├── footer.html             # Shared site footer
 ├── index.html              # Main homepage & interactive portal
+├── embed.js                # Production-ready embed script for third-party websites
+├── embed.css               # Scoped CSS styles for the embedded widget
+├── content.json            # Extensible structured JSON content source
+├── embed/                  # Local test suite and demo pages
 ├── shared.css              # Global styles, variables, typography, and responsive rules
 ├── shared.js               # Utility script to inject global header and footer partials
+├── README_WIDGET.md        # Detailed embed widget integration documentation
 └── README.md               # Project documentation
 ```
 

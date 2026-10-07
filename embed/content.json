@@ -1,0 +1,96 @@
+{
+  "$schema": "https://ieee-computer-nirma.github.io/content.schema.json",
+  "meta": {
+    "title": "IEEE Computer Society Student Chapter — Nirma University",
+    "lastUpdated": "2025-03-01",
+    "version": "1.0.0"
+  },
+  "chapter": {
+    "name": "IEEE Computer Society Student Chapter",
+    "institution": "Nirma University",
+    "tagline": "Empowering Tomorrow's Engineers and Leaders",
+    "description": "The IEEE Computer Society Student Chapter at Nirma University operates under the global IEEE Computer Society. Founded to empower tomorrow's engineers and leaders, the chapter drives student collaboration in cutting-edge fields such as computer science, quantum computing, computer vision, cybersecurity, and beyond."
+  },
+  "ieee_cs": {
+    "title": "IEEE Computer Society",
+    "description": "The IEEE Computer Society is a global organization for computing professionals. In 2026, it celebrates its 80th anniversary and advances the field through high-impact conferences, publications, and professional initiatives connecting leaders across all career stages.",
+    "anniversary": "80th Anniversary (2026)",
+    "highlights": [
+      {
+        "id": "sc24",
+        "title": "SC24",
+        "description": "Brought together more than 18,000 high-performance computing experts."
+      },
+      {
+        "id": "cvpr-2026",
+        "title": "CVPR 2026",
+        "description": "Attracted 12,200 attendees representing 84 countries and regions. Set new records for attendance and paper submissions, showcasing breakthroughs in computer vision, artificial intelligence (AI), autonomous systems, and embodied AI/robotics."
+      },
+      {
+        "id": "quantum-week-2026",
+        "title": "Quantum Week 2026",
+        "description": "Served as a flagship global platform for quantum engineering and computing, bringing together more than 2,300 attendees from across the international quantum community."
+      }
+    ]
+  },
+  "nirma_chapter": {
+    "title": "Nirma University Chapter",
+    "established": "2025",
+    "description": "Upholding its parent organization's commitment to innovation, the IEEE Computer Society Chapter at Nirma University was established in 2025. The chapter has made a strong impact by hosting key events such as HackDays Ahmedabad and welcoming prominent industry figures, including Naren Kachroo, Head of Google Cloud India.",
+    "featured_guest": {
+      "name": "Naren Kachroo",
+      "role": "Head of Google Cloud India",
+      "linkedin": "http://in.linkedin.com/in/naren-kachroo"
+    }
+  },
+  "goals": [
+    {
+      "id": 1,
+      "title": "Foster Technical Innovation & Research Excellence",
+      "description": "Empower students to engage in cutting-edge computing research, deep learning model replication, and open-source software engineering."
+    },
+    {
+      "id": 2,
+      "title": "Promote Student Collaboration in Emerging Fields",
+      "description": "Cultivate an active peer-learning community centered on key domains, including Artificial Intelligence, Computer Vision, Cybersecurity, Health AI, and Quantum Computing."
+    },
+    {
+      "id": 3,
+      "title": "Build a Collaborative Learning Community Beyond the Classroom",
+      "description": "Provide a dedicated environment where students can learn, work, and collaborate as a cohesive team outside of traditional coursework."
+    }
+  ],
+  "faculty_advisor": {
+    "name": "Dr. Umesh Bodkhe",
+    "role": "Faculty Advisor",
+    "affiliation": "Department of Computer Science & Engineering, Nirma University"
+  },
+  "links": [
+    {
+      "label": "IEEE Computer Society",
+      "url": "https://www.computer.org",
+      "external": true
+    },
+    {
+      "label": "Chapter Website",
+      "url": "https://ieee-computer-nirma.github.io",
+      "external": false
+    },
+    {
+      "label": "Chapter Team",
+      "url": "https://ieee-computer-nirma.github.io/team",
+      "external": false
+    },
+    {
+      "label": "Chapter Events",
+      "url": "https://ieee-computer-nirma.github.io/events",
+      "external": false
+    }
+  ],
+  "events": [],
+  "announcements": [],
+  "achievements": [],
+  "sponsors": [],
+  "leadership": [],
+  "gallery": []
+}

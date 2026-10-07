@@ -68,41 +68,6 @@
 
 ## Achievements & Milestones
 
-### 1st Place — HackDays Ahmedabad 2025
-- Date: 2025-10-15
-- Description: Secured 1st place in the regional 24-hour hackathon by developing an automated agentic AI pipeline for legal document verification and smart risk analysis.
-- Contributors: Deep Joshi, Priyansh Patel, Aarav Mehta
-
-### IEEE CS Outstanding Student Branch Chapter Award
-- Date: 2025-08-10
-- Description: Recognized by IEEE Computer Society India Council for exceptional technical programming, student engagement, and open-source contributions across Gujarat.
-- Contributors: Dr Umesh Bodhke, Deep Joshi, Vedanshi Bhatt, Divy Shah
-
-### Top 3 Finish — National Cybersecurity CTF 2025
-- Date: 2025-05-20
-- Description: Outperformed 120+ university teams in a 36-hour Jeopardy CTF competition covering Web Exploitation, Cryptography, Reverse Engineering, and Binary Forensics.
-- Contributors: Priyansh Patel, Ridham Shah, Rohan Sharma
-
-### Chapter Open Source Sprint — 50+ PRs Merged
-- Date: 2025-03-12
-- Description: Led a month-long community sprint guiding 80+ students to make high-impact open-source contributions to developer tools and security libraries.
-- Contributors: Deep Joshi, Ridham Shah, Meet Patel
-
-### Best Technical Workshop Series Award 2024
-- Date: 2024-11-05
-- Description: Conducted hands-on sessions on Agentic AI, LLM Fine-Tuning, and Distributed Systems, training over 350+ engineering students across 4 sessions.
-- Contributors: Franky Patel, Sakshi Chavda, Mahi Acharya
-
-### Published Research Paper at IEEE CONECCT 2024
-- Date: 2024-07-18
-- Description: Co-authored and presented research on lightweight cryptographic verification for decentralized edge nodes.
-- Contributors: Dr Umesh Bodhke, Deep Joshi, Palak Sinojia
-
-### Excellence in Digital Outreach & Design 2024
-- Date: 2024-04-14
-- Description: Awarded for designing high-impact visual identity and marketing campaigns for chapter tech events, reaching 10,000+ students across Gujarat.
-- Contributors: Vishwa Ghori, Keya Jeni, Pari Pancholi, Neha Siju
-
 ## Core Team & Leadership
 
 ### Faculty Advisor
