@@ -9,15 +9,13 @@
       {
         "name": "Project Repo",
         "url": "https://github.com/IEEE-Computer-Nirma"
-      },
+      }
     ],
     "contributors": [
       {
         "id": "deep-joshi",
         "name": "The Team"
-      },
-      
+      }
     ]
-  },
-  
+  }
 ]

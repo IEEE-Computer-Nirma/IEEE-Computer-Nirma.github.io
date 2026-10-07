@@ -63,7 +63,7 @@
   // Render Loading State
   function renderLoading(container) {
     container.className = 'ieee-cs-nirma-widget';
-    container.innerHTML = '';
+    container.textContent = '';
     var loadingP = document.createElement('p');
     loadingP.className = 'ieee-cs-nirma-widget__loading';
     loadingP.textContent = 'Loading IEEE Computer Society Chapter content...';
@@ -72,11 +72,20 @@
 
   // Render Fallback / Error State
   function renderFallback(container, message) {
-    container.innerHTML = '';
+    container.textContent = '';
     var fallbackP = document.createElement('p');
     fallbackP.className = 'ieee-cs-nirma-widget__fallback';
     fallbackP.textContent = message || 'IEEE Computer Society Chapter — Nirma University. Please visit https://ieee-computer-nirma.github.io for details.';
     container.appendChild(fallbackP);
+  }
+
+  // Resolve relative URLs to absolute BASE_URL
+  function resolveUrl(relativeUrl) {
+    if (!relativeUrl) return '';
+    if (relativeUrl.indexOf('http://') === 0 || relativeUrl.indexOf('https://') === 0 || relativeUrl.indexOf('//') === 0) {
+      return relativeUrl;
+    }
+    return BASE_URL + relativeUrl.replace(/^\/+/, '');
   }
 
   // Safe DOM Helper functions
@@ -99,10 +108,18 @@
 
   // Main Simple Text Render Function
   function renderWidget(container, data) {
-    container.innerHTML = '';
+    container.textContent = '';
 
     // 1. Chapter Title & Intro
     if (data.chapter) {
+      if (data.chapter.logo) {
+        var logoImg = document.createElement('img');
+        logoImg.src = resolveUrl(data.chapter.logo);
+        logoImg.alt = data.chapter.logo_alt || data.chapter.name || 'IEEE CS Nirma Logo';
+        logoImg.className = 'ieee-cs-nirma-widget__logo';
+        container.appendChild(logoImg);
+      }
+
       var title = el('h2', data.chapter.name + (data.chapter.institution ? ' — ' + data.chapter.institution : ''));
       container.appendChild(title);
 
@@ -150,6 +167,14 @@
       if (data.nirma_chapter.description) {
         var nirmaDesc = el('p', data.nirma_chapter.description);
         container.appendChild(nirmaDesc);
+      }
+
+      if (data.nirma_chapter.image) {
+        var nirmaImg = document.createElement('img');
+        nirmaImg.src = resolveUrl(data.nirma_chapter.image);
+        nirmaImg.alt = data.nirma_chapter.image_alt || data.nirma_chapter.title || 'Nirma Chapter Image';
+        nirmaImg.className = 'ieee-cs-nirma-widget__image';
+        container.appendChild(nirmaImg);
       }
 
       if (data.nirma_chapter.featured_guest) {
