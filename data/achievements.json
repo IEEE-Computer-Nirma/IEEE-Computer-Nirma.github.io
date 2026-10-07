@@ -1,203 +1,23 @@
 [
   {
-    "id": "hackdays-ahmedabad-winner",
-    "title": "1st Place — HackDays Ahmedabad 2025",
-    "date": "2025-10-15",
-    "image": "assets/gallery/hackdays_ahmedbad.png",
-    "description": "Secured 1st place in the regional 24-hour hackathon by developing an automated agentic AI pipeline for legal document verification and smart risk analysis.",
+    "id": "Under Development",
+    "title": "Under Development",
+    "date": "2026-10-07",
+    "image": "assets/IEEE_CS_Nirma_logo.svg",
+    "description": "Under Development",
     "links": [
       {
         "name": "Project Repo",
         "url": "https://github.com/IEEE-Computer-Nirma"
       },
-      {
-        "name": "Certificate",
-        "url": "https://hack.ieeenirma.org"
-      }
     ],
     "contributors": [
       {
         "id": "deep-joshi",
-        "name": "Deep Joshi"
+        "name": "The Team"
       },
-      {
-        "id": "priyansh-patel",
-        "name": "Priyansh Patel"
-      },
-      {
-        "id": "external-contributor-1",
-        "name": "Aarav Mehta"
-      }
+      
     ]
   },
-  {
-    "id": "ieee-cs-outstanding-chapter-award",
-    "title": "IEEE CS Outstanding Student Branch Chapter Award",
-    "date": "2025-08-10",
-    "image": "assets/gallery/hackdays_ahmedbad.png",
-    "description": "Recognized by IEEE Computer Society India Council for exceptional technical programming, student engagement, and open-source contributions across Gujarat.",
-    "links": [
-      {
-        "name": "Official Announcement",
-        "url": "https://www.computer.org"
-      }
-    ],
-    "contributors": [
-      {
-        "id": "dr-umesh-bodhke",
-        "name": "Dr Umesh Bodhke"
-      },
-      {
-        "id": "deep-joshi",
-        "name": "Deep Joshi"
-      },
-      {
-        "id": "vedanshi-malay-bhatt",
-        "name": "Vedanshi Bhatt"
-      },
-      {
-        "id": "divy-shah",
-        "name": "Divy Shah"
-      }
-    ]
-  },
-  {
-    "id": "ctf-national-cyber-challenge-top3",
-    "title": "Top 3 Finish — National Cybersecurity CTF 2025",
-    "date": "2025-05-20",
-    "image": "assets/gallery/hackdays_ahmedbad.png",
-    "description": "Outperformed 120+ university teams in a 36-hour Jeopardy CTF competition covering Web Exploitation, Cryptography, Reverse Engineering, and Binary Forensics.",
-    "links": [
-      {
-        "name": "Writeups",
-        "url": "https://github.com/IEEE-Computer-Nirma"
-      }
-    ],
-    "contributors": [
-      {
-        "id": "priyansh-patel",
-        "name": "Priyansh Patel"
-      },
-      {
-        "id": "ridham-mayur-shah",
-        "name": "Ridham Shah"
-      },
-      {
-        "id": "external-contributor-2",
-        "name": "Rohan Sharma"
-      }
-    ]
-  },
-  {
-    "id": "open-source-summer-ship",
-    "title": "Chapter Open Source Sprint — 50+ PRs Merged",
-    "date": "2025-03-12",
-    "image": "assets/gallery/hackdays_ahmedbad.png",
-    "description": "Led a month-long community sprint guiding 80+ students to make high-impact open-source contributions to developer tools and security libraries.",
-    "links": [
-      {
-        "name": "GitHub Organization",
-        "url": "https://github.com/IEEE-Computer-Nirma"
-      }
-    ],
-    "contributors": [
-      {
-        "id": "deep-joshi",
-        "name": "Deep Joshi"
-      },
-      {
-        "id": "ridham-mayur-shah",
-        "name": "Ridham Shah"
-      },
-      {
-        "id": "patel-meet-rameshbhai",
-        "name": "Meet Patel"
-      }
-    ]
-  },
-  {
-    "id": "ai-workshop-series-record",
-    "title": "Best Technical Workshop Series Award 2024",
-    "date": "2024-11-05",
-    "image": "assets/gallery/hackdays_ahmedbad.png",
-    "description": "Conducted hands-on sessions on Agentic AI, LLM Fine-Tuning, and Distributed Systems, training over 350+ engineering students across 4 sessions.",
-    "links": [
-      {
-        "name": "Workshop Resources",
-        "url": "https://github.com/IEEE-Computer-Nirma"
-      }
-    ],
-    "contributors": [
-      {
-        "id": "franky-kirtikumar-patel",
-        "name": "Franky Patel"
-      },
-      {
-        "id": "sakshi-chavda",
-        "name": "Sakshi Chavda"
-      },
-      {
-        "id": "mahi-sunil-acharya",
-        "name": "Mahi Acharya"
-      }
-    ]
-  },
-  {
-    "id": "research-paper-ieee-conecct",
-    "title": "Published Research Paper at IEEE CONECCT 2024",
-    "date": "2024-07-18",
-    "image": "assets/gallery/hackdays_ahmedbad.png",
-    "description": "Co-authored and presented research on lightweight cryptographic verification for decentralized edge nodes.",
-    "links": [
-      {
-        "name": "IEEE Xplore",
-        "url": "https://ieeexplore.ieee.org"
-      }
-    ],
-    "contributors": [
-      {
-        "id": "dr-umesh-bodhke",
-        "name": "Dr Umesh Bodhke"
-      },
-      {
-        "id": "deep-joshi",
-        "name": "Deep Joshi"
-      },
-      {
-        "id": "palak-sinojia",
-        "name": "Palak Sinojia"
-      }
-    ]
-  },
-  {
-    "id": "creatives-marketing-campaign-award",
-    "title": "Excellence in Digital Outreach & Design 2024",
-    "date": "2024-04-14",
-    "image": "assets/gallery/hackdays_ahmedbad.png",
-    "description": "Awarded for designing high-impact visual identity and marketing campaigns for chapter tech events, reaching 10,000+ students across Gujarat.",
-    "links": [
-      {
-        "name": "Instagram Highlights",
-        "url": "https://www.instagram.com/ieee.cs.sbnu/"
-      }
-    ],
-    "contributors": [
-      {
-        "id": "vishwa-ghori",
-        "name": "Vishwa Ghori"
-      },
-      {
-        "id": "keya-jeni",
-        "name": "Keya Jeni"
-      },
-      {
-        "id": "pari-pancholi",
-        "name": "Pari Pancholi"
-      },
-      {
-        "id": "neha-siju-kananthanam",
-        "name": "Neha Siju"
-      }
-    ]
-  }
+  
 ]
