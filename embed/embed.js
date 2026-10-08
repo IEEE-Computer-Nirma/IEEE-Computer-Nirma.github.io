@@ -124,15 +124,37 @@
       container.appendChild(title);
 
       if (data.chapter.tagline) {
-        var subtitle = el('p');
-        var em = el('em', data.chapter.tagline);
-        subtitle.appendChild(em);
-        container.appendChild(subtitle);
+        var taglineP = el('p', data.chapter.tagline);
+        taglineP.className = 'ieee-cs-nirma-widget__tagline';
+        container.appendChild(taglineP);
       }
 
-      if (data.chapter.description) {
-        var desc = el('p', data.chapter.description);
-        container.appendChild(desc);
+      // In-flow split layout: Left Image, Right Text
+      if (data.chapter.description || data.chapter.image) {
+        if (data.chapter.image) {
+          var chapterBlock = document.createElement('div');
+          chapterBlock.className = 'ieee-cs-nirma-widget__media-block';
+
+          var mediaImgWrap = document.createElement('div');
+          mediaImgWrap.className = 'ieee-cs-nirma-widget__media-img';
+          var chapterImg = document.createElement('img');
+          chapterImg.src = resolveUrl(data.chapter.image);
+          chapterImg.alt = data.chapter.image_alt || 'IEEE CS Nirma Chapter Team';
+          chapterImg.className = 'ieee-cs-nirma-widget__image';
+          mediaImgWrap.appendChild(chapterImg);
+
+          var mediaTextWrap = document.createElement('div');
+          mediaTextWrap.className = 'ieee-cs-nirma-widget__media-text';
+          if (data.chapter.description) {
+            mediaTextWrap.appendChild(el('p', data.chapter.description));
+          }
+
+          chapterBlock.appendChild(mediaImgWrap);
+          chapterBlock.appendChild(mediaTextWrap);
+          container.appendChild(chapterBlock);
+        } else if (data.chapter.description) {
+          container.appendChild(el('p', data.chapter.description));
+        }
       }
     }
 
@@ -164,32 +186,82 @@
       var nirmaTitle = el('h3', data.nirma_chapter.title || 'Nirma University Chapter');
       container.appendChild(nirmaTitle);
 
-      if (data.nirma_chapter.description) {
-        var nirmaDesc = el('p', data.nirma_chapter.description);
-        container.appendChild(nirmaDesc);
-      }
+      // In-flow split layout: Left Text, Right Image (reverse layout)
+      if (data.nirma_chapter.description || data.nirma_chapter.image) {
+        if (data.nirma_chapter.image) {
+          var nirmaBlock = document.createElement('div');
+          nirmaBlock.className = 'ieee-cs-nirma-widget__media-block ieee-cs-nirma-widget__media-block--reverse';
 
-      if (data.nirma_chapter.image) {
-        var nirmaImg = document.createElement('img');
-        nirmaImg.src = resolveUrl(data.nirma_chapter.image);
-        nirmaImg.alt = data.nirma_chapter.image_alt || data.nirma_chapter.title || 'Nirma Chapter Image';
-        nirmaImg.className = 'ieee-cs-nirma-widget__image';
-        container.appendChild(nirmaImg);
-      }
+          var nirmaTextWrap = document.createElement('div');
+          nirmaTextWrap.className = 'ieee-cs-nirma-widget__media-text';
 
-      if (data.nirma_chapter.featured_guest) {
-        var guest = data.nirma_chapter.featured_guest;
-        var guestP = el('p');
-        guestP.appendChild(document.createTextNode('Featured Guest: '));
-        if (guest.linkedin) {
-          guestP.appendChild(createLink(guest.linkedin, guest.name, true));
+          if (data.nirma_chapter.description) {
+            nirmaTextWrap.appendChild(el('p', data.nirma_chapter.description));
+          }
+
+          if (data.nirma_chapter.featured_guest) {
+            var guest = data.nirma_chapter.featured_guest;
+            var guestCard = document.createElement('div');
+            guestCard.className = 'ieee-cs-nirma-widget__guest-card';
+
+            var guestLabel = el('span', 'Featured Industry Guest');
+            guestLabel.className = 'ieee-cs-nirma-widget__guest-label';
+
+            var guestBody = document.createElement('div');
+            guestBody.className = 'ieee-cs-nirma-widget__guest-body';
+
+            var guestName = guest.linkedin ? createLink(guest.linkedin, guest.name, true) : el('span', guest.name);
+            guestName.className = 'ieee-cs-nirma-widget__guest-name';
+
+            guestBody.appendChild(guestName);
+
+            if (guest.role) {
+              var guestRole = el('span', guest.role);
+              guestRole.className = 'ieee-cs-nirma-widget__guest-role';
+              guestBody.appendChild(guestRole);
+            }
+
+            guestCard.appendChild(guestLabel);
+            guestCard.appendChild(guestBody);
+            nirmaTextWrap.appendChild(guestCard);
+          }
+
+          var nirmaImgWrap = document.createElement('div');
+          nirmaImgWrap.className = 'ieee-cs-nirma-widget__media-img';
+          var nirmaImg = document.createElement('img');
+          nirmaImg.src = resolveUrl(data.nirma_chapter.image);
+          nirmaImg.alt = data.nirma_chapter.image_alt || data.nirma_chapter.title || 'Nirma Chapter Image';
+          nirmaImg.className = 'ieee-cs-nirma-widget__image';
+          nirmaImgWrap.appendChild(nirmaImg);
+
+          nirmaBlock.appendChild(nirmaTextWrap);
+          nirmaBlock.appendChild(nirmaImgWrap);
+          container.appendChild(nirmaBlock);
         } else {
-          guestP.appendChild(document.createTextNode(guest.name));
+          if (data.nirma_chapter.description) {
+            container.appendChild(el('p', data.nirma_chapter.description));
+          }
+          if (data.nirma_chapter.featured_guest) {
+            var guestFallback = data.nirma_chapter.featured_guest;
+            var guestCardFb = document.createElement('div');
+            guestCardFb.className = 'ieee-cs-nirma-widget__guest-card';
+            var guestLabelFb = el('span', 'Featured Industry Guest');
+            guestLabelFb.className = 'ieee-cs-nirma-widget__guest-label';
+            var guestBodyFb = document.createElement('div');
+            guestBodyFb.className = 'ieee-cs-nirma-widget__guest-body';
+            var guestNameFb = guestFallback.linkedin ? createLink(guestFallback.linkedin, guestFallback.name, true) : el('span', guestFallback.name);
+            guestNameFb.className = 'ieee-cs-nirma-widget__guest-name';
+            guestBodyFb.appendChild(guestNameFb);
+            if (guestFallback.role) {
+              var guestRoleFb = el('span', guestFallback.role);
+              guestRoleFb.className = 'ieee-cs-nirma-widget__guest-role';
+              guestBodyFb.appendChild(guestRoleFb);
+            }
+            guestCardFb.appendChild(guestLabelFb);
+            guestCardFb.appendChild(guestBodyFb);
+            container.appendChild(guestCardFb);
+          }
         }
-        if (guest.role) {
-          guestP.appendChild(document.createTextNode(' (' + guest.role + ')'));
-        }
-        container.appendChild(guestP);
       }
     }
 
@@ -199,9 +271,9 @@
       container.appendChild(goalsTitle);
 
       var goalsList = el('ul');
-      data.goals.forEach(function (goal, idx) {
+      data.goals.forEach(function (goal) {
         var li = el('li');
-        var strong = el('strong', (goal.id || (idx + 1)) + '. ' + goal.title + ': ');
+        var strong = el('strong', goal.title + ': ');
         li.appendChild(strong);
         li.appendChild(document.createTextNode(goal.description));
         goalsList.appendChild(li);
