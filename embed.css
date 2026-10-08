@@ -1,80 +1,267 @@
-/* Minimal simple text styling for IEEE CS Nirma embed widget */
+/* Simple text styling for the IEEE CS Nirma embed widget.
+   Everything is scoped under .ieee-cs-nirma-widget. Fonts and text colour are
+   inherited from the host page; override the variables below to theme it. */
+
 .ieee-cs-nirma-widget {
+  --ieee-cs-accent: #006699;
+  --ieee-cs-divider: rgba(128, 128, 128, 0.35);
+  --ieee-cs-radius: 4px;
+  --ieee-cs-measure: none; /* set e.g. 70ch to cap line length */
+
+  display: block;
+  box-sizing: border-box;
+  margin: 1rem 0;
+  padding: 0;
   font-family: inherit;
   font-size: 1rem;
   line-height: 1.6;
   color: inherit;
   background: transparent;
-  padding: 0;
-  margin: 16px 0;
-  border: none;
+  border: 0;
   box-shadow: none;
+  overflow-wrap: anywhere;
 }
 
-.ieee-cs-nirma-widget h2,
-.ieee-cs-nirma-widget h3,
-.ieee-cs-nirma-widget h4 {
+.ieee-cs-nirma-widget *,
+.ieee-cs-nirma-widget *::before,
+.ieee-cs-nirma-widget *::after {
+  box-sizing: border-box;
+}
+
+/* Headings are styled by class, so the heading level can change without changing the look */
+.ieee-cs-nirma-widget .ieee-cs-nirma-widget__title,
+.ieee-cs-nirma-widget .ieee-cs-nirma-widget__heading {
+  margin: 0 0 0.5rem;
+  padding: 0;
   font-family: inherit;
+  font-weight: 700;
+  line-height: 1.3;
   color: inherit;
-  margin-top: 1.2em;
-  margin-bottom: 0.5em;
-  font-weight: bold;
 }
 
-.ieee-cs-nirma-widget h2 {
-  font-size: 1.5rem;
+.ieee-cs-nirma-widget .ieee-cs-nirma-widget__title {
+  font-size: 1.75rem;
 }
 
-.ieee-cs-nirma-widget h3 {
+.ieee-cs-nirma-widget .ieee-cs-nirma-widget__heading {
   font-size: 1.2rem;
 }
 
-.ieee-cs-nirma-widget h4 {
+.ieee-cs-nirma-widget .ieee-cs-nirma-widget__tagline {
+  font-style: italic;
+}
+
+/* Sections */
+.ieee-cs-nirma-widget .ieee-cs-nirma-widget__section {
+  margin: 2.5rem 0 0;
+  padding: 2.25rem 0 0;
+  border-top: 1px solid var(--ieee-cs-divider);
+}
+
+.ieee-cs-nirma-widget .ieee-cs-nirma-widget__section > :last-child {
+  margin-bottom: 0;
+}
+
+/* Text and lists (resets guard against host styles such as list-style: none) */
+.ieee-cs-nirma-widget p,
+.ieee-cs-nirma-widget li {
+  font-family: inherit;
   font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.6;
+  color: inherit;
 }
 
 .ieee-cs-nirma-widget p {
-  margin-bottom: 1em;
+  margin: 0 0 1em;
+  max-width: var(--ieee-cs-measure);
+}
+
+.ieee-cs-nirma-widget ul,
+.ieee-cs-nirma-widget ol {
+  margin: 0 0 1em;
+  padding: 0 0 0 1.25rem;
+  max-width: var(--ieee-cs-measure);
 }
 
 .ieee-cs-nirma-widget ul {
-  margin-left: 20px;
-  margin-bottom: 1em;
+  list-style: disc;
+}
+
+.ieee-cs-nirma-widget ol {
+  list-style: decimal;
 }
 
 .ieee-cs-nirma-widget li {
-  margin-bottom: 0.5em;
+  margin: 0 0 0.6em;
+  padding: 0;
 }
 
+.ieee-cs-nirma-widget li:last-child {
+  margin-bottom: 0;
+}
+
+/* Item title sits on its own line, with the description underneath */
+.ieee-cs-nirma-widget .ieee-cs-nirma-widget__item-title {
+  display: block;
+  font-weight: 600;
+}
+
+/* Links */
 .ieee-cs-nirma-widget a {
-  color: #006699;
+  color: var(--ieee-cs-accent);
   text-decoration: underline;
+  text-underline-offset: 0.15em;
 }
 
 .ieee-cs-nirma-widget a:hover {
-  text-decoration: none;
+  text-decoration-thickness: 2px;
 }
 
-.ieee-cs-nirma-widget img,
-.ieee-cs-nirma-widget__image {
+.ieee-cs-nirma-widget a:focus-visible {
+  outline: 2px solid var(--ieee-cs-accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Hero: centred logo, title and intro */
+.ieee-cs-nirma-widget .ieee-cs-nirma-widget__hero {
+  padding: 1rem 0 0.5rem;
+  text-align: center;
+}
+
+.ieee-cs-nirma-widget .ieee-cs-nirma-widget__hero p {
+  max-width: 60ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.ieee-cs-nirma-widget .ieee-cs-nirma-widget__logo {
+  display: block;
+  width: 100%;
+  max-width: 380px;
+  height: auto;
+  margin: 0 auto 2rem;
+}
+
+/* Split sections: text on one side, photo on the other.
+   Stacked (text first) on small screens. Class selectors are doubled so they
+   win over host rules like ".content img". */
+.ieee-cs-nirma-widget .ieee-cs-nirma-widget__split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.ieee-cs-nirma-widget .ieee-cs-nirma-widget__split-text > :last-child {
+  margin-bottom: 0;
+}
+
+.ieee-cs-nirma-widget .ieee-cs-nirma-widget__figure {
+  margin: 0;
+  padding: 0;
+}
+
+.ieee-cs-nirma-widget .ieee-cs-nirma-widget__photo {
+  display: block;
   width: 100%;
   max-width: 100%;
   height: auto;
-  display: block;
-  margin: 16px 0;
-  border-radius: 4px;
+  margin: 0;
+  border-radius: var(--ieee-cs-radius);
 }
 
-.ieee-cs-nirma-widget__logo {
-  max-width: 320px;
-  width: 100%;
-  height: auto;
-  display: block;
-  margin: 16px 0 24px 0;
-}
-
-.ieee-cs-nirma-widget__loading,
-.ieee-cs-nirma-widget__fallback {
-  padding: 8px 0;
+.ieee-cs-nirma-widget .ieee-cs-nirma-widget__caption {
+  margin: 0.5rem 0 0;
+  font-size: 0.875rem;
   font-style: italic;
+}
+
+@media (min-width: 720px) {
+  .ieee-cs-nirma-widget .ieee-cs-nirma-widget__split {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 2.5rem;
+  }
+
+  /* Photo on the left, text on the right (DOM order stays text first) */
+  .ieee-cs-nirma-widget .ieee-cs-nirma-widget__split--reverse > .ieee-cs-nirma-widget__figure {
+    order: -1;
+  }
+
+  /* Photo failed to load: let the text use the full width */
+  .ieee-cs-nirma-widget .ieee-cs-nirma-widget__split--text-only {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Goals: numbered, side by side on wider screens */
+.ieee-cs-nirma-widget .ieee-cs-nirma-widget__goals {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.5rem;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: ieee-cs-goal;
+}
+
+.ieee-cs-nirma-widget .ieee-cs-nirma-widget__goals > li {
+  counter-increment: ieee-cs-goal;
+  margin: 0;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--ieee-cs-divider);
+}
+
+.ieee-cs-nirma-widget .ieee-cs-nirma-widget__goals > li::before {
+  content: counter(ieee-cs-goal);
+  display: block;
+  margin-bottom: 0.35rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--ieee-cs-accent);
+}
+
+@media (min-width: 720px) {
+  .ieee-cs-nirma-widget .ieee-cs-nirma-widget__goals {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2rem;
+  }
+}
+
+/* Links: one wrapping row instead of a bullet list */
+.ieee-cs-nirma-widget .ieee-cs-nirma-widget__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ieee-cs-nirma-widget .ieee-cs-nirma-widget__links > li {
+  margin: 0;
+}
+
+/* Loading and error states */
+.ieee-cs-nirma-widget .ieee-cs-nirma-widget__loading,
+.ieee-cs-nirma-widget .ieee-cs-nirma-widget__fallback {
+  padding: 0.5rem 0;
+  font-style: italic;
+}
+
+/* Visually hidden text for screen readers */
+.ieee-cs-nirma-widget .ieee-cs-nirma-widget__sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }

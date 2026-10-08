@@ -2,99 +2,96 @@
   "$schema": "https://ieee-computer-nirma.github.io/content.schema.json",
   "meta": {
     "title": "IEEE Computer Society Student Chapter — Nirma University",
-    "lastUpdated": "2025-03-01",
-    "version": "1.0.0"
+    "lastUpdated": "2026-10-08",
+    "version": "1.3.0"
   },
   "chapter": {
     "name": "IEEE Computer Society Student Chapter",
     "institution": "Nirma University",
     "logo": "assets/IEEE_CS_Nirma_logo.svg",
-    "logo_alt": "IEEE Computer Society Nirma University Logo",
+    "logo_alt": "",
     "tagline": "Empowering Tomorrow's Engineers and Leaders",
-    "description": "The IEEE Computer Society Student Chapter at Nirma University operates under the global IEEE Computer Society. Founded to empower tomorrow's engineers and leaders, the chapter drives student collaboration in cutting-edge fields such as computer science, quantum computing, computer vision, cybersecurity, and beyond."
+    "description": "The IEEE Computer Society Student Chapter at Nirma University is a student community that operates under the IEEE Computer Society. The chapter brings students together to learn and collaborate in areas like artificial intelligence, computer vision, cybersecurity, health AI and quantum computing."
+  },
+  "what_we_do": {
+    "title": "What We Do",
+    "paragraphs": [
+      "IEEE Computer Society at Nirma is a student community built around learning, building, and sharing ideas. We bring students together through workshops, talks, hackathons, and hands-on projects.",
+      "Beyond these activities, we also encourage students to explore their interests, take on new challenges, and find opportunities to grow."
+    ],
+    "image": "assets/gallery/hackdays_ahmedbad.png",
+    "image_alt": "HackDays poster: IEEE Computer Society, Nirma University, Ahmedabad, September 26, 2026."
+  },
+  "nirma_chapter": {
+    "title": "About the Chapter",
+    "paragraphs": [
+      "The chapter was established in 2025, and as part of the IEEE Computer Society we're connected to a much bigger community of people working in computing.",
+      "Events we've hosted include HackDays Ahmedabad, held at Nirma University on 26 September 2026.",
+      "We've also had industry guests visit, including Naren Kachroo, Head of Google Cloud India."
+    ],
+    "image": "assets/gallery/GroupPhoto00.jpeg",
+    "image_alt": "A large group of people posing together in a Nirma University lecture hall, with the HackDays Ahmedabad title on the projector screen behind them.",
+    "image_caption": "HackDays Ahmedabad"
+  },
+  "goals": {
+    "title": "Goals",
+    "items": [
+      {
+        "title": "Technical innovation and research",
+        "description": "Help students get involved in computing research, deep learning model replication and open-source software engineering."
+      },
+      {
+        "title": "Peer learning in emerging fields",
+        "description": "Build an active peer-learning community around artificial intelligence, computer vision, cybersecurity, health AI and quantum computing."
+      },
+      {
+        "title": "A learning community beyond the classroom",
+        "description": "Give students a dedicated space to learn and work together as a team, outside regular coursework."
+      }
+    ]
+  },
+  "faculty_advisor": {
+    "title": "Faculty Advisor",
+    "name": "Dr. Umesh Bodkhe",
+    "affiliation": "Department of Computer Science & Engineering, Nirma University"
   },
   "ieee_cs": {
-    "title": "IEEE Computer Society",
-    "description": "The IEEE Computer Society is a global organization for computing professionals. In 2026, it celebrates its 80th anniversary and advances the field through high-impact conferences, publications, and professional initiatives connecting leaders across all career stages.",
-    "anniversary": "80th Anniversary (2026)",
+    "title": "About the IEEE Computer Society",
+    "description": "The IEEE Computer Society is a global organization for computing professionals. It supports the field through conferences, publications and professional initiatives, and celebrates its 80th anniversary in 2026.",
     "highlights": [
       {
-        "id": "sc24",
         "title": "SC24",
         "description": "Brought together more than 18,000 high-performance computing experts."
       },
       {
-        "id": "cvpr-2026",
         "title": "CVPR 2026",
-        "description": "Attracted 12,200 attendees representing 84 countries and regions. Set new records for attendance and paper submissions, showcasing breakthroughs in computer vision, artificial intelligence (AI), autonomous systems, and embodied AI/robotics."
+        "description": "Attracted 12,200 attendees from 84 countries and regions, and set new records for attendance and paper submissions. Showcased work in computer vision, artificial intelligence (AI), autonomous systems and embodied AI/robotics."
       },
       {
-        "id": "quantum-week-2026",
         "title": "Quantum Week 2026",
-        "description": "Served as a flagship global platform for quantum engineering and computing, bringing together more than 2,300 attendees from across the international quantum community."
+        "description": "A flagship global platform for quantum engineering and computing, bringing together more than 2,300 attendees from the international quantum community."
       }
     ]
   },
-  "nirma_chapter": {
-    "title": "Nirma University Chapter",
-    "established": "2025",
-    "description": "Upholding its parent organization's commitment to innovation, the IEEE Computer Society Chapter at Nirma University was established in 2025. The chapter has made a strong impact by hosting key events such as HackDays Ahmedabad and welcoming prominent industry figures, including Naren Kachroo, Head of Google Cloud India.",
-    "image": "assets/gallery/hackdays_ahmedbad.png",
-    "image_alt": "HackDays Ahmedabad Event",
-    "featured_guest": {
-      "name": "Naren Kachroo",
-      "role": "Head of Google Cloud India",
-      "linkedin": "http://in.linkedin.com/in/naren-kachroo"
-    }
-  },
-  "goals": [
-    {
-      "id": 1,
-      "title": "Foster Technical Innovation & Research Excellence",
-      "description": "Empower students to engage in cutting-edge computing research, deep learning model replication, and open-source software engineering."
-    },
-    {
-      "id": 2,
-      "title": "Promote Student Collaboration in Emerging Fields",
-      "description": "Cultivate an active peer-learning community centered on key domains, including Artificial Intelligence, Computer Vision, Cybersecurity, Health AI, and Quantum Computing."
-    },
-    {
-      "id": 3,
-      "title": "Build a Collaborative Learning Community Beyond the Classroom",
-      "description": "Provide a dedicated environment where students can learn, work, and collaborate as a cohesive team outside of traditional coursework."
-    }
-  ],
-  "faculty_advisor": {
-    "name": "Dr. Umesh Bodkhe",
-    "role": "Faculty Advisor",
-    "affiliation": "Department of Computer Science & Engineering, Nirma University"
-  },
-  "links": [
-    {
-      "label": "IEEE Computer Society",
-      "url": "https://www.computer.org",
-      "external": true
-    },
-    {
-      "label": "Chapter Website",
-      "url": "https://ieee-computer-nirma.github.io",
-      "external": false
-    },
-    {
-      "label": "Chapter Team",
-      "url": "https://ieee-computer-nirma.github.io/team",
-      "external": false
-    },
-    {
-      "label": "Chapter Events",
-      "url": "https://ieee-computer-nirma.github.io/events",
-      "external": false
-    }
-  ],
-  "events": [],
-  "announcements": [],
-  "achievements": [],
-  "sponsors": [],
-  "leadership": [],
-  "gallery": []
+  "links": {
+    "title": "Links",
+    "items": [
+      {
+        "label": "IEEE Computer Society",
+        "url": "https://www.computer.org"
+      },
+      {
+        "label": "Chapter website",
+        "url": "https://ieee-computer-nirma.github.io"
+      },
+      {
+        "label": "Meet the team",
+        "url": "https://ieee-computer-nirma.github.io/team"
+      },
+      {
+        "label": "Events",
+        "url": "https://ieee-computer-nirma.github.io/events"
+      }
+    ]
+  }
 }
