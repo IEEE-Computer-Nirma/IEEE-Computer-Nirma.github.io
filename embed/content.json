@@ -17,8 +17,7 @@
   },
   "ieee_cs": {
     "title": "IEEE Computer Society",
-    "description": "The IEEE Computer Society is a global organization for computing professionals. In 2026, it celebrates its 80th anniversary and advances the field through high-impact conferences, publications, and professional initiatives connecting leaders across all career stages.",
-    "anniversary": "80th Anniversary (2026)",
+    "description": "The IEEE Computer Society is a global organization for computing professionals. Celebrating its 80th anniversary in 2026, it advances the field through high-impact conferences, publications, and professional initiatives connecting leaders across all career stages.",
     "highlights": [
       {
         "id": "sc24",
@@ -40,14 +39,9 @@
   "nirma_chapter": {
     "title": "Nirma University Chapter",
     "established": "2025",
-    "description": "Upholding its parent organization's commitment to innovation, the IEEE Computer Society Chapter at Nirma University was established in 2025. The chapter has made a strong impact by hosting key events such as HackDays Ahmedabad and welcoming prominent industry figures, including Naren Kachroo, Head of Google Cloud India.",
+    "description": "Upholding its parent organization's commitment to innovation, the IEEE Computer Society Chapter at Nirma University was established in 2025. The chapter has made a strong impact by hosting key events such as HackDays Ahmedabad and fostering student technical research and collaboration.",
     "image": "assets/gallery/GroupPhoto00.jpeg",
-    "image_alt": "IEEE CS Nirma Chapter Group Photo",
-    "featured_guest": {
-      "name": "Naren Kachroo",
-      "role": "Head of Google Cloud India",
-      "linkedin": "http://in.linkedin.com/in/naren-kachroo"
-    }
+    "image_alt": "IEEE CS Nirma Chapter Group Photo"
   },
   "goals": [
     {

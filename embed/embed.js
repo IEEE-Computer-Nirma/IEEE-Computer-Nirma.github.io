@@ -27,7 +27,7 @@
   var CSS_URL = BASE_URL + 'embed.css';
   var CONTENT_URL = BASE_URL + 'content.json';
 
-  // Inject minimal CSS stylesheet into head if not already injected
+  // Inject CSS stylesheet into head if not already injected
   function injectStylesheet() {
     if (document.querySelector('link[data-ieee-cs-widget-css]')) {
       return;
@@ -110,26 +110,34 @@
   function renderWidget(container, data) {
     container.textContent = '';
 
-    // 1. Chapter Title & Intro
+    // Header section (centered logo, title, and quote tagline)
+    var header = document.createElement('div');
+    header.className = 'ieee-cs-nirma-widget__header';
+
     if (data.chapter) {
       if (data.chapter.logo) {
         var logoImg = document.createElement('img');
         logoImg.src = resolveUrl(data.chapter.logo);
         logoImg.alt = data.chapter.logo_alt || data.chapter.name || 'IEEE CS Nirma Logo';
         logoImg.className = 'ieee-cs-nirma-widget__logo';
-        container.appendChild(logoImg);
+        header.appendChild(logoImg);
       }
 
-      var title = el('h2', data.chapter.name + (data.chapter.institution ? ' — ' + data.chapter.institution : ''));
-      container.appendChild(title);
+      var titleText = data.chapter.name + (data.chapter.institution ? ' — ' + data.chapter.institution : '');
+      var title = el('h2', titleText);
+      title.className = 'ieee-cs-nirma-widget__title';
+      header.appendChild(title);
 
       if (data.chapter.tagline) {
-        var taglineP = el('p', data.chapter.tagline);
-        taglineP.className = 'ieee-cs-nirma-widget__tagline';
-        container.appendChild(taglineP);
+        var quote = el('blockquote', '“' + data.chapter.tagline + '”');
+        quote.className = 'ieee-cs-nirma-widget__tagline';
+        header.appendChild(quote);
       }
+    }
+    container.appendChild(header);
 
-      // In-flow split layout: Left Image, Right Text
+    // 1. Chapter Description Block
+    if (data.chapter) {
       if (data.chapter.description || data.chapter.image) {
         if (data.chapter.image) {
           var chapterBlock = document.createElement('div');
@@ -160,7 +168,7 @@
 
     // 2. IEEE Computer Society
     if (data.ieee_cs) {
-      var csTitle = el('h3', (data.ieee_cs.title || 'IEEE Computer Society') + (data.ieee_cs.anniversary ? ' (' + data.ieee_cs.anniversary + ')' : ''));
+      var csTitle = el('h3', data.ieee_cs.title || 'IEEE Computer Society');
       container.appendChild(csTitle);
 
       if (data.ieee_cs.description) {
@@ -186,7 +194,6 @@
       var nirmaTitle = el('h3', data.nirma_chapter.title || 'Nirma University Chapter');
       container.appendChild(nirmaTitle);
 
-      // In-flow split layout: Left Text, Right Image (reverse layout)
       if (data.nirma_chapter.description || data.nirma_chapter.image) {
         if (data.nirma_chapter.image) {
           var nirmaBlock = document.createElement('div');
@@ -194,36 +201,8 @@
 
           var nirmaTextWrap = document.createElement('div');
           nirmaTextWrap.className = 'ieee-cs-nirma-widget__media-text';
-
           if (data.nirma_chapter.description) {
             nirmaTextWrap.appendChild(el('p', data.nirma_chapter.description));
-          }
-
-          if (data.nirma_chapter.featured_guest) {
-            var guest = data.nirma_chapter.featured_guest;
-            var guestCard = document.createElement('div');
-            guestCard.className = 'ieee-cs-nirma-widget__guest-card';
-
-            var guestLabel = el('span', 'Featured Industry Guest');
-            guestLabel.className = 'ieee-cs-nirma-widget__guest-label';
-
-            var guestBody = document.createElement('div');
-            guestBody.className = 'ieee-cs-nirma-widget__guest-body';
-
-            var guestName = guest.linkedin ? createLink(guest.linkedin, guest.name, true) : el('span', guest.name);
-            guestName.className = 'ieee-cs-nirma-widget__guest-name';
-
-            guestBody.appendChild(guestName);
-
-            if (guest.role) {
-              var guestRole = el('span', guest.role);
-              guestRole.className = 'ieee-cs-nirma-widget__guest-role';
-              guestBody.appendChild(guestRole);
-            }
-
-            guestCard.appendChild(guestLabel);
-            guestCard.appendChild(guestBody);
-            nirmaTextWrap.appendChild(guestCard);
           }
 
           var nirmaImgWrap = document.createElement('div');
@@ -237,30 +216,8 @@
           nirmaBlock.appendChild(nirmaTextWrap);
           nirmaBlock.appendChild(nirmaImgWrap);
           container.appendChild(nirmaBlock);
-        } else {
-          if (data.nirma_chapter.description) {
-            container.appendChild(el('p', data.nirma_chapter.description));
-          }
-          if (data.nirma_chapter.featured_guest) {
-            var guestFallback = data.nirma_chapter.featured_guest;
-            var guestCardFb = document.createElement('div');
-            guestCardFb.className = 'ieee-cs-nirma-widget__guest-card';
-            var guestLabelFb = el('span', 'Featured Industry Guest');
-            guestLabelFb.className = 'ieee-cs-nirma-widget__guest-label';
-            var guestBodyFb = document.createElement('div');
-            guestBodyFb.className = 'ieee-cs-nirma-widget__guest-body';
-            var guestNameFb = guestFallback.linkedin ? createLink(guestFallback.linkedin, guestFallback.name, true) : el('span', guestFallback.name);
-            guestNameFb.className = 'ieee-cs-nirma-widget__guest-name';
-            guestBodyFb.appendChild(guestNameFb);
-            if (guestFallback.role) {
-              var guestRoleFb = el('span', guestFallback.role);
-              guestRoleFb.className = 'ieee-cs-nirma-widget__guest-role';
-              guestBodyFb.appendChild(guestRoleFb);
-            }
-            guestCardFb.appendChild(guestLabelFb);
-            guestCardFb.appendChild(guestBodyFb);
-            container.appendChild(guestCardFb);
-          }
+        } else if (data.nirma_chapter.description) {
+          container.appendChild(el('p', data.nirma_chapter.description));
         }
       }
     }
