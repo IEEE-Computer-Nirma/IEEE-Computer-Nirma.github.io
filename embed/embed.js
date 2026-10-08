@@ -124,10 +124,9 @@
       container.appendChild(title);
 
       if (data.chapter.tagline) {
-        var subtitle = el('p');
-        var em = el('em', data.chapter.tagline);
-        subtitle.appendChild(em);
-        container.appendChild(subtitle);
+        var taglineP = el('p', data.chapter.tagline);
+        taglineP.className = 'ieee-cs-nirma-widget__tagline';
+        container.appendChild(taglineP);
       }
 
       if (data.chapter.description) {
@@ -179,17 +178,29 @@
 
       if (data.nirma_chapter.featured_guest) {
         var guest = data.nirma_chapter.featured_guest;
-        var guestP = el('p');
-        guestP.appendChild(document.createTextNode('Featured Guest: '));
-        if (guest.linkedin) {
-          guestP.appendChild(createLink(guest.linkedin, guest.name, true));
-        } else {
-          guestP.appendChild(document.createTextNode(guest.name));
-        }
+        var guestCard = document.createElement('div');
+        guestCard.className = 'ieee-cs-nirma-widget__guest-card';
+
+        var guestLabel = el('span', 'Featured Industry Guest');
+        guestLabel.className = 'ieee-cs-nirma-widget__guest-label';
+
+        var guestBody = document.createElement('div');
+        guestBody.className = 'ieee-cs-nirma-widget__guest-body';
+
+        var guestName = guest.linkedin ? createLink(guest.linkedin, guest.name, true) : el('span', guest.name);
+        guestName.className = 'ieee-cs-nirma-widget__guest-name';
+
+        guestBody.appendChild(guestName);
+
         if (guest.role) {
-          guestP.appendChild(document.createTextNode(' (' + guest.role + ')'));
+          var guestRole = el('span', guest.role);
+          guestRole.className = 'ieee-cs-nirma-widget__guest-role';
+          guestBody.appendChild(guestRole);
         }
-        container.appendChild(guestP);
+
+        guestCard.appendChild(guestLabel);
+        guestCard.appendChild(guestBody);
+        container.appendChild(guestCard);
       }
     }
 
@@ -199,9 +210,9 @@
       container.appendChild(goalsTitle);
 
       var goalsList = el('ul');
-      data.goals.forEach(function (goal, idx) {
+      data.goals.forEach(function (goal) {
         var li = el('li');
-        var strong = el('strong', (goal.id || (idx + 1)) + '. ' + goal.title + ': ');
+        var strong = el('strong', goal.title + ': ');
         li.appendChild(strong);
         li.appendChild(document.createTextNode(goal.description));
         goalsList.appendChild(li);
