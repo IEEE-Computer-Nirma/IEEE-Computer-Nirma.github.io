@@ -84,6 +84,19 @@
   max-width: var(--ieee-cs-measure);
 }
 
+/* Tagline styling */
+.ieee-cs-nirma-widget__tagline {
+  font-size: 1.05rem;
+  font-style: italic;
+  font-weight: 500;
+  color: #006699;
+  border-left: 3px solid #006699;
+  padding-left: 12px;
+  margin: 4px 0 16px 0;
+  letter-spacing: 0.01em;
+}
+
+/* List styling */
 .ieee-cs-nirma-widget ul {
   list-style: disc;
 }
