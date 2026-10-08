@@ -8,6 +8,8 @@
   "chapter": {
     "name": "IEEE Computer Society Student Chapter",
     "institution": "Nirma University",
+    "logo": "assets/IEEE_CS_Nirma_logo.svg",
+    "logo_alt": "IEEE Computer Society Nirma University Logo",
     "tagline": "Empowering Tomorrow's Engineers and Leaders",
     "description": "The IEEE Computer Society Student Chapter at Nirma University operates under the global IEEE Computer Society. Founded to empower tomorrow's engineers and leaders, the chapter drives student collaboration in cutting-edge fields such as computer science, quantum computing, computer vision, cybersecurity, and beyond."
   },
@@ -37,6 +39,8 @@
     "title": "Nirma University Chapter",
     "established": "2025",
     "description": "Upholding its parent organization's commitment to innovation, the IEEE Computer Society Chapter at Nirma University was established in 2025. The chapter has made a strong impact by hosting key events such as HackDays Ahmedabad and welcoming prominent industry figures, including Naren Kachroo, Head of Google Cloud India.",
+    "image": "assets/gallery/GroupPhoto00.jpeg",
+    "image_alt": "HackDays Ahmedabad Event",
     "featured_guest": {
       "name": "Naren Kachroo",
       "role": "Head of Google Cloud India",

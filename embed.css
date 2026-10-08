@@ -55,6 +55,24 @@
   text-decoration: none;
 }
 
+.ieee-cs-nirma-widget img,
+.ieee-cs-nirma-widget__image {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 16px 0;
+  border-radius: 4px;
+}
+
+.ieee-cs-nirma-widget__logo {
+  max-width: 320px;
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 16px 0 24px 0;
+}
+
 .ieee-cs-nirma-widget__loading,
 .ieee-cs-nirma-widget__fallback {
   padding: 8px 0;
