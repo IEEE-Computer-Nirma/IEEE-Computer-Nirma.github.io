@@ -195,11 +195,12 @@
   }
 }
 
-/* Goals: numbered, side by side on wider screens */
+/* Goals: three numbered statements in the page's own text style.
+   Same bold-title-over-description pattern as the other lists, with the
+   number hanging in the left margin. No rules, colour or boxes: the section
+   divider above is the only line, as everywhere else on the page. */
 .ieee-cs-nirma-widget .ieee-cs-nirma-widget__goals {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 1.5rem;
+  display: block;
   max-width: none;
   margin: 0;
   padding: 0;
@@ -208,27 +209,35 @@
 }
 
 .ieee-cs-nirma-widget .ieee-cs-nirma-widget__goals > li {
-  counter-increment: ieee-cs-goal;
-  margin: 0;
-  padding-top: 0.75rem;
-  border-top: 1px solid var(--ieee-cs-divider);
-}
-
-.ieee-cs-nirma-widget .ieee-cs-nirma-widget__goals > li::before {
-  content: counter(ieee-cs-goal);
+  position: relative;
   display: block;
-  margin-bottom: 0.35rem;
-  font-size: 1.5rem;
-  font-weight: 700;
-  line-height: 1;
-  color: var(--ieee-cs-accent);
+  margin: 0 0 1.5rem;
+  padding: 0 0 0 2rem;
+  list-style: none;
+  counter-increment: ieee-cs-goal;
 }
 
-@media (min-width: 720px) {
-  .ieee-cs-nirma-widget .ieee-cs-nirma-widget__goals {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 2rem;
-  }
+.ieee-cs-nirma-widget .ieee-cs-nirma-widget__goals > li:last-child {
+  margin-bottom: 0;
+}
+
+/* The number is typeset like the title beside it, so the two share a baseline */
+.ieee-cs-nirma-widget .ieee-cs-nirma-widget__goals > li::before {
+  content: counter(ieee-cs-goal) ".";
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.35;
+  color: inherit;
+}
+
+.ieee-cs-nirma-widget .ieee-cs-nirma-widget__goals .ieee-cs-nirma-widget__item-title {
+  margin: 0 0 0.15rem;
+  font-size: 1.1rem;
+  line-height: 1.35;
 }
 
 /* Links: one wrapping row instead of a bullet list */
