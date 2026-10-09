@@ -47,10 +47,6 @@
   font-size: 1.2rem;
 }
 
-.ieee-cs-nirma-widget .ieee-cs-nirma-widget__tagline {
-  font-style: italic;
-}
-
 /* Sections */
 .ieee-cs-nirma-widget .ieee-cs-nirma-widget__section {
   margin: 2.5rem 0 0;
@@ -82,18 +78,6 @@
   margin: 0 0 1em;
   padding: 0 0 0 1.25rem;
   max-width: var(--ieee-cs-measure);
-}
-
-/* Tagline styling */
-.ieee-cs-nirma-widget__tagline {
-  font-size: 1.05rem;
-  font-style: italic;
-  font-weight: 500;
-  color: #006699;
-  border-left: 3px solid #006699;
-  padding-left: 12px;
-  margin: 4px 0 16px 0;
-  letter-spacing: 0.01em;
 }
 
 /* List styling */
@@ -154,7 +138,7 @@
   width: 100%;
   max-width: 380px;
   height: auto;
-  margin: 0 auto 2rem;
+  margin: 0 auto 1.5rem;
 }
 
 /* Split sections: text on one side, photo on the other.
