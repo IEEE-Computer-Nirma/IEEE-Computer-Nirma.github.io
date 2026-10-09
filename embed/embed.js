@@ -110,7 +110,7 @@
   function renderWidget(container, data) {
     container.textContent = '';
 
-    // Header section (centered logo, title, and quote tagline)
+    // Header section (clean logo and main title)
     var header = document.createElement('div');
     header.className = 'ieee-cs-nirma-widget__header';
 
@@ -127,12 +127,6 @@
       var title = el('h2', titleText);
       title.className = 'ieee-cs-nirma-widget__title';
       header.appendChild(title);
-
-      if (data.chapter.tagline) {
-        var quote = el('blockquote', '“' + data.chapter.tagline + '”');
-        quote.className = 'ieee-cs-nirma-widget__tagline';
-        header.appendChild(quote);
-      }
     }
     container.appendChild(header);
 
