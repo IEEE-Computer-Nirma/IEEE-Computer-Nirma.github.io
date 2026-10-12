@@ -77,6 +77,14 @@
       "ogTitle": "Events — IEEE CS Nirma University",
       "ogDescription": "Explore upcoming and past technical workshops, hackathons, and competitions."
     },
+    "opportunities.html": {
+      "path": "/opportunities",
+      "title": "Opportunities & Internships — IEEE CS Nirma University",
+      "description": "Discover tech internships, career opportunities, featured hiring programs, and subscribe to weekly tech placement digests by IEEE Computer Society Nirma University.",
+      "keywords": ["IEEE CS Opportunities", "Tech Internships 2025 2026", "Nirma University Internships", "Software Engineering Jobs"],
+      "ogTitle": "Opportunities & Internships — IEEE CS Nirma University",
+      "ogDescription": "Daily updated tech internships, featured company opportunities, and weekly digest subscriptions."
+    },
     "team.html": {
       "path": "/team",
       "title": "Team & Board Members — IEEE CS Nirma University",

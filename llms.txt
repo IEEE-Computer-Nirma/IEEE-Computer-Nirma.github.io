@@ -31,6 +31,7 @@
 
 - IEEE CS Nirma — Computer Society Student Branch Chapter at Nirma University: https://deeplumiere.github.io/IEEEComputerSociety
 - Events — IEEE CS Nirma University: https://deeplumiere.github.io/IEEEComputerSociety/events
+- Opportunities & Internships — IEEE CS Nirma University: https://deeplumiere.github.io/IEEEComputerSociety/opportunities
 - Team & Board Members — IEEE CS Nirma University: https://deeplumiere.github.io/IEEEComputerSociety/team
 - Achievements — IEEE CS Nirma University: https://deeplumiere.github.io/IEEEComputerSociety/achievements
 - About Us — IEEE CS Nirma University: https://deeplumiere.github.io/IEEEComputerSociety/about
