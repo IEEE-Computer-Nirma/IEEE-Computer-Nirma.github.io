@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://deeplumiere.github.io/IEEEComputerSociety/sitemap.xml
+Sitemap: https://ieee-computer-nirma.github.io/sitemap.xml
